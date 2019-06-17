@@ -1,0 +1,19 @@
+<h1>Transform metadata from a spreadsheet template into DataCite XML</h1>
+<hr>
+<h2>Transform a file</h2>
+
+<form action="/transform_to_datacite_process" method="post" enctype="multipart/form-data">
+  <h3>Select the metadata spreadsheet</h3>
+  <input type="file" name="file">
+  <p>
+  <button class="button" type="submit">Submit the file</button>
+</form>
+<hr>
+<form action="/transform_to_datacite_template" method="post">
+  <h3>Download the spreadsheet template</h3>
+  <button class="button" type="submit">Download template</button>
+</form>
+
+<p>
+<hr>
+<a href="/"><button class="button-return">Return to main menu</button></a>

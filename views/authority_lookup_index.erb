@@ -1,0 +1,35 @@
+<h2>Authority lookup (BETA)</h2>
+<hr>
+<h3>Search the LD4P cache of the Library of Congress Name Authority file for authorized terms and URIs</h3>
+<p>Note: The LD4P cache server is not a production system, and may not always be available.</p>
+
+<p>Submit a text file (.txt) containing a list of terms to search, one term per line.</p>
+<form action="/authority_lookup_process" method="post" enctype="multipart/form-data">
+  <input type="file" name="file" id="file">
+  <p>
+  <hr>
+  <h2>Options</h2>
+  <fieldset id="subauthority">
+    <h3>Limit search</h3>
+    <input type="radio" value="" name="subauthority" checked>&nbsp;No limits<br>
+    <input type="radio" value="person" name="subauthority">&nbsp;Personal names only<br>
+    <input type="radio" value="organization" name="subauthority">&nbsp;Corporate bodies and organizations only<br>
+    <input type="radio" value="place" name="subauthority">&nbsp;Places only<br>
+    <input type="radio" value="work" name="subauthority">&nbsp;Works only<br>
+  </fieldset>
+  <p>
+  <fieldset id="limit">
+    <h3>Maximum number of results to return per term</h3>
+    <input type="radio" value="1" name="limit">&nbsp;1<br>
+    <input type="radio" value="5" name="limit">&nbsp;5<br>
+    <input type="radio" value="10" name="limit" checked>&nbsp;10<br>
+    <input type="radio" value="15" name="limit">&nbsp;15<br>
+    <input type="radio" value="20" name="limit">&nbsp;20<br>
+  </fieldset>
+  <p>
+  <button class="button" type="Submit">Submit the file</button>
+</form>
+
+<p>
+<hr>
+<a href="/"><button class="button-return">Return to main menu</button></a>

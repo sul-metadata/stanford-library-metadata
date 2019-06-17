@@ -1,0 +1,42 @@
+<h2>Virtual object manifest generator</h2>
+<hr>
+<h3>Process a file</h3>
+
+<form action="/virtual_object_manifest_process" method="post" enctype="multipart/form-data">
+  <input type="file" name="file" id="file">
+  <p>
+  <button class="button" type="submit">Submit the file</button>
+</form>
+
+<hr>
+<h3>Guidelines</h3>
+Generates manifest used to construct virtual object relationships in Argo.
+<p>
+Takes input file with column headers:
+<ul>
+<li>'root' (object identifier, same for parent and children, such as the source ID root)</li>
+<li>'sequence' (numeric order of objects, with parent as 0)</li>
+<li>'druid' (object druids)</li>
+</ul>
+<p>
+The order of columns or the presence of additional columns does not matter.
+<p>
+Input file should be .xlsx, .xls, or .csv.
+
+<hr>
+<h3>Example input and output</h3>
+A submission file for three virtual objects:
+<ul>
+<li>Object AAAA has virtual parent druid:pm947hz3258 with 5 child objects</li>
+<li>Object BBBB has virtual parent druid:kw916cz7521 with 8 child objects</li>
+<li>Object CCCC has virtual parent druid:wg203zc4392 with 4 child objects</li>
+
+<h4>Input file</h4>
+<img src="images/vo_premanifest_list_rev.png" />
+
+<h4>Output file</h4>
+<img src="images/vo_manifest_rev.png" />
+
+<p>
+<hr>
+<a href="/"><button class="button-return">Return to main menu</button></a>

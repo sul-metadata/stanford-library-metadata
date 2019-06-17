@@ -1,0 +1,361 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns="http://datacite.org/schema/kernel-4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4/metadata.xsd">
+  <titles>
+    <title>[[ti1:title]]</title>
+  </titles>
+  <creators>
+    <creator>
+      <creatorName nameType="Personal">[[na1:namePart]]</creatorName>
+      <givenName>[[dc:na1:givenName]]</givenName>
+      <familyName>[[dc:na1:familyName]]</familyName>
+      <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">[[na1:nameIdentifier1]]</nameIdentifier>
+      <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">[[na1:nameIdentifier2]]</nameIdentifier>
+      <affiliation>[[dc:na1:affiliation1]]</affiliation>
+      <affiliation>[[dc:na1:affiliation2]]</affiliation>
+      <affiliation>[[dc:na1:affiliation3]]</affiliation>
+      <affiliation>[[dc:na1:affiliation4]]</affiliation>
+      <affiliation>[[dc:na1:affiliation5]]</affiliation>
+    </creator>
+    <creator>
+      <creatorName nameType="Personal">[[na2:namePart]]</creatorName>
+      <givenName>[[dc:na2:givenName]]</givenName>
+      <familyName>[[dc:na2:familyName]]</familyName>
+      <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">[[na2:nameIdentifier1]]</nameIdentifier>
+      <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">[[na2:nameIdentifier2]]</nameIdentifier>
+      <affiliation>[[dc:na2:affiliation1]]</affiliation>
+      <affiliation>[[dc:na2:affiliation2]]</affiliation>
+      <affiliation>[[dc:na2:affiliation3]]</affiliation>
+      <affiliation>[[dc:na2:affiliation4]]</affiliation>
+      <affiliation>[[dc:na2:affiliation5]]</affiliation>
+    </creator>
+    <creator>
+      <creatorName nameType="Personal">[[na3:namePart]]</creatorName>
+      <givenName>[[dc:na3:givenName]]</givenName>
+      <familyName>[[dc:na3:familyName]]</familyName>
+      <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">[[na3:nameIdentifier1]]</nameIdentifier>
+      <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">[[na3:nameIdentifier2]]</nameIdentifier>
+      <affiliation>[[dc:na3:affiliation1]]</affiliation>
+      <affiliation>[[dc:na3:affiliation2]]</affiliation>
+      <affiliation>[[dc:na3:affiliation3]]</affiliation>
+      <affiliation>[[dc:na3:affiliation4]]</affiliation>
+      <affiliation>[[dc:na3:affiliation5]]</affiliation>
+    </creator>
+    <creator>
+      <creatorName nameType="Personal">[[na4:namePart]]</creatorName>
+      <givenName>[[dc:na4:givenName]]</givenName>
+      <familyName>[[dc:na4:familyName]]</familyName>
+      <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">[[na4:nameIdentifier1]]</nameIdentifier>
+      <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">[[na4:nameIdentifier2]]</nameIdentifier>
+      <affiliation>[[dc:na4:affiliation1]]</affiliation>
+      <affiliation>[[dc:na4:affiliation2]]</affiliation>
+      <affiliation>[[dc:na4:affiliation3]]</affiliation>
+      <affiliation>[[dc:na4:affiliation4]]</affiliation>
+      <affiliation>[[dc:na4:affiliation5]]</affiliation>
+    </creator>
+    <creator>
+      <creatorName nameType="Personal">[[na5:namePart]]</creatorName>
+      <givenName>[[dc:na5:givenName]]</givenName>
+      <familyName>[[dc:na5:familyName]]</familyName>
+      <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">[[na5:nameIdentifier1]]</nameIdentifier>
+      <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">[[na5:nameIdentifier2]]</nameIdentifier>
+      <affiliation>[[dc:na5:affiliation1]]</affiliation>
+      <affiliation>[[dc:na5:affiliation2]]</affiliation>
+      <affiliation>[[dc:na5:affiliation3]]</affiliation>
+      <affiliation>[[dc:na5:affiliation4]]</affiliation>
+      <affiliation>[[dc:na5:affiliation5]]</affiliation>
+    </creator>
+    <creator>
+      <creatorName nameType="Personal">[[na6:namePart]]</creatorName>
+      <givenName>[[dc:na6:givenName]]</givenName>
+      <familyName>[[dc:na6:familyName]]</familyName>
+      <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">[[na6:nameIdentifier1]]</nameIdentifier>
+      <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">[[na6:nameIdentifier2]]</nameIdentifier>
+      <affiliation>[[dc:na6:affiliation1]]</affiliation>
+      <affiliation>[[dc:na6:affiliation2]]</affiliation>
+      <affiliation>[[dc:na6:affiliation3]]</affiliation>
+      <affiliation>[[dc:na6:affiliation4]]</affiliation>
+      <affiliation>[[dc:na6:affiliation5]]</affiliation>
+    </creator>
+    <creator>
+      <creatorName nameType="Personal">[[na7:namePart]]</creatorName>
+      <givenName>[[dc:na7:givenName]]</givenName>
+      <familyName>[[dc:na7:familyName]]</familyName>
+      <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">[[na7:nameIdentifier1]]</nameIdentifier>
+      <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">[[na7:nameIdentifier2]]</nameIdentifier>
+      <affiliation>[[dc:na7:affiliation1]]</affiliation>
+      <affiliation>[[dc:na7:affiliation2]]</affiliation>
+      <affiliation>[[dc:na7:affiliation3]]</affiliation>
+      <affiliation>[[dc:na7:affiliation4]]</affiliation>
+      <affiliation>[[dc:na7:affiliation5]]</affiliation>
+    </creator>
+    <creator>
+      <creatorName nameType="Personal">[[na8:namePart]]</creatorName>
+      <givenName>[[dc:na8:givenName]]</givenName>
+      <familyName>[[dc:na8:familyName]]</familyName>
+      <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">[[na8:nameIdentifier1]]</nameIdentifier>
+      <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">[[na8:nameIdentifier2]]</nameIdentifier>
+      <affiliation>[[dc:na8:affiliation1]]</affiliation>
+      <affiliation>[[dc:na8:affiliation2]]</affiliation>
+      <affiliation>[[dc:na8:affiliation3]]</affiliation>
+      <affiliation>[[dc:na8:affiliation4]]</affiliation>
+      <affiliation>[[dc:na8:affiliation5]]</affiliation>
+    </creator>
+    <creator>
+      <creatorName nameType="Personal">[[na9:namePart]]</creatorName>
+      <givenName>[[dc:na9:givenName]]</givenName>
+      <familyName>[[dc:na9:familyName]]</familyName>
+      <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">[[na9:nameIdentifier1]]</nameIdentifier>
+      <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">[[na9:nameIdentifier2]]</nameIdentifier>
+      <affiliation>[[dc:na9:affiliation1]]</affiliation>
+      <affiliation>[[dc:na9:affiliation2]]</affiliation>
+      <affiliation>[[dc:na9:affiliation3]]</affiliation>
+      <affiliation>[[dc:na9:affiliation4]]</affiliation>
+      <affiliation>[[dc:na9:affiliation5]]</affiliation>
+    </creator>
+    <creator>
+      <creatorName nameType="Personal">[[na10:namePart]]</creatorName>
+      <givenName>[[dc:na10:givenName]]</givenName>
+      <familyName>[[dc:na10:familyName]]</familyName>
+      <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">[[na10:nameIdentifier1]]</nameIdentifier>
+      <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">[[na10:nameIdentifier2]]</nameIdentifier>
+      <affiliation>[[dc:na10:affiliation1]]</affiliation>
+      <affiliation>[[dc:na10:affiliation2]]</affiliation>
+      <affiliation>[[dc:na10:affiliation3]]</affiliation>
+      <affiliation>[[dc:na10:affiliation4]]</affiliation>
+      <affiliation>[[dc:na10:affiliation5]]</affiliation>
+    </creator>
+    <creator>
+      <creatorName nameType="Personal">[[na11:namePart]]</creatorName>
+      <givenName>[[dc:na11:givenName]]</givenName>
+      <familyName>[[dc:na11:familyName]]</familyName>
+      <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">[[na11:nameIdentifier1]]</nameIdentifier>
+      <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">[[na11:nameIdentifier2]]</nameIdentifier>
+      <affiliation>[[dc:na11:affiliation1]]</affiliation>
+      <affiliation>[[dc:na11:affiliation2]]</affiliation>
+      <affiliation>[[dc:na11:affiliation3]]</affiliation>
+      <affiliation>[[dc:na11:affiliation4]]</affiliation>
+      <affiliation>[[dc:na11:affiliation5]]</affiliation>
+    </creator>
+    <creator>
+      <creatorName nameType="Personal">[[na12:namePart]]</creatorName>
+      <givenName>[[dc:na12:givenName]]</givenName>
+      <familyName>[[dc:na12:familyName]]</familyName>
+      <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">[[na12:nameIdentifier1]]</nameIdentifier>
+      <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">[[na12:nameIdentifier2]]</nameIdentifier>
+      <affiliation>[[dc:na12:affiliation1]]</affiliation>
+      <affiliation>[[dc:na12:affiliation2]]</affiliation>
+      <affiliation>[[dc:na12:affiliation3]]</affiliation>
+      <affiliation>[[dc:na12:affiliation4]]</affiliation>
+      <affiliation>[[dc:na12:affiliation5]]</affiliation>
+    </creator>
+    <creator>
+      <creatorName nameType="Personal">[[na13:namePart]]</creatorName>
+      <givenName>[[dc:na13:givenName]]</givenName>
+      <familyName>[[dc:na13:familyName]]</familyName>
+      <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">[[na13:nameIdentifier1]]</nameIdentifier>
+      <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">[[na13:nameIdentifier2]]</nameIdentifier>
+      <affiliation>[[dc:na13:affiliation1]]</affiliation>
+      <affiliation>[[dc:na13:affiliation2]]</affiliation>
+      <affiliation>[[dc:na13:affiliation3]]</affiliation>
+      <affiliation>[[dc:na13:affiliation4]]</affiliation>
+      <affiliation>[[dc:na13:affiliation5]]</affiliation>
+    </creator>
+    <creator>
+      <creatorName nameType="Personal">[[na14:namePart]]</creatorName>
+      <givenName>[[dc:na14:givenName]]</givenName>
+      <familyName>[[dc:na14:familyName]]</familyName>
+      <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">[[na14:nameIdentifier1]]</nameIdentifier>
+      <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">[[na14:nameIdentifier2]]</nameIdentifier>
+      <affiliation>[[dc:na14:affiliation1]]</affiliation>
+      <affiliation>[[dc:na14:affiliation2]]</affiliation>
+      <affiliation>[[dc:na14:affiliation3]]</affiliation>
+      <affiliation>[[dc:na14:affiliation4]]</affiliation>
+      <affiliation>[[dc:na14:affiliation5]]</affiliation>
+    </creator>
+    <creator>
+      <creatorName nameType="Personal">[[na15:namePart]]</creatorName>
+      <givenName>[[dc:na15:givenName]]</givenName>
+      <familyName>[[dc:na15:familyName]]</familyName>
+      <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">[[na15:nameIdentifier1]]</nameIdentifier>
+      <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">[[na15:nameIdentifier2]]</nameIdentifier>
+      <affiliation>[[dc:na15:affiliation1]]</affiliation>
+      <affiliation>[[dc:na15:affiliation2]]</affiliation>
+      <affiliation>[[dc:na15:affiliation3]]</affiliation>
+      <affiliation>[[dc:na15:affiliation4]]</affiliation>
+      <affiliation>[[dc:na15:affiliation5]]</affiliation>
+    </creator>
+    <creator>
+      <creatorName nameType="Personal">[[na16:namePart]]</creatorName>
+      <givenName>[[dc:na16:givenName]]</givenName>
+      <familyName>[[dc:na16:familyName]]</familyName>
+      <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">[[na16:nameIdentifier1]]</nameIdentifier>
+      <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">[[na16:nameIdentifier2]]</nameIdentifier>
+      <affiliation>[[dc:na16:affiliation1]]</affiliation>
+      <affiliation>[[dc:na16:affiliation2]]</affiliation>
+      <affiliation>[[dc:na16:affiliation3]]</affiliation>
+      <affiliation>[[dc:na16:affiliation4]]</affiliation>
+      <affiliation>[[dc:na16:affiliation5]]</affiliation>
+    </creator>
+    <creator>
+      <creatorName nameType="Personal">[[na17:namePart]]</creatorName>
+      <givenName>[[dc:na17:givenName]]</givenName>
+      <familyName>[[dc:na17:familyName]]</familyName>
+      <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">[[na17:nameIdentifier1]]</nameIdentifier>
+      <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">[[na17:nameIdentifier2]]</nameIdentifier>
+      <affiliation>[[dc:na17:affiliation1]]</affiliation>
+      <affiliation>[[dc:na17:affiliation2]]</affiliation>
+      <affiliation>[[dc:na17:affiliation3]]</affiliation>
+      <affiliation>[[dc:na17:affiliation4]]</affiliation>
+      <affiliation>[[dc:na17:affiliation5]]</affiliation>
+    </creator>
+    <creator>
+      <creatorName nameType="Personal">[[na18:namePart]]</creatorName>
+      <givenName>[[dc:na18:givenName]]</givenName>
+      <familyName>[[dc:na18:familyName]]</familyName>
+      <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">[[na18:nameIdentifier1]]</nameIdentifier>
+      <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">[[na18:nameIdentifier2]]</nameIdentifier>
+      <affiliation>[[dc:na18:affiliation1]]</affiliation>
+      <affiliation>[[dc:na18:affiliation2]]</affiliation>
+      <affiliation>[[dc:na18:affiliation3]]</affiliation>
+      <affiliation>[[dc:na18:affiliation4]]</affiliation>
+      <affiliation>[[dc:na18:affiliation5]]</affiliation>
+    </creator>
+    <creator>
+      <creatorName nameType="Personal">[[na19:namePart]]</creatorName>
+      <givenName>[[dc:na19:givenName]]</givenName>
+      <familyName>[[dc:na19:familyName]]</familyName>
+      <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">[[na19:nameIdentifier1]]</nameIdentifier>
+      <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">[[na19:nameIdentifier2]]</nameIdentifier>
+      <affiliation>[[dc:na19:affiliation1]]</affiliation>
+      <affiliation>[[dc:na19:affiliation2]]</affiliation>
+      <affiliation>[[dc:na19:affiliation3]]</affiliation>
+      <affiliation>[[dc:na19:affiliation4]]</affiliation>
+      <affiliation>[[dc:na19:affiliation5]]</affiliation>
+    </creator>
+    <creator>
+      <creatorName nameType="Personal">[[na20:namePart]]</creatorName>
+      <givenName>[[dc:na20:givenName]]</givenName>
+      <familyName>[[dc:na20:familyName]]</familyName>
+      <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">[[na20:nameIdentifier1]]</nameIdentifier>
+      <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">[[na20:nameIdentifier2]]</nameIdentifier>
+      <affiliation>[[dc:na20:affiliation1]]</affiliation>
+      <affiliation>[[dc:na20:affiliation2]]</affiliation>
+      <affiliation>[[dc:na20:affiliation3]]</affiliation>
+      <affiliation>[[dc:na20:affiliation4]]</affiliation>
+      <affiliation>[[dc:na20:affiliation5]]</affiliation>
+    </creator>
+  </creators>
+  <contributors>
+    <contributor contributorType="Sponsor">
+      <contributorName nameType="Organizational">[[na21:namePart]]</contributorName>
+    </contributor>
+    <contributor contributorType="Sponsor">
+      <contributorName nameType="Organizational">[[na22:namePart]]</contributorName>
+    </contributor>
+    <contributor contributorType="Sponsor">
+      <contributorName nameType="Organizational">[[na23:namePart]]</contributorName>
+    </contributor>
+    <contributor contributorType="Sponsor">
+      <contributorName nameType="Organizational">[[na24:namePart]]</contributorName>
+    </contributor>
+    <contributor contributorType="Sponsor">
+      <contributorName nameType="Organizational">[[na25:namePart]]</contributorName>
+    </contributor>
+    <contributor contributorType="Sponsor">
+      <contributorName nameType="Organizational">[[na26:namePart]]</contributorName>
+    </contributor>
+    <contributor contributorType="Sponsor">
+      <contributorName nameType="Organizational">[[na27:namePart]]</contributorName>
+    </contributor>
+    <contributor contributorType="Sponsor">
+      <contributorName nameType="Organizational">[[na28:namePart]]</contributorName>
+    </contributor>
+    <contributor contributorType="Sponsor">
+      <contributorName nameType="Organizational">[[na29:namePart]]</contributorName>
+    </contributor>
+    <contributor contributorType="Sponsor">
+      <contributorName nameType="Organizational">[[na30:namePart]]</contributorName>
+    </contributor>
+    <contributor contributorType="ResearchGroup">
+      <contributorName nameType="Organizational">[[no2:note]]</contributorName>
+    </contributor>
+  </contributors>
+  <fundingReferences>
+    <fundingReference>
+      <funderName>[[dc:funderName1]]</funderName>
+      <awardNumber>[[dc:awardNumber1]]</awardNumber>
+    </fundingReference>
+    <fundingReference>
+      <funderName>[[dc:funderName2]]</funderName>
+      <awardNumber>[[dc:awardNumber2]]</awardNumber>
+    </fundingReference>
+    <fundingReference>
+      <funderName>[[dc:funderName3]]</funderName>
+      <awardNumber>[[dc:awardNumber3]]</awardNumber>
+    </fundingReference>
+    <fundingReference>
+      <funderName>[[dc:funderName4]]</funderName>
+      <awardNumber>[[dc:awardNumber4]]</awardNumber>
+    </fundingReference>
+    <fundingReference>
+      <funderName>[[dc:funderName5]]</funderName>
+      <awardNumber>[[dc:awardNumber5]]</awardNumber>
+    </fundingReference>
+  </fundingReferences>
+  <resourceType resourceTypeGeneral="[[dc:resourceTypeGeneral]]">[[dc:ResourceType]]</resourceType>
+  <sizes>
+    <size>[[ph1:extent]]</size>
+  </sizes>
+  <publisher>Stanford Digital Repository</publisher>
+  <publicationYear>[[dt:dateIssued]]</publicationYear>
+  <dates>
+    <date dateType="Created">[[dc:dateCreated]]</date>
+  </dates>
+  <descriptions>
+    <description descriptionType="Abstract">[[ab:abstract]]</description>
+  </descriptions>
+  <subjects>
+    <subject xml:lang="en-US">[[su31:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su32:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su33:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su34:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su35:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su1:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su2:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su3:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su4:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su5:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su6:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su7:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su8:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su9:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su10:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su11:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su12:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su13:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su14:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su15:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su16:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su17:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su18:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su19:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su20:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su21:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su22:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su23:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su24:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su25:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su26:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su27:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su28:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su29:p1:value]]</subject>
+    <subject xml:lang="en-US">[[su30:p1:value]]</subject>
+  </subjects>
+  <identifier identifierType="DOI">[[id1:identifier]]</identifier>
+  <alternateIdentifiers>
+    <alternateIdentifier alternateIdentifierType="PURL">[[lo:purl]]</alternateIdentifier>
+  </alternateIdentifiers>
+  <rightsList>
+    <rights>[[dc:rights]]</rights>
+  </rightsList>
+</resource>

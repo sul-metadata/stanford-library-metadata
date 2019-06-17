@@ -1,0 +1,13 @@
+/public/authority_lookup/*
+/public/reverse_modsulator/*
+/public/rps_validator/*
+/public/transform_to_datacite/*
+!/public/transform_to_datacite/datacite_template_*
+/public/transform_to_rps/*
+/public/virtual_object_manifest/*
+/test/
+/Gemfile.lock
+/test.rb
+
+/apps/replayable_spreadsheet_generator/
+/views/replayable_spreadsheet_generator_index.erb

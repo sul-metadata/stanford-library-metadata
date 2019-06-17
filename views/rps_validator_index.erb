@@ -1,0 +1,74 @@
+<h2>Replayable spreadsheet validator</h2>
+<hr>
+<h3>Validate a file</h3>
+
+<form action="/rps_validator_process" method="post" enctype="multipart/form-data">
+  <input type="file" name="file" id="file">
+  <p>
+  <button class="button" type="submit">Submit the file</button>
+</form>
+
+<hr>
+
+<h3>Guidelines</h3>
+
+<p>Validates a replayable spreadsheet (.xlsx, .xls, or .csv) against the modsulator template and checks for other problems with the metadata.</p>
+
+<p>The validator classes issues into failures, errors, warnings, and information. Failures prevent the spreadsheet from being parsed for validation; errors mean system or schema metadata requirements are not met; warnings mean metadata recommendations are not met; information means the data suggests an error may be present, or is missing from a non-essential field.</p>
+
+<h4>Validation criteria</h4>
+
+<h5>Failure</h5>
+<ul>
+  <li>File extension is not .xlsx, .xls, or .csv</li>
+  <li>Header row does not begin with "druid" and "sourceId"</li>
+  <li>Spreadsheet includes invalid characters</li>
+</ul>
+
+<h5>Error</h5>
+<ul>
+  <li>Duplicate headers</li>
+  <li>Blank rows within the data</li>
+  <li>Line breaks or control characters in cell values</li>
+  <li>Duplicate druids</li>
+  <li>Data rows without druids</li>
+  <li>Druids do not match alphanumeric pattern</li>
+  <li>Required fields are missing data</li>
+    <ul>
+      <li>Title (ti1:title)</li>
+      <li>Type of resource (ty1:typeOfResource)</li>
+    </ul>
+  <li>MODS controlled field values do not match specified vocabulary</li>
+    <ul>
+      <li>Title type (tiX:type)</li>
+      <li>Name usage (na1:usage)</li>
+      <li>Type of resource (ty1:typeOfResource)</li>
+      <li>Manuscript (ty1:manuscript)</li>
+      <li>All dates: keyDate, qualifier, point, encoding</li>
+      <li>Issuance (orX:issuance)</li>
+      <li>Subject types (snX:p1:nameType, suX:pX:type)</li>
+    </ul>
+  <li>More than one keyDate is declared</li>
+  <li>Subject values missing types</li>
+</ul>
+
+<h5>Warning</h5>
+<ul>
+  <li>Cell values beginning with an unclosed double quotation mark</li>
+  <li>Date range point values missing if two dates are given</li>
+  <li>Date keyDate, qualifier, point, and encoding field have value but the corresponding date field does not</li>
+  <li>No keyDate is declared</li>
+  <li>Subject types lack corresponding subjects</li>
+  <li>Missing values in the lo:purl field</li>
+</ul>
+
+<h5>Information</h5>
+<ul>
+  <li>Headers appearing in spreadsheet are not in modsulator XML template</li>
+  <li>Columns with data are missing headers</li>
+  <li>Duplicate or missing source IDs</li>
+</ul>
+
+<p>
+<hr>
+<a href="/"><button class="button-return">Return to main menu</button></a>

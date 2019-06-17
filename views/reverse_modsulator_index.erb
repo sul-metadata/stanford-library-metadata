@@ -1,0 +1,22 @@
+<h2>Reverse modsulator</h2>
+<hr>
+<h3>Transform MODS records into a replayable spreadsheet</h3>
+
+<p>Submit a ZIP file containing one or more MODS XML records. Individual MODS records in the ZIP file should have the druid as the filename. The ZIP file should have a flat structure (i.e., it should contain XML files only, no folders).</p>
+<form action="/reverse_modsulator_process" method="post" enctype="multipart/form-data">
+  <input type="file" name="file" id="file">
+  <p>
+  <button class="button" type="submit">Submit the file</button>
+</form>
+
+<hr>
+
+<h3>Guidelines</h3>
+
+<p>Transforms MODS XML records into a replayable spreadsheet based on the current modsulator template mapping.</p>
+
+<p>Note that data in the source records that is not included in the template may be lost in the transformation. The results page will report possible data loss.</p>
+
+<p>
+<hr>
+<a href="/"><button class="button-return">Return to main menu</button></a>

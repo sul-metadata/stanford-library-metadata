@@ -1,0 +1,18 @@
+<h2>Results</h2>
+<hr>
+
+<h3>Replayable spreadsheet</h3>
+
+<form action="/reverse_modsulator_deliver" method="post">
+  <button class="button" type="submit">Download replayable spreadsheet</button>
+</form>
+
+<h3>Data loss report</h3>
+<p>Metadata in source that is not in the modsulator template and so could not be transferred to the replayable spreadsheet.</p>
+
+<%= @table %>
+
+<p>
+<hr>
+<a href="/reverse_modsulator_index"><button class="button-return">Submit another MODS file</button></a>
+<a href="/"><button class="button-return">Return to main menu</button></a>
