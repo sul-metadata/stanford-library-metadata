@@ -132,7 +132,6 @@ GEM
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
-    zip (2.0.2)
 
 PLATFORMS
   ruby
@@ -147,7 +146,6 @@ DEPENDENCIES
   roo-xls
   rubyzip
   sinatra
-  zip
 
 RUBY VERSION
    ruby 2.6.3p62
