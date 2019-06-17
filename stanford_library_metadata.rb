@@ -273,7 +273,7 @@ get '/authority_lookup_download' do
 end
 
 post '/authority_lookup_deliver' do
-  send_file('./public/authority_lookup/report.txt', :type => 'csv', :disposition => 'attachment')
+  send_file('./public/authority_lookup/report.csv', :type => 'csv', :disposition => 'attachment')
 end
 
 def authority_lookup
