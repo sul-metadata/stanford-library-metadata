@@ -1,10 +1,3 @@
-/public/authority_lookup/*
-/public/reverse_modsulator/*
-/public/rps_validator/*
-/public/transform_to_datacite/*
-!/public/transform_to_datacite/datacite_template_*
-/public/transform_to_rps/*
-/public/virtual_object_manifest/*
 /test/
 /test.rb
 
