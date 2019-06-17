@@ -1,0 +1,109 @@
+<form>
+	<fieldset>
+		<legend>Title</legend>
+		<p>Number of title columns (min 1, max 10): <input type="number" name="titleInfo" min="1" max="10" value="1"></p>
+		<ul>
+			<li>Include field for non-sorting characters? <input type="radio" name="non_sort" value="true">Yes <input type="radio" name="non_sort" value="false" checked>No</li>
+			<li>Include subtitle and title parts? <input type="radio" name="parts" value="true">Yes <input type="radio" name="parts" value="false" checked>No</li>
+			<li>Include uniform title? <input type="radio" name="uniform_title" value="true">Yes <input type="radio" name="uniform_title" value="false" checked>No</li>
+			<li>Include display label? <input type="radio" name="displayLabel" value="true">Yes <input type="radio" name="displayLabel" value="false" checked>No</li>
+			<li>Include language of title? <input type="radio" name="language" value="true">Yes <input type="radio" name="language" value="false" checked>No</li>
+		</ul>
+	</fieldset>
+	<fieldset>
+		<legend>Name</legend>
+		<p>Number of name columns (min 0, max 30): <input type="number" name="name" min="0" max="30" value="0"></p>
+		<ul>
+			<li>Number of affiliation columns (min 0, max 5): <input type="number" name="affiliation" min="0" max="5" value="0"></li>
+			<li>Number of person identifier (not name authority) columns (min 0, max 3): <input type="number" name="nameIdentifier" min="0" max="3" value="0"></li>
+			<li>Number of role columns (min 0, max 3): <input type="number" name="role" min="0" max="3" value="0"></li>
+			<li>Include name authority? <input type="radio" name="authority" value="true">Yes <input type="radio" name="authority" value="false" checked>No</li>
+			<li>Include language of name? <input type="radio" name="language" value="true">Yes <input type="radio" name="language" value="false" checked>No</li>
+		</ul>
+	</fieldset>
+	<fieldset>
+		<legend>Type of resource</legend>
+		<p>Number of type of resource columns (min 1, max 3): <input type="number" name="typeOfResource" min="1" max="3" value="1"></p>
+		<ul>
+			<li>Include manuscript designation? <input type="radio" name="manuscript" value="true">Yes <input type="radio" name="manuscript" value="false" checked>No</li>
+		</ul>
+	</fieldset>
+	<fieldset>
+		<legend>Genre</legend>
+		<p>Number of genre columns (min 0, max 10): <input type="number" name="genre" min="0" max="10" value="0"></p>
+		<ul>
+			<li>Include display label? <input type="radio" name="displayLabel" value="true">Yes <input type="radio" name="displayLabel" value="false" checked>No</li>
+			<li>Include genre authority? <input type="radio" name="authority" value="true">Yes <input type="radio" name="authority" value="false" checked>No</li>
+		</ul>
+	</fieldset>
+	<fieldset>
+		<legend>Origin info</legend>
+		<p>Include origin info? <input type="radio" name="originInfo" value="true">Yes <input type="radio" name="originInfo" value="false" checked>No</p>
+		<ul>
+			<li>Include display label? <input type="radio" name="displayLabel" value="true">Yes <input type="radio" name="displayLabel" value="false" checked>No</li>
+			<li>Include event type? <input type="radio" name="eventType" value="true">Yes <input type="radio" name="eventType" value="false" checked>No</li>
+			<li>Include place name as text? <input type="radio" name="place_text" value="true">Yes <input type="radio" name="place_text" value="false" checked>No</li>
+			<li>Include place name as geographic code? <input type="radio" name="place_code" value="true">Yes <input type="radio" name="place_code" value="false" checked>No</li>
+			<li>Include publisher? <input type="radio" name="publisher" value="true">Yes <input type="radio" name="publisher" value="false" checked>No</li>
+			<li>Number of date of creation columns (min 0, max 3): <input type="number" name="dateCreated" min="0" max="3" value="0"></li>
+			<li>Number of date of issuance or publication columns (min 0, max 3): <input type="number" name="dateIssued" min="0" max="3" value="0"></li>
+			<li>Number of capture date columns (min 0, max 2): <input type="number" name="dateCaptured" min="0" max="2" value="0"></li>
+			<li>Number of copyright date columns (min 0, max 2): <input type="number" name="copyrightDate" min="0" max="2" value="0"></li>
+			<li>Include edition? <input type="radio" name="edition" value="true">Yes <input type="radio" name="edition" value="false" checked>No</li>
+			<li>Include issuance? <input type="radio" name="issuance" value="true">Yes <input type="radio" name="issuance" value="false" checked>No</li>
+			<li>Include frequency? <input type="radio" name="frequency" value="true">Yes <input type="radio" name="frequency" value="false" checked>No</li>
+		</ul>
+	</fieldset>
+	<fieldset>
+		<legend>Language</legend>
+		<p>Number of language columns (min 0, max 10): <input type="number" name="language" min="0" max="10" value="0"></p>
+		<ul>
+			<li>Include designation for the part of the resource that uses this language? <input type="radio" name="objectPart" value="true">Yes <input type="radio" name="objectPart" value="false" checked>No</li>
+			<li>Include script? <input type="radio" name="scriptTerm" value="true">Yes <input type="radio" name="scriptTerm" value="false" checked>No</li>
+		</ul>
+	</fieldset>
+	<fieldset>
+		<legend>Physical description</legend>
+		<p>Include physical description? <input type="radio" name="physicalDescription" value="true">Yes <input type="radio" name="physicalDescription" value="false" checked>No</p>
+	</fieldset>
+	<fieldset>
+		<legend>Abstract</legend>
+		<p>Include abstract? <input type="radio" name="abstract" value="true">Yes <input type="radio" name="abstract" value="false" checked>No</p>
+	</fieldset>
+	<fieldset>
+		<legend>Table of contents</legend>
+		<p>Include table of contents? <input type="radio" name="tableOfContents" value="true">Yes <input type="radio" name="tableOfContents" value="false" checked>No</p>
+	</fieldset>
+	<fieldset>
+		<legend>Note</legend>
+		<p>Number of note columns (min 0, max 20): <input type="number" name="note" min="0" max="20" value="0"></p>
+	</fieldset>
+	<fieldset>
+		<legend>Name subject</legend>
+		<p>Number of name subject columns (min 0, max 30): <input type="number" name="subject_name_title" min="0" max="30" value="0"></p>
+	</fieldset>
+	<fieldset>
+		<legend>Other subject</legend>
+		<p>Number of other subject columns (min 0, max 50): <input type="number" name="subject_other" min="0" max="50" value="0"></p>
+	</fieldset>
+	<fieldset>
+		<legend>Cartographic subject</legend>
+		<p>Include cartographic subject? <input type="radio" name="subject_cartographics" value="true">Yes <input type="radio" name="subject_cartographics" value="false" checked>No</p>
+	</fieldset>
+	<fieldset>
+		<legend>Identifier</legend>
+		<p>Number of identifier columns (min 0, max 5): <input type="number" name="identifier" min="0" max="5" value="0"></p>
+	</fieldset>
+	<fieldset>
+		<legend>Location</legend>
+		<p>Include location? <input type="radio" name="location" value="true">Yes <input type="radio" name="location" value="false" checked>No</p>
+	</fieldset>
+	<fieldset>
+		<legend>Related item</legend>
+		<p>Number of related item columns (min 0, max 100): <input type="number" name="relatedItem" min="0" max="100" value="0"></p>
+	</fieldset>
+	<fieldset>
+		<legend>Geo extension</legend>
+		<p>Include geo extension? <input type="radio" name="geo_extension" value="true">Yes <input type="radio" name="geo_extension" value="false" checked>No</p>
+	</fieldset>
+</form>
