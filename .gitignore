@@ -6,7 +6,6 @@
 /public/transform_to_rps/*
 /public/virtual_object_manifest/*
 /test/
-/Gemfile.lock
 /test.rb
 
 /apps/replayable_spreadsheet_generator/
