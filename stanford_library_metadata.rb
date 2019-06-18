@@ -232,7 +232,7 @@ post '/transform_to_datacite_deliver' do
 end
 
 post '/transform_to_datacite_template' do
-  send_file('./public/transform_to_datacite/datacite_template_20190228.xlsx', :type => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', :disposition => 'attachment')
+  send_file('./public/transform_to_datacite/datacite_template_20190618.xlsx', :type => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', :disposition => 'attachment')
 end
 
 def transform_to_datacite
