@@ -30,6 +30,7 @@
   <li>Duplicate headers</li>
   <li>Blank rows within the data</li>
   <li>Line breaks or control characters in cell values</li>
+  <li>Cell value is a spreadsheet formula error (#NA, #REF!, #VALUE?, #NAME?)</li>
   <li>Duplicate druids</li>
   <li>Data rows without druids</li>
   <li>Druids do not match alphanumeric pattern</li>
@@ -49,11 +50,13 @@
       <li>Subject types (snX:p1:nameType, suX:pX:type)</li>
     </ul>
   <li>More than one keyDate is declared</li>
+  <li>Subject value or type header is present without the corresponding value or type header</li>
   <li>Subject values missing types</li>
 </ul>
 
 <h5>Warning</h5>
 <ul>
+  <li>Cell value is 0</li>
   <li>Cell values beginning with an unclosed double quotation mark</li>
   <li>Date range point values missing if two dates are given</li>
   <li>Date keyDate, qualifier, point, and encoding field have value but the corresponding date field does not</li>
