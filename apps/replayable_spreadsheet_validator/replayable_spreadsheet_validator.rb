@@ -172,10 +172,17 @@ class Validator
       log_error(@info, headers_not_in_template.uniq.join(", "), "Header not in XML template")
     end
 
+    # Get column letter reference from index
+    def get_column_ref(i)
+      name = 'A'
+      i.times { name.succ! }
+      return name
+    end
+
     # Report data in a column that lacks a value in the header row
     @header_row.each_with_index do |h, i|
       if value_is_blank?(h) && !@spreadsheet.column(i+1)[@header_row_index+1..-1].compact.join("").match(/^\s*$/)
-        log_error(@info, "column #{i+1}", "Contains data without headers")
+        log_error(@info, "column #{get_column_ref(i)}", "Contains data without headers")
       end
     end
   end
@@ -191,12 +198,13 @@ class Validator
         row.each_with_index do |cell, j|
           next if cell == nil || cell.class != String
           if cell.match(/[\r\n]+/)
-            log_error(@error, "row #{i+1}, column #{j+1}", "Line break in cell text")
-          elsif cell.match(/[\u0000-\u001F]/)
-            log_error(@error, "row #{i+1}, column #{j+1}", "Control character in cell text")
+            log_error(@error, "#{get_column_ref(j)}#{i+1}", "Line break in cell text")
+          end
+          if cell.match(/[\u0000-\u001F]/)
+            log_error(@error, "#{get_column_ref(j)}#{i+1}", "Control character in cell text")
           end
           if cell.match(/^["“”][^"]*/)
-            log_error(@warning, "row #{i+1}, column #{j+1}", "Cell value begins with unclosed double quotation mark")
+            log_error(@warning, "#{get_column_ref(j)}#{i+1}", "Cell value begins with unclosed double quotation mark")
           end
         end
       end
