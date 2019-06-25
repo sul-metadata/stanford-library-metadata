@@ -2,9 +2,9 @@ require 'roo'
 
 class Validator
 
-  def initialize(file, extension)
+  def initialize(file, filename)
     @file = file
-    @extension = extension
+    @filename = filename
     @template = './apps/replayable_spreadsheet_validator/modsulator_template.xml'
 
     ## Term lists
@@ -111,16 +111,19 @@ class Validator
 
   def validate_spreadsheet
     # Check for allowed file extensions and fail if invalid
-    @spreadsheet = case @extension
+    extension = File.extname(@filename)
+    @spreadsheet = case extension
     when '.csv' then Roo::Spreadsheet.open(@file, extension: :csv)
     when '.xls' then Roo::Spreadsheet.open(@file, extension: :xls)
     when '.xlsx' then Roo::Spreadsheet.open(@file, extension: :xlsx)
     else
-      log_error(@fail, "Invalid input file extension #{@extension}: use .csv, .xls, or .xlsx", "filename")
+      log_error(@fail, "Invalid input file extension #{extension}: use .csv, .xls, or .xlsx", "filename")
       return true
     end
     @errors = {@error => [], @warning => [], @info => []}
     @exit = false
+    validate_encoding
+    return true if @exit == true
     validate_headers
     return true if @exit == true
     validate_rows
@@ -133,6 +136,18 @@ class Validator
     validate_subject
     validate_location
     report_errors
+  end
+
+  def validate_encoding
+    # Check if encoding is UTF-8 (non-binary/CSV only)
+    enc_data = `file -i "#{@filename}"`
+    enc_data.match(/charset=.*$/)[0].inspect
+    encoding = enc_data.match(/charset=.*$/)[0]
+    return if encoding.strip == 'charset=binary'
+    if encoding.strip != 'charset=utf-8'
+      log_error(@fail, "file", "Invalid encoding: File #{encoding} instead of UTF-8")
+      @exit = true
+    end
   end
 
   def validate_headers
@@ -155,10 +170,8 @@ class Validator
     end
     @header_row_terms = @header_row.compact
 
-    # Check encoding
-    if @header_row_terms[0].encoding.name != 'UTF-8'
-      log_error(@warning, "file", "File encoding is not UTF-8")
-    end
+
+
 
     # Report duplicate header codes
     if has_duplicates?(@header_row_terms)
