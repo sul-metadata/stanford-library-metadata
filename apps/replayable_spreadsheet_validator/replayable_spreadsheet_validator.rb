@@ -9,6 +9,9 @@ class Validator
 
     ## Term lists
 
+    # Spreadsheet value errors
+    @cell_errors = ['#N/A', '#REF!', '#NAME?', '#VALUE?' '0']
+
     # typeOfResource / tyX:typeOfResource
     @type_of_resource_terms = [
       'text',
@@ -188,8 +191,13 @@ class Validator
   end
 
   def validate_rows
-    # Report blank rows, control characters, and open quotation marks
+    # Report blank rows, control characters, open quotation marks, and cell errors
     @blank_row_index = []
+    na_error = []
+    ref_error = []
+    zero_error = []
+    name_error = []
+    value_error = []
     @spreadsheet.each_with_index do |row, i|
       if row.compact.join("").match(/^\s*$/)
         log_error(@error, "row #{i+1}", "Blank row")
@@ -197,17 +205,45 @@ class Validator
       else
         row.each_with_index do |cell, j|
           next if cell == nil || cell.class != String
+          cell_ref = "#{get_column_ref(j)}#{i+1}"
           if cell.match(/[\r\n]+/)
-            log_error(@error, "#{get_column_ref(j)}#{i+1}", "Line break in cell text")
+            log_error(@error, cell_ref, "Line break in cell text")
           end
           if cell.match(/[\u0000-\u001F]/)
-            log_error(@error, "#{get_column_ref(j)}#{i+1}", "Control character in cell text")
+            log_error(@error, cell_ref, "Control character in cell text")
           end
           if cell.match(/^["“”][^"]*/)
-            log_error(@warning, "#{get_column_ref(j)}#{i+1}", "Cell value begins with unclosed double quotation mark")
+            log_error(@warning, cell_ref, "Cell value begins with unclosed double quotation mark")
+          end
+          case cell
+          when '#N/A'
+            na_error << cell_ref
+          when '#REF!'
+            ref_error << cell_ref
+          when '0'
+            zero_error << cell_ref
+          when '#NAME?'
+            name_error << cell_ref
+          when '#VALUE?'
+            value_error << cell_ref
           end
         end
       end
+    end
+    unless na_error.empty?
+      log_error(@error, na_error.join(", "), "#N/A error in cell")
+    end
+    unless ref_error.empty?
+      log_error(@error, ref_error.join(", "), "#REF! error in cell")
+    end
+    unless zero_error.empty?
+      log_error(@warning, zero_error.join(", "), "Cell value is 0")
+    end
+    unless name_error.empty?
+      log_error(@error, name_error.join(", "), "#NAME? error in cell")
+    end
+    unless value_error.empty?
+      log_error(@error, value_error.join(", "), "#VALUE? error in cell")
     end
   end
 
@@ -570,6 +606,16 @@ class Validator
     return true if !value_is_blank?(value)
   end
 
+  # Identify cell errors
+  def value_is_error?(value)
+    return true if @cell_errors.include?(value)
+  end
+
+  # Identify non-cell-errors
+  def value_is_not_error?(value)
+    return true unless @cell_errors.include?(value)
+  end
+
   # Determine whether row has any content
   def row_has_content?(index)
     return true unless @blank_row_index.include?(index)
@@ -639,13 +685,14 @@ class Validator
     values = get_values_by_header(header)
     values.each_with_index do |v, i|
       next if i <= @header_row_index
+      next if value_is_error?(v)
       report_invalid_value(v, valid_terms, get_druid_or_row_number(i), header)
     end
   end
 
   # Report if a given value is not in a given termlist
   def report_invalid_value(value, valid_terms, id, header)
-    if value_is_not_blank?(value) && value_not_in_term_list?(value, valid_terms)
+    if value_is_not_blank?(value) && value_not_in_term_list?(value, valid_terms) && value_is_not_error?(value)
       log_error(@error, id, "Invalid term \"#{value}\" in #{header}")
     end
   end
