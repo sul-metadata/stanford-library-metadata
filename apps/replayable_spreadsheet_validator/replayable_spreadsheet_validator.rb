@@ -498,7 +498,7 @@ class Validator
   # WARNING: data suggests an error, extra data (ex. date encoding without a date
   #   value) may be present, or data does not meet SUL recommendations
   # INFO: not necessarily an error, for user to review
-  def log_error(error_type, msg, locator)
+  def log_error(error_type, locator, msg)
     if error_type == @fail
       write_fail_to_output(error_type, msg, locator)
     else
