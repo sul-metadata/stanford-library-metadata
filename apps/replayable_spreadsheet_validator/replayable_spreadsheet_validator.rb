@@ -142,12 +142,12 @@ class Validator
           @header_row_index = @spreadsheet.find_index(row)
           break
         elsif i + 1 == @spreadsheet.last_row
-          log_error(@fail, "Invalid header row, must begin with druid & sourceId (case-sensitive)", "row 1")
+          log_error(@fail, "row 1", "Invalid header row, must begin with druid & sourceId (case-sensitive)")
           @exit = true
         end
       end
     rescue
-      log_error(@fail, "Invalid character; save the file as CSV, check for line break characters inside cell values, and retry", "file")
+      log_error(@fail, "file", "Invalid character; save the file as CSV, check for line break characters inside cell values, and retry")
       @exit = true
     end
     @header_row_terms = @header_row.compact
