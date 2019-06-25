@@ -459,7 +459,13 @@ class Validator
     subject_header_parts.each_value do |v|
       value = v.index {|x| x.match(/:value$|:name$/)}
       type = v.index {|x| x.match(/:type$|:nameType$/)}
-      value_type_indexes[@header_row.find_index(v[value])] = @header_row.find_index(v[type])
+      if value == nil
+        log_error(@error, "", "Missing subject value column for #{v[type]}")
+      elsif type == nil
+        log_error(@error, "", "Missing subject type column for #{v[value]}")
+      else
+        value_type_indexes[@header_row.find_index(v[value])] = @header_row.find_index(v[type])
+      end
     end
     value_type_indexes.each do |value, type|
       value_column = @spreadsheet.column(value+1)
