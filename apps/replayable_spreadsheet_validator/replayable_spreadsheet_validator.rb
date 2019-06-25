@@ -208,8 +208,7 @@ class Validator
           cell_ref = "#{get_column_ref(j)}#{i+1}"
           if cell.match(/[\r\n]+/)
             log_error(@error, cell_ref, "Line break in cell text")
-          end
-          if cell.match(/[\u0000-\u001F]/)
+          elsif cell.match(/[\u0000-\u001F]/)
             log_error(@error, cell_ref, "Control character in cell text")
           end
           if cell.match(/^["“”][^"]*/)
