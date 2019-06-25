@@ -147,10 +147,15 @@ class Validator
         end
       end
     rescue
-      log_error(@fail, "Invalid character; to identify, save spreadsheet as CSV and retry", "file")
+      log_error(@fail, "Invalid character; save the file as CSV, check for line break characters inside cell values, and retry", "file")
       @exit = true
     end
     @header_row_terms = @header_row.compact
+
+    # Check encoding
+    if @header_row_terms[0].encoding.name != 'UTF-8'
+      log_error(@warning, "file", "File encoding is not UTF-8")
+    end
 
     # Report duplicate header codes
     if has_duplicates?(@header_row_terms)
