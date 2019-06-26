@@ -18,7 +18,7 @@ require './apps/authority_lookup/authority_lookup'
 require './apps/authority_lookup/file_parser'
 require './apps/authority_lookup/result_parser'
 require './apps/authority_lookup/term_lookup'
-require './apps/replayable_spreadsheet_generator/replayable_spreadsheet_generator'
+# require './apps/replayable_spreadsheet_generator/replayable_spreadsheet_generator'
 
 
 get '/' do
@@ -292,32 +292,32 @@ end
 
 #####
 
-get '/replayable_spreadsheet_generator_index' do
-  clear_files('./public/replayable_spreadsheet_generator')
-  erb :replayable_spreadsheet_generator_index
-end
-
-post '/replayable_spreadsheet_generator_index' do
-  clear_files('./public/replayable_spreadsheet_generator')
-  erb :replayable_spreadsheet_generator_index
-end
-
-post '/replayable_spreadsheet_generator_process' do
-  replayable_spreadsheet_generator
-  redirect to('/replayable_spreadsheet_generator_download')
-end
-
-get '/replayable_spreadsheet_generator_download' do
-  erb:replayable_spreadsheet_generator_download
-end
-
-post '/replayable_spreadsheet_generator_deliver' do
-  send_file('./public/replayable_spreadsheet_generator/replayable_spreadsheet_headers.csv', :type => 'csv', :disposition => 'attachment')
-end
-
-def replayable_spreadsheet_generator
-  ReplayableSpreadsheetGenerator.new('./public/replayable_spreadsheet_generator/params.txt', './public/replayable_spreadsheet_generator/replayable_spreadsheet_headers.csv')
-end
+# get '/replayable_spreadsheet_generator_index' do
+#   clear_files('./public/replayable_spreadsheet_generator')
+#   erb :replayable_spreadsheet_generator_index
+# end
+#
+# post '/replayable_spreadsheet_generator_index' do
+#   clear_files('./public/replayable_spreadsheet_generator')
+#   erb :replayable_spreadsheet_generator_index
+# end
+#
+# post '/replayable_spreadsheet_generator_process' do
+#   replayable_spreadsheet_generator
+#   redirect to('/replayable_spreadsheet_generator_download')
+# end
+#
+# get '/replayable_spreadsheet_generator_download' do
+#   erb:replayable_spreadsheet_generator_download
+# end
+#
+# post '/replayable_spreadsheet_generator_deliver' do
+#   send_file('./public/replayable_spreadsheet_generator/replayable_spreadsheet_headers.csv', :type => 'csv', :disposition => 'attachment')
+# end
+#
+# def replayable_spreadsheet_generator
+#   ReplayableSpreadsheetGenerator.new('./public/replayable_spreadsheet_generator/params.txt', './public/replayable_spreadsheet_generator/replayable_spreadsheet_headers.csv')
+# end
 
 #####
 
