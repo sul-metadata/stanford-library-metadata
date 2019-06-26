@@ -18,6 +18,7 @@ require './apps/authority_lookup/authority_lookup'
 require './apps/authority_lookup/file_parser'
 require './apps/authority_lookup/result_parser'
 require './apps/authority_lookup/term_lookup'
+require './apps/replayable_spreadsheet_generator/replayable_spreadsheet_generator'
 
 
 get '/' do
@@ -59,8 +60,8 @@ end
 
 def validate_rps
   file = params[:file][:tempfile]
-  extension = File.extname(params[:file][:filename])
-  result = Validator.new(file, extension).validate_spreadsheet
+  filename = params[:file][:tempfile].path
+  result = Validator.new(file, filename).validate_spreadsheet
 end
 
 def generate_report_table
@@ -235,6 +236,10 @@ post '/transform_to_datacite_template' do
   send_file('./public/transform_to_datacite/datacite_template_20190618.xlsx', :type => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', :disposition => 'attachment')
 end
 
+post '/transform_to_datacite_template_dc_only' do
+  send_file('./public/transform_to_datacite/datacite_only_template_20190626.xlsx', :type => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', :disposition => 'attachment')
+end
+
 def transform_to_datacite
   in_file = params[:file][:tempfile]
   in_filename = params[:file][:tempfile].path
@@ -288,7 +293,30 @@ end
 #####
 
 get '/replayable_spreadsheet_generator_index' do
+  clear_files('./public/replayable_spreadsheet_generator')
   erb :replayable_spreadsheet_generator_index
+end
+
+post '/replayable_spreadsheet_generator_index' do
+  clear_files('./public/replayable_spreadsheet_generator')
+  erb :replayable_spreadsheet_generator_index
+end
+
+post '/replayable_spreadsheet_generator_process' do
+  replayable_spreadsheet_generator
+  redirect to('/replayable_spreadsheet_generator_download')
+end
+
+get '/replayable_spreadsheet_generator_download' do
+  erb:replayable_spreadsheet_generator_download
+end
+
+post '/replayable_spreadsheet_generator_deliver' do
+  send_file('./public/replayable_spreadsheet_generator/replayable_spreadsheet_headers.csv', :type => 'csv', :disposition => 'attachment')
+end
+
+def replayable_spreadsheet_generator
+  ReplayableSpreadsheetGenerator.new('./public/replayable_spreadsheet_generator/params.txt', './public/replayable_spreadsheet_generator/replayable_spreadsheet_headers.csv')
 end
 
 #####
