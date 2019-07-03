@@ -6,7 +6,7 @@ class ResultParser
     @result_set = result_set
     @filename = filename
     @fields = fields
-    @headers = @fields.unshift('search term')
+    @headers = ['search term', @fields[0..-1]].flatten
     write_results_to_file
   end
 
