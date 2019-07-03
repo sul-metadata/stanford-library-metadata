@@ -21,11 +21,15 @@ class ResultParser
         else
           matches.each do |match|
             row = [term]
-            @fields.each do |f|
-              if match.keys.include?(f)
-                row << match[f]
-              else
-                row << ""
+            if match.class == Array
+              row << "lookup error"
+            else
+              @fields.each do |f|
+                if match.keys.include?(f)
+                  row << match[f]
+                else
+                  row << ""
+                end
               end
             end
             outfile << row
