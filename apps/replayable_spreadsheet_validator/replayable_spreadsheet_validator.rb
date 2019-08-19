@@ -775,33 +775,27 @@ class Validator
     return headers.select {|h| h.match(pattern)}.group_by {|h| h.match(pattern)[1]}
   end
 
-  # Return a column of values with the given header
-  def get_values_by_header(header)
+  # Return a value with the given header
+  def get_value_by_header(header, row)
     return unless @header_row_terms.include?(header)
-    return @spreadsheet.column(@header_row.find_index("#{header}") + 1)
+    value = row[@header_row.find_index(header)]
+    return value
   end
 
-  # Report blank values present in a column with a given header
-  def report_blank_values_by_header(header, report_level)
+  # Report blank value in a row for a given header
+  def report_blank_value_by_header(header, row, row_index, id, report_level)
     return unless @header_row_terms.include?(header)
-    values = @spreadsheet.column(@header_row.find_index(header) + 1)
-    values.each_with_index do |v, i|
-      next if i <= @header_row_index
-      if value_is_blank_in_nonblank_row?(v, i)
-        log_error(report_level, get_druid_or_row_number(i), "Blank #{header}")
-      end
+    header_index = @header_row.find_index(header)
+    if value_is_blank_in_nonblank_row?(row[header_index], row_index)
+      log_error(report_level, id, "Blank #{header}")
     end
   end
 
-  # Report invalid values (given a list of valid ones) in a column with a given header
-  def report_invalid_values_by_header(header, valid_terms)
+  # Report invalid values (given a list of valid ones) in a row for a given header
+  def report_invalid_value_by_header(header, row, id, valid_terms)
     return unless @header_row_terms.include?(header)
-    values = get_values_by_header(header)
-    values.each_with_index do |v, i|
-      next if i <= @header_row_index
-      next if value_is_error?(v)
-      report_invalid_value(v, valid_terms, get_druid_or_row_number(i), header)
-    end
+    header_index = @header_row.find_index(header)
+    report_invalid_value(row[header_index], valid_terms, id, header)
   end
 
   # Report if a given value is not in a given termlist
@@ -811,5 +805,5 @@ class Validator
     end
   end
 
-  
+
 end
