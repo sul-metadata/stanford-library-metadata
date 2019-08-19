@@ -317,6 +317,7 @@ class Validator
     else
       validate_druid(druid)
     end
+    validate_cells_in_row(row, row_index)
   end
 
   def report_blank_row(row, row_index)
@@ -339,6 +340,54 @@ class Validator
       return true
     end
     return false
+  end
+
+  def validate_cells_in_row(row, row_index)
+    row.each_with_index do |cell, cell_index|
+      validate_cells(cell, cell_index, row_index)
+    end
+  end
+
+  def validate_cells(cell, cell_index, row_index)
+    return false if cell == nil || cell.class != String || cell.empty?
+    cell_ref = "#{get_column_ref(cell_index)}#{row_index + 1}"
+    validate_characters(cell, cell_ref)
+    identify_formula_errors(cell, cell_ref)
+    if cell_index == 1
+      identify_missing_sourceid(cell, cell_ref)
+    end
+  end
+
+  def validate_characters(cell, cell_ref)
+    if cell.match(/[\r\n]+/)
+      log_error(@error, cell_ref, "Line break in cell text")
+    elsif cell.match(/[\u0000-\u001F]/)
+      log_error(@error, cell_ref, "Control character in cell text")
+    end
+    if cell.match(/^["“”][^"]*/)
+      log_error(@warning, cell_ref, "Cell value begins with unclosed double quotation mark")
+    end
+  end
+
+  def identify_formula_errors(cell, cell_ref)
+    case cell
+    when '#N/A'
+      @formula_errors['na'] << cell_ref
+    when '#REF!'
+      @formula_errors['ref'] << cell_ref
+    when '0'
+      @formula_errors['zero'] << cell_ref
+    when '#NAME?'
+      @formula_errors['name'] << cell_ref
+    when '#VALUE?'
+      @formula_errors['value'] << cell_ref
+    end
+  end
+
+  def identify_missing_sourceid(cell, cell_ref)
+    if value_is_blank?(cell)
+      @missing_sourceids << cell_ref
+    end
   end
 
   def validate_sourceid
