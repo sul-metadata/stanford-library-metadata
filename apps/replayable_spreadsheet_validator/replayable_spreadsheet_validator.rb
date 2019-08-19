@@ -270,6 +270,18 @@ class Validator
       'dates' => get_date_headers(),
       'issuance' => select_by_pattern(@header_row_terms, 'issuance')
     }
+    sourceids = []
+    row_index = 0
+    case @extension
+    when '.csv'
+      CSV.foreach(@filename) do |row|
+        process_row(row, row_index, sourceids)
+      end
+    when '.xlsx'
+      @xlsx.each_row_streaming(pad_cells: true) do |row|
+        process_row(row, row_index, sourceids)
+      end
+    end
 
   end
 
@@ -287,6 +299,10 @@ class Validator
       end
     end
     return grouped_date_headers
+  end
+
+  def process_row(row, row_index, sourceids)
+    return
   end
 
   def validate_druid
