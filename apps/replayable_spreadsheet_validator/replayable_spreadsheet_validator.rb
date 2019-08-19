@@ -2,10 +2,13 @@ require 'roo'
 
 class Validator
 
+  attr_reader :header_row_index, :header_row_terms, :errors, :exit, :value_type_indexes, :selected_headers, :druids, :formula_errors, :report
+
   def initialize(filename)
     @filename = filename
     @template = './apps/replayable_spreadsheet_validator/modsulator_template.xml'
     @extension = File.extname(@filename)
+    @report = CSV.new(File.open('./public/rps_validator/report.csv', 'w'))
 
     @exit = false
     @value_type_indexes = {}
@@ -13,6 +16,11 @@ class Validator
     @sourceids = []
     @blank_row_index = []
     @missing_sourceids = []
+
+    ## Additional accessors for testing
+    @header_row_index = nil
+    @header_row_terms = []
+    @selected_headers = {}
 
     ## Error data collection
 
@@ -307,6 +315,9 @@ class Validator
   end
 
   def process_row(row, row_index)
+    druid = row[0]
+    @druids << druid
+    sourceids << row[1]
     # Check for blank row
     if report_blank_row(row, row_index)
       row_index += 1
