@@ -320,11 +320,9 @@ class Validator
     # Check for blank row
     if report_blank_row(row, row_index)
       row_index += 1
-      return
     end
     if row_index <= @header_row_index
       row_index += 1
-      return
     end
     id = druid
     if value_is_blank?(druid)
@@ -675,34 +673,18 @@ class Validator
   # Output error info
   # ERROR: data is invalid MODS or does not meet baseline SUL requirements
   # WARNING: data suggests an error, extra data (ex. date encoding without a date
-  #   value) may be present, or data does not meet SUL recommendations
+  # value) may be present, or data does not meet SUL recommendations
   # INFO: not necessarily an error, for user to review
   def log_error(error_type, locator, msg)
+    @errors[error_type] << [error_type, msg, locator]
     if error_type == @fail
-      write_fail_to_output(error_type, msg, locator)
-    else
-      @errors[error_type] << [error_type, msg, locator]
-    end
-  end
-
-  def report_errors
-    if @errors.values.flatten.compact == []
-      return
-    else
       write_errors_to_output
     end
   end
 
-  def write_fail_to_output(error_type, msg, locator)
-    @report = CSV.new(File.open('./public/rps_validator/report.csv', 'w'))
-    @report << ["Type", "Description", "Locator"]
-    @report << [error_type, msg, locator]
-    @report.close
-  end
-
   def write_errors_to_output
-    @report = CSV.new(File.open('./public/rps_validator/report.csv', 'w'))
     @report << ["Type", "Description", "Locator"]
+    report_error_type(@fail)
     report_error_type(@error)
     report_error_type(@warning)
     report_error_type(@info)
