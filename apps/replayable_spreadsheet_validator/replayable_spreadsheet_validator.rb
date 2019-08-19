@@ -10,6 +10,7 @@ class Validator
     @exit = false
     @value_type_indexes = {}
     @blank_row_index = []
+    @druids = []
 
     ## Error data collection
 
