@@ -131,6 +131,7 @@ class Validator
     return true if @exit == true
     validate_file_encoding
     return true if @exit == true
+    validate_file_open
     validate_headers
     return true if @exit == true
     validate_rows
