@@ -299,11 +299,23 @@ class Validator
     case @extension
     when '.csv'
       CSV.foreach(@filename) do |row|
-        process_row(row, row_index)
+        if report_blank_row(row, row_index) || row_index <= @header_row_index
+          row_index += 1
+        else
+          process_row(row, row_index)
+          row_index += 1
+        end
       end
     when '.xlsx'
       @xlsx.each_row_streaming(pad_cells: true) do |row|
-        process_row(row, row_index)
+        CSV.foreach(@filename) do |row|
+          if report_blank_row(row, row_index) || row_index <= @header_row_index
+            row_index += 1
+          else
+            process_row(row, row_index)
+            row_index += 1
+          end
+        end
       end
     end
     report_duplicate_druids
@@ -331,13 +343,6 @@ class Validator
     druid = row[0]
     @druids << druid
     @sourceids << row[1]
-    # Check for blank row
-    if report_blank_row(row, row_index)
-      row_index += 1
-    end
-    if row_index <= @header_row_index
-      row_index += 1
-    end
     id = druid
     if value_is_blank?(druid)
       id = "row #{row_index + 1}"
