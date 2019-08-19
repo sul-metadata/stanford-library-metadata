@@ -270,16 +270,16 @@ class Validator
       'dates' => get_date_headers(),
       'issuance' => select_by_pattern(@header_row_terms, 'issuance')
     }
-    sourceids = []
+    @sourceids = []
     row_index = 0
     case @extension
     when '.csv'
       CSV.foreach(@filename) do |row|
-        process_row(row, row_index, sourceids)
+        process_row(row, row_index)
       end
     when '.xlsx'
       @xlsx.each_row_streaming(pad_cells: true) do |row|
-        process_row(row, row_index, sourceids)
+        process_row(row, row_index)
       end
     end
 
@@ -301,8 +301,21 @@ class Validator
     return grouped_date_headers
   end
 
-  def process_row(row, row_index, sourceids)
-    return
+  def process_row(row, row_index)
+    # Check for blank row
+    if report_blank_row(row, row_index)
+      row_index += 1
+      return
+    end
+  end
+
+  def report_blank_row(row, row_index)
+    if row.compact.join("").match(/^\s*$/)
+      log_error(@error, "row #{row_index + 1}", "Blank row")
+      @blank_row_index << row_index
+      return true
+    end
+    return false
   end
 
   def validate_druid
