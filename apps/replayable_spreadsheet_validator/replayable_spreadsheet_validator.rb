@@ -164,6 +164,24 @@ class Validator
     end
   end
 
+  def validate_file_open
+    # Check if modsulator can open file
+    @xlsx = nil
+    begin
+      if @extension == '.xlsx'
+        @xlsx = Roo::Excelx.new(@filename)
+      else
+        CSV.foreach(@filename) do |row|
+          break
+        end
+      end
+    rescue
+      log_error(@fail, "file", "Could not open file, check for bad character encoding")
+      @exit = true
+      return
+    end
+  end
+
   def validate_headers
     # Try to identify header row by first two values and fail if not identified
     @header_row = []
