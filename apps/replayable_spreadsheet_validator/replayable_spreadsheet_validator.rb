@@ -29,6 +29,14 @@ class Validator
       @info => []
     }
 
+    @formula_errors = {
+      'na' => [],
+      'ref' => [],
+      'zero' => [],
+      'name' => [],
+      'value' => []
+    }
+
     ## Term lists
 
     # typeOfResource / tyX:typeOfResource
@@ -140,6 +148,7 @@ class Validator
     validate_headers
     return true if @exit == true
     validate_rows
+    report_formula_errors
     validate_title
     validate_name
     validate_type_of_resource
@@ -411,7 +420,20 @@ class Validator
     if has_duplicates?(@sourceids.compact)
       log_error(@info, get_duplicates(@sourceids), "Duplicate source IDs")
     end
+  end
 
+  def report_formula_errors
+    formula_error_messages = {
+      'na' => ['#N/A error in cell', @error],
+      'ref' => ['#REF! error in cell', @error],
+      'zero' => ['Cell value is 0', @warning],
+      'name' => ['#NAME? error in cell', @error],
+      'value' => ['#VALUE? error in cell', @error]
+    }
+    @formula_errors.each do |error_type, errors|
+      next if value_is_blank?(errors)
+      log_error(formula_error_messages[1], errors.join(', '), formula_error_messages[0])
+    end
   end
 
   def validate_title
