@@ -238,6 +238,11 @@ class Validator
       log_error(@error, "ti1:title", "Missing required column")
     end
 
+    # Report absence of type of resource column
+    unless @header_row_terms.include?('ty1:typeOfResource')
+      log_error(@warning, "ty1:typeOfResource", "Recommended column missing")
+    end
+
   end
 
   def validate_rows
