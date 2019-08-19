@@ -10,6 +10,13 @@ class Validator
     @exit = false
 
     ## Error data collection
+
+    # Error type labels for output
+    @fail = "FAIL"
+    @error = "ERROR"
+    @warning = "WARNING"
+    @info = "INFO"
+
     @errors = {
       @fail => [],
       @error => [],
@@ -114,13 +121,6 @@ class Validator
       '#VALUE?',
       '0'
     ]
-
-    # Error type labels for output
-    @fail = "FAIL"
-    @error = "ERROR"
-    @warning = "WARNING"
-    @info = "INFO"
-
 
   end
 
