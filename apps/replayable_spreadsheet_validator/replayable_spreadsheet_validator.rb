@@ -119,6 +119,21 @@ class Validator
       'temper'
     ]
 
+    @date_value_types = {
+      'date1' => '',
+      'key_date' => '',
+      'encoding' => '',
+      'date1_qualifier' => '',
+      'date1_point' => '',
+      'date2' => '',
+      'date2_qualifier' => '',
+      'date2_point' => '',
+      'date3' => '',
+      'date3_key_date' => '',
+      'date3_encoding' => '',
+      'date3_qualifier' => ''
+    }
+
     # originInfo/issuance
     @issuance_terms = [
       'continuing',
