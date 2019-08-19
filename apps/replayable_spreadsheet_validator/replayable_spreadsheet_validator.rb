@@ -7,6 +7,8 @@ class Validator
     @filename = filename
     @template = './apps/replayable_spreadsheet_validator/modsulator_template.xml'
 
+    @exit = false
+
     ## Term lists
 
     # typeOfResource / tyX:typeOfResource
@@ -116,7 +118,6 @@ class Validator
 
 
   def validate_spreadsheet
-    @exit = false
     # Check for allowed file extensions and fail if invalid
     validate_file_extension
     return true if @exit == true
