@@ -185,25 +185,38 @@ class Validator
   def validate_headers
     # Try to identify header row by first two values and fail if not identified
     @header_row = []
-    begin
-      @spreadsheet.each_with_index do |row, i|
+    i = 0
+    if @extension == '.csv'
+      CSV.foreach(@filename) do |row|
         if [row[0], row[1]] == ['druid', 'sourceId']
           @header_row = row
-          @header_row_index = @spreadsheet.find_index(row)
+          @header_row_index = i
           break
-        elsif i + 1 == @spreadsheet.last_row
-          log_error(@fail, "row 1", "Invalid header row, must begin with druid & sourceId (case-sensitive)")
+        elsif i == 9
+          log_error(@fail, "headers", "Invalid header row, must begin with druid & sourceId (case-sensitive) and appear in first ten lines of file")
           @exit = true
+          return
+        else
+          i += 1
         end
       end
-    rescue
-      log_error(@fail, "file", "Invalid character; save the file as CSV, check for line break characters inside cell values, and retry")
-      @exit = true
+    else
+      i = 0
+      @xlsx.each_row_streaming(pad_cells: true, max_rows: 10) do |row|
+        if [row[0], row[1]] == ['druid', 'sourceId']
+          @header_row = row
+          @header_row_index = i
+          break
+        elsif i == 9
+          log_error(@fail, "headers", "Invalid header row, must begin with druid & sourceId (case-sensitive) and appear in first ten lines of file")
+          @exit = true
+          return
+        else
+          i += 1
+        end
+      end
     end
     @header_row_terms = @header_row.compact
-
-
-
 
     # Report duplicate header codes
     if has_duplicates?(@header_row_terms)
