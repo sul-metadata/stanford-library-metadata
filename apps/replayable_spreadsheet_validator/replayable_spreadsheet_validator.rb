@@ -250,12 +250,14 @@ class Validator
 
   def validate_rows
     # Report blank rows, control characters, open quotation marks, and cell errors
+    @selected_headers = {
+      'title_type' => select_by_pattern(@header_row_terms, /^ti\d+:type$/),
+      'name_type' => select_by_pattern(@header_row_terms, /^na\d+:type$/),
+      'type_of_resource' => select_by_pattern(@header_row_terms, /^ty\d+:/) - ["ty1:manuscript"],
+      'dates' => get_date_headers(),
+      'issuance' => select_by_pattern(@header_row_terms, 'issuance')
+    }
     @blank_row_index = []
-    na_error = []
-    ref_error = []
-    zero_error = []
-    name_error = []
-    value_error = []
     @spreadsheet.each_with_index do |row, i|
       if row.compact.join("").match(/^\s*$/)
         log_error(@error, "row #{i+1}", "Blank row")
