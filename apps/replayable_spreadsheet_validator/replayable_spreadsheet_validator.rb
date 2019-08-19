@@ -718,11 +718,6 @@ class Validator
     return true if !value_is_blank?(value)
   end
 
-  # Identify cell errors
-  def value_is_error?(value)
-    return true if @cell_errors.include?(value)
-  end
-
   # Identify non-cell-errors
   def value_is_not_error?(value)
     return true unless @cell_errors.include?(value)
@@ -816,27 +811,5 @@ class Validator
     end
   end
 
-  # Check that date syntax matches specified encoding
-  # NOT IN USE
-  def check_date_encoding(date_value, encoding)
-    date = date_value.to_s.strip
-    case encoding
-    when 'w3cdtf'
-      return true if date.match(/^[\d]{4}$/)
-      return true if date.match(/^[\d]{4}-[\d]{2}$/)
-      return true if date.match(/^[\d]{4}-[\d]{2}-[\d]{2}$/)
-    when 'edtf'
-      return true if date.match(/^-?[\d]{4}$/)
-    when 'marc'
-      return true if date.match(/^[\du]{4}$/)
-      return true if date.match(/^[\d]{1,3}$/)
-      return true if date.match(/^[\d]{6}$/)
-    end
-    if ['w3cdtf', 'edtf', 'marc'].include?(encoding)
-      return FALSE
-    else
-      return TRUE
-    end
-  end
-
+  
 end
