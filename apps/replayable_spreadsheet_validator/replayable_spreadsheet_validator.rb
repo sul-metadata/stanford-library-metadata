@@ -9,8 +9,10 @@ class Validator
 
     @exit = false
     @value_type_indexes = {}
-    @blank_row_index = []
     @druids = []
+    @sourceids = []
+    @blank_row_index = []
+    @missing_sourceids = []
 
     ## Error data collection
 
@@ -138,7 +140,6 @@ class Validator
     validate_headers
     return true if @exit == true
     validate_rows
-    validate_sourceid
     validate_title
     validate_name
     validate_type_of_resource
@@ -281,7 +282,9 @@ class Validator
         process_row(row, row_index)
       end
     end
-
+    report_duplicate_druids
+    report_duplicate_sourceids
+    report_missing_sourceids
   end
 
   def get_date_headers
@@ -318,6 +321,7 @@ class Validator
       validate_druid(druid)
     end
     validate_cells_in_row(row, row_index)
+    row_index += 1
   end
 
   def report_blank_row(row, row_index)
@@ -390,22 +394,24 @@ class Validator
     end
   end
 
-  def validate_sourceid
-    # Get source IDs from second column
-    source_ids = @spreadsheet.column(2)
-
-    # Report duplicate source IDs
-    if has_duplicates?(source_ids.compact)
-      log_error(@info, get_duplicates(source_ids), "Duplicate source IDs")
+  def report_duplicate_druids
+    # Report duplicate druids
+    if has_duplicates?(@druids)
+      log_error(@error, get_duplicates(@druids), "Duplicate druids")
     end
+  end
 
+  def report_missing_sourceids
     # Report empty cells in source ID column
-    source_ids.each_with_index do |source_id, i|
-      next if i <= @header_row_index
-      if value_is_blank_in_nonblank_row?(source_id, i)
-        log_error(@info, get_druid_or_row_number(i), "Blank source ID")
-      end
+    log_error(@info, @missing_sourceids.join(", "), "Blank source ID")
+  end
+
+  def report_duplicate_sourceids
+    # Report duplicate source IDs
+    if has_duplicates?(@sourceids.compact)
+      log_error(@info, get_duplicates(@sourceids), "Duplicate source IDs")
     end
+
   end
 
   def validate_title
