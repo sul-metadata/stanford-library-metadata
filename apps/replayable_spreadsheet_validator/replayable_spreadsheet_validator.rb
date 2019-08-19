@@ -2,8 +2,7 @@ require 'roo'
 
 class Validator
 
-  def initialize(file, filename)
-    @file = file
+  def initialize(filename)
     @filename = filename
     @template = './apps/replayable_spreadsheet_validator/modsulator_template.xml'
     @extension = File.extname(@filename)
