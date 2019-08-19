@@ -233,13 +233,6 @@ class Validator
       log_error(@info, headers_not_in_template.uniq.join(", "), "Header not in XML template")
     end
 
-    # Get column letter reference from index
-    def get_column_ref(i)
-      name = 'A'
-      i.times { name.succ! }
-      return name
-    end
-
     # Report data in a column that lacks a value in the header row
     @header_row.each_with_index do |h, i|
       if value_is_blank?(h) && !@spreadsheet.column(i+1)[@header_row_index+1..-1].compact.join("").match(/^\s*$/)
@@ -707,6 +700,13 @@ class Validator
     else
       return @druids[index]
     end
+  end
+
+  # Get column letter reference from index
+  def get_column_ref(i)
+    name = 'A'
+    i.times { name.succ! }
+    return name
   end
 
   # Return array of headers that match given pattern
