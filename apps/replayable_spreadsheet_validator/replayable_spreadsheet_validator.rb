@@ -9,9 +9,6 @@ class Validator
 
     ## Term lists
 
-    # Spreadsheet value errors
-    @cell_errors = ['#N/A', '#REF!', '#NAME?', '#VALUE?' '0']
-
     # typeOfResource / tyX:typeOfResource
     @type_of_resource_terms = [
       'text',
@@ -97,6 +94,15 @@ class Validator
     # For attributes whose only valid value is "yes"
     @yes_terms = [
       'yes'
+    ]
+
+    # Spreadsheet value errors
+    @cell_errors = [
+      '#N/A',
+      '#REF!',
+      '#NAME?',
+      '#VALUE?',
+      '0'
     ]
 
     # Error type labels for output
