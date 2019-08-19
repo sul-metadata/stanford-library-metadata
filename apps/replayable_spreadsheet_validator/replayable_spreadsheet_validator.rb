@@ -149,7 +149,6 @@ class Validator
     return true if @exit == true
     validate_rows
     report_formula_errors
-    validate_location
     report_errors
   end
 
@@ -329,8 +328,9 @@ class Validator
     validate_name(row, id, @selected_headers['name_type'])
     validate_type_of_resource(row, row_index, id, @selected_headers['type_of_resource'])
     validate_date(row, id, @selected_headers['dates'])
-
+    validate_issuance(row, id, @selected_headers['issuance'])
     validate_subject(row, id)
+    validate_location(row, row_index, id)
     row_index += 1
   end
 
@@ -627,6 +627,13 @@ class Validator
     end
   end
 
+  def validate_issuance(row, id, headers)
+    # Report invalid issuance term
+    headers.each do |issuance|
+      report_invalid_value_by_header(issuance, row, id, @issuance_terms)
+    end
+  end
+
   def get_subject_headers
     subject_headers = collect_by_pattern(@header_row_terms, /^(su\d+:p[1-5]:)/).merge(collect_by_pattern(@header_row_terms, /^(sn\d+:p[1-5]:)/))
     return subject_headers
@@ -650,9 +657,9 @@ class Validator
     end
   end
 
-  def validate_location
+  def validate_location(row, row_index, id)
     # Report missing purl values
-    report_blank_values_by_header('lo:purl', @warning)
+    report_blank_value_by_header('lo:purl', row, row_index, id, @warning)
   end
 
   # Output error info
