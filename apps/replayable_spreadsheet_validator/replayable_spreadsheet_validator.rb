@@ -149,7 +149,6 @@ class Validator
     return true if @exit == true
     validate_rows
     report_formula_errors
-    validate_type_of_resource
     validate_date_and_origin_info
     validate_subject
     validate_location
@@ -330,6 +329,7 @@ class Validator
     validate_cells_in_row(row, row_index)
     validate_title(row, row_index, id, @selected_headers['title_type'])
     validate_name(row, id, @selected_headers['name_type'])
+    validate_type_of_resource(row, row_index, id, @selected_headers['type_of_resource'])
     row_index += 1
   end
 
@@ -454,23 +454,16 @@ class Validator
     report_invalid_value_by_header('na1:usage', row, id, ['primary'])
   end
 
-  def validate_type_of_resource
+  def validate_type_of_resource(row, row_index, id, headers)
     # Report missing (required) or invalid type of resource value
-    type_of_resource_headers = select_by_pattern(@header_row_terms, /^ty\d+:/)
-    type_of_resource_headers.delete("ty1:manuscript")
-    if type_of_resource_headers.size == 0
-      log_error(@warning, "ty1:typeOfResource", "Recommended column missing")
-    else
-      type_of_resource_headers.each do |h|
-        if h == "ty1:typeOfResource"
-          report_blank_values_by_header(h, @warning)
-        end
-        report_invalid_values_by_header(h, @type_of_resource_terms)
+    headers.each do |h|
+      if h == "ty1:typeOfResource"
+        report_blank_value_by_header(h, row, row_index, id, @warning)
       end
+      report_invalid_value_by_header(h, row, id, @type_of_resource_terms)
     end
-
     # Report invalid values in ty1:manuscript
-    report_invalid_values_by_header('ty1:manuscript', @yes_terms)
+    report_invalid_value_by_header('ty1:manuscript', row, id, @yes_terms)
   end
 
   def validate_date_and_origin_info
