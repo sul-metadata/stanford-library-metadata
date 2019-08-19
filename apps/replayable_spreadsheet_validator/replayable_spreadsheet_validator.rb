@@ -172,7 +172,6 @@ class Validator
     return true if @exit == true
     validate_rows
     report_formula_errors
-    report_errors
   end
 
   def validate_file_extension
