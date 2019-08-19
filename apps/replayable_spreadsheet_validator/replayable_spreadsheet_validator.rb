@@ -8,6 +8,7 @@ class Validator
     @extension = File.extname(@filename)
 
     @exit = false
+    @value_type_indexes = {}
 
     ## Error data collection
 
@@ -314,6 +315,22 @@ class Validator
     unless value_error.empty?
       log_error(@error, value_error.join(", "), "#VALUE? error in cell")
     end
+  end
+
+  def get_date_headers
+    grouped_date_headers = {}
+    # Get date headers present in spreadsheet and group by prefix(es)
+    all_date_headers = collect_by_pattern(@header_row_terms, /^(o?r?[23]?:?dt\d?:)/)
+    # Iterate over the set of headers for each prefix
+    all_date_headers.each do |prefix, originInfo_instance_headers|
+      grouped_date_headers["#{prefix}"] = {}
+      # Iterate over the set of date headers for each date type (dateCreated, etc.)
+      @date_elements.each do |date_group_term|
+        # Get date headers actually in spreadsheet for this group
+        grouped_date_headers["#{prefix}"]["#{date_group_term}"] = select_by_pattern(originInfo_instance_headers, /#{date_group_term}/)
+      end
+    end
+    return grouped_date_headers
   end
 
   def validate_druid
