@@ -149,7 +149,6 @@ class Validator
     return true if @exit == true
     validate_rows
     report_formula_errors
-    validate_name
     validate_type_of_resource
     validate_date_and_origin_info
     validate_subject
@@ -330,6 +329,7 @@ class Validator
     end
     validate_cells_in_row(row, row_index)
     validate_title(row, row_index, id, @selected_headers['title_type'])
+    validate_name(row, id, @selected_headers['name_type'])
     row_index += 1
   end
 
@@ -445,15 +445,13 @@ class Validator
     end
   end
 
-  def validate_name
+  def validate_name(row, id, type_headers)
     # Report invalid name type
-    name_type_headers = select_by_pattern(@header_row_terms, /^na\d+:type$/)
-    name_type_headers.each do |h|
-      report_invalid_values_by_header(h, @name_type_terms)
+    type_headers.each do |h|
+      report_invalid_value_by_header(h, row, id, @name_type_terms)
     end
-
     # Report invalid usage value ("primary" is only value allowed)
-    report_invalid_values_by_header('na1:usage', ['primary'])
+    report_invalid_value_by_header('na1:usage', row, id, ['primary'])
   end
 
   def validate_type_of_resource
