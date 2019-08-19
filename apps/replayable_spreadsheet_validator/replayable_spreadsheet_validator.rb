@@ -9,6 +9,14 @@ class Validator
 
     @exit = false
 
+    ## Error data collection
+    @errors = {
+      @fail => [],
+      @error => [],
+      @warning => [],
+      @info => []
+    }
+
     ## Term lists
 
     # typeOfResource / tyX:typeOfResource
@@ -121,7 +129,6 @@ class Validator
     # Check for allowed file extensions and fail if invalid
     validate_file_extension
     return true if @exit == true
-    @errors = {@error => [], @warning => [], @info => []}
     validate_encoding
     return true if @exit == true
     validate_headers
