@@ -281,7 +281,6 @@ class Validator
       'dates' => get_date_headers(),
       'issuance' => select_by_pattern(@header_row_terms, 'issuance')
     }
-    @sourceids = []
     row_index = 0
     case @extension
     when '.csv'
@@ -317,7 +316,7 @@ class Validator
   def process_row(row, row_index)
     druid = row[0]
     @druids << druid
-    sourceids << row[1]
+    @sourceids << row[1]
     # Check for blank row
     if report_blank_row(row, row_index)
       row_index += 1
