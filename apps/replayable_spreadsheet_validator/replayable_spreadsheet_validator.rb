@@ -9,6 +9,7 @@ class Validator
 
     @exit = false
     @value_type_indexes = {}
+    @blank_row_index = []
 
     ## Error data collection
 
@@ -268,7 +269,6 @@ class Validator
       'dates' => get_date_headers(),
       'issuance' => select_by_pattern(@header_row_terms, 'issuance')
     }
-    @blank_row_index = []
     @spreadsheet.each_with_index do |row, i|
       if row.compact.join("").match(/^\s*$/)
         log_error(@error, "row #{i+1}", "Blank row")
