@@ -269,52 +269,7 @@ class Validator
       'dates' => get_date_headers(),
       'issuance' => select_by_pattern(@header_row_terms, 'issuance')
     }
-    @spreadsheet.each_with_index do |row, i|
-      if row.compact.join("").match(/^\s*$/)
-        log_error(@error, "row #{i+1}", "Blank row")
-        @blank_row_index << i
-      else
-        row.each_with_index do |cell, j|
-          next if cell == nil || cell.class != String
-          cell_ref = "#{get_column_ref(j)}#{i+1}"
-          if cell.match(/[\r\n]+/)
-            log_error(@error, cell_ref, "Line break in cell text")
-          elsif cell.match(/[\u0000-\u001F]/)
-            log_error(@error, cell_ref, "Control character in cell text")
-          end
-          if cell.match(/^["“”][^"]*/)
-            log_error(@warning, cell_ref, "Cell value begins with unclosed double quotation mark")
-          end
-          case cell
-          when '#N/A'
-            na_error << cell_ref
-          when '#REF!'
-            ref_error << cell_ref
-          when '0'
-            zero_error << cell_ref
-          when '#NAME?'
-            name_error << cell_ref
-          when '#VALUE?'
-            value_error << cell_ref
-          end
-        end
-      end
-    end
-    unless na_error.empty?
-      log_error(@error, na_error.join(", "), "#N/A error in cell")
-    end
-    unless ref_error.empty?
-      log_error(@error, ref_error.join(", "), "#REF! error in cell")
-    end
-    unless zero_error.empty?
-      log_error(@warning, zero_error.join(", "), "Cell value is 0")
-    end
-    unless name_error.empty?
-      log_error(@error, name_error.join(", "), "#NAME? error in cell")
-    end
-    unless value_error.empty?
-      log_error(@error, value_error.join(", "), "#VALUE? error in cell")
-    end
+
   end
 
   def get_date_headers
