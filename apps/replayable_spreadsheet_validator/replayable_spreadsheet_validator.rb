@@ -149,7 +149,6 @@ class Validator
     return true if @exit == true
     validate_rows
     report_formula_errors
-    validate_title
     validate_name
     validate_type_of_resource
     validate_date_and_origin_info
@@ -330,6 +329,7 @@ class Validator
       validate_druid(druid)
     end
     validate_cells_in_row(row, row_index)
+    validate_title(row, row_index, id, @selected_headers['title_type'])
     row_index += 1
   end
 
@@ -436,16 +436,12 @@ class Validator
     end
   end
 
-  def validate_title
+  def validate_title(row, row_index, id, type_headers)
     # Report missing title in first title column
-     if @header_row_terms.include?("ti1:title")
-      report_blank_values_by_header("ti1:title", @error)
-    end
-
+    report_blank_value_by_header('ti1:title', row, row_index, id, @error)
     # Report invalid title type
-    title_type_headers = select_by_pattern(@header_row_terms, /^ti\d+:type$/)
-    title_type_headers.each do |h|
-      report_invalid_values_by_header(h, @title_type_terms)
+    type_headers.each do |h|
+      report_invalid_value_by_header(h, row, id, @title_type_terms)
     end
   end
 
