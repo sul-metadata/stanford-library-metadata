@@ -233,12 +233,6 @@ class Validator
       log_error(@info, headers_not_in_template.uniq.join(", "), "Header not in XML template")
     end
 
-    # Report data in a column that lacks a value in the header row
-    @header_row.each_with_index do |h, i|
-      if value_is_blank?(h) && !@spreadsheet.column(i+1)[@header_row_index+1..-1].compact.join("").match(/^\s*$/)
-        log_error(@info, "column #{get_column_ref(i)}", "Contains data without headers")
-      end
-    end
   end
 
   def validate_rows
