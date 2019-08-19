@@ -307,6 +307,10 @@ class Validator
       row_index += 1
       return
     end
+    if row_index <= @header_row_index
+      row_index += 1
+      return
+    end
   end
 
   def report_blank_row(row, row_index)
