@@ -6,6 +6,7 @@ class Validator
     @file = file
     @filename = filename
     @template = './apps/replayable_spreadsheet_validator/modsulator_template.xml'
+    @extension = File.extname(@filename)
 
     @exit = false
 
@@ -129,7 +130,7 @@ class Validator
     # Check for allowed file extensions and fail if invalid
     validate_file_extension
     return true if @exit == true
-    validate_encoding
+    validate_file_encoding
     return true if @exit == true
     validate_headers
     return true if @exit == true
@@ -152,14 +153,13 @@ class Validator
     end
   end
 
-  def validate_encoding
-    # Check if encoding is UTF-8 (non-binary/CSV only)
+  def validate_file_encoding
+    # Check if file has acceptable encoding (UTF-8 or ASCII, non-binary/CSV only)
     enc_data = `file -i "#{@filename}"`
-    enc_data.match(/charset=.*$/)[0].inspect
     encoding = enc_data.match(/charset=.*$/)[0]
     return if encoding.strip == 'charset=binary'
-    if encoding.strip != 'charset=utf-8'
-      log_error(@fail, "file", "Invalid encoding: File #{encoding} instead of UTF-8")
+    unless encoding.strip == 'charset=utf-8' || encoding.strip == 'charset=us-ascii'
+      log_error(@fail, "file", "Invalid encoding: File #{encoding} instead of UTF-8 or ASCII")
       @exit = true
     end
   end
