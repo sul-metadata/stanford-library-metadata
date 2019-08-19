@@ -138,7 +138,6 @@ class Validator
     validate_headers
     return true if @exit == true
     validate_rows
-    validate_druid
     validate_sourceid
     validate_title
     validate_name
@@ -311,6 +310,13 @@ class Validator
       row_index += 1
       return
     end
+    id = druid
+    if value_is_blank?(druid)
+      id = "row #{row_index + 1}"
+      log_error(@error, id, "Missing druid")
+    else
+      validate_druid(druid)
+    end
   end
 
   def report_blank_row(row, row_index)
@@ -322,24 +328,17 @@ class Validator
     return false
   end
 
-  def validate_druid
-    # Get druids from first column
-    @druids = @spreadsheet.column(1)
-
-    # Report duplicate druids
-    if has_duplicates?(@druids)
-      log_error(@error, get_duplicates(@druids), "Duplicate druids")
+  def validate_druid(druid)
+    unless druid_is_valid_pattern?(druid)
+      log_error(@error, druid, "Invalid druid")
     end
+  end
 
-    # Report missing and invalid values in druid column
-    @druids.each_with_index do |druid, i|
-      next if i <= @header_row_index
-      if value_is_blank_in_nonblank_row?(druid, i)
-        log_error(@error, "row #{i+1}", "Blank druid")
-      elsif !value_is_blank?(druid) && !druid.strip.match(/^[a-z][a-z][0-9][0-9][0-9][a-z][a-z][0-9][0-9][0-9][0-9]$/)
-        log_error(@error, druid, "Invalid druid")
-      end
+  def druid_is_valid_pattern?(druid)
+    if druid.strip.match(/^[a-z][a-z][0-9][0-9][0-9][a-z][a-z][0-9][0-9][0-9][0-9]$/)
+      return true
     end
+    return false
   end
 
   def validate_sourceid
