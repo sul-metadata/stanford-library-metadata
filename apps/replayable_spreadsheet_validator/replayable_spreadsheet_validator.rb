@@ -149,8 +149,6 @@ class Validator
     return true if @exit == true
     validate_rows
     report_formula_errors
-    validate_date_and_origin_info
-    validate_subject
     validate_location
     report_errors
   end
@@ -330,6 +328,9 @@ class Validator
     validate_title(row, row_index, id, @selected_headers['title_type'])
     validate_name(row, id, @selected_headers['name_type'])
     validate_type_of_resource(row, row_index, id, @selected_headers['type_of_resource'])
+    validate_date(row, id, @selected_headers['dates'])
+
+    validate_subject(row, id)
     row_index += 1
   end
 
@@ -466,170 +467,163 @@ class Validator
     report_invalid_value_by_header('ty1:manuscript', row, id, @yes_terms)
   end
 
-  def validate_date_and_origin_info
-    # Get date headers present in spreadsheet and group by prefix(es)
-    all_date_headers = collect_by_pattern(@header_row_terms, /^(o?r?[23]?:?dt\d?:)/)
-    key_dates = {}
-    # Iterate over the set of headers for each prefix
-    all_date_headers.each do |prefix, originInfo_instance_headers|
-      # Iterate over the set of date headers for each date type (dateCreated, etc.)
-      @date_elements.each do |date_group_term|
-        # Get date headers actually in spreadsheet for this group
-        date_group_headers = select_by_pattern(originInfo_instance_headers, /#{date_group_term}/)
-        # Skip to next if date type for this iteration is not in spreadsheet
-        next if value_is_blank?(date_group_headers)
-        # Base of date term (dateCreated, etc.) and suffixes for date headers (keyDate, etc.)
-        date_base, date1, key_date, encoding, date1_qualifier, date1_point, date2, date2_qualifier, date2_point, date3, date3_key_date, date3_encoding, date3_qualifier = Array.new(13, [])
-        # Identify values under each possible header for given date type if header is present
-        current_headers = {}
-        date_group_headers.each do |h|
-          date_base = "#{prefix}#{date_group_term}"
-          # Single date or start of range (dateCreated, etc.)
-          if h == date_base
-            date1 = get_values_by_header(h)
-            current_headers['date1'] = h
-          else
-            # Get values by header suffix
-            h_uniq = h.gsub(date_base,"")
-            case h_uniq
-            when "KeyDate"
-              key_date = get_values_by_header(h)
-              current_headers['key_date'] = h
-            when "Encoding"
-              encoding = get_values_by_header(h)
-              current_headers['encoding'] = h
-            when "Qualifier"
-              date1_qualifier = get_values_by_header(h)
-              current_headers['date1_qualifier'] = h
-             when "Point"
-              date1_point = get_values_by_header(h)
-              current_headers['date1_point'] = h
-            when "2"
-              date2 = get_values_by_header(h)
-              current_headers['date2'] = h
-            when "2Qualifier"
-              date2_qualifier = get_values_by_header(h)
-              current_headers['date2_qualifier'] = h
-            when "2Point"
-              date2_point = get_values_by_header(h)
-              current_headers['date2_point'] = h
-            when "3"
-              date3 = get_values_by_header(h)
-              current_headers['date3'] = h
-            when "3KeyDate"
-              date3_key_date = get_values_by_header(h)
-              current_headers['date3_key_date'] = h
-            when "3Encoding"
-              date3_encoding = get_values_by_header(h)
-              current_headers['date3_encoding'] = h
-            when "3Qualifier"
-              date3_qualifier = get_values_by_header(h)
-              current_headers['date3_qualifier'] = h
-            end
-          end
+  def validate_date(row, id, grouped_date_headers)
+    key_dates = []
+    grouped_date_headers.each do |prefix, date_groups|
+      # prefix = dt, or2, or3
+      # Skip to next if date type for this iteration is not in spreadsheet
+      next if value_is_blank?(date_groups)
+      # Base of date term (dateCreated, etc.) and suffixes for date headers (keyDate, etc.)
+      # Identify values under each possible header for given date type if header is present
+      date_groups.each do |date_group_term, date_group_headers|
+        current_headers, current_values = get_current_date_headers_and_values(prefix, date_group_term, date_group_headers, row)
+        report_invalid_date_values(current_headers, current_values, id)
+        report_missing_date_point_values(current_headers, current_values, id)
+        report_unnecessary_date_attributes(current_headers, current_values, id)
+        report_invalid_date_encoding(current_headers, current_values, id)
+        # Get key dates for comparison across date types
+        if value_is_not_blank?(current_values['date1']) || value_is_not_blank?(current_values['date2'])
+          key_dates << current_values['key_date']
         end
-
-        # Report invalid values for each field in this date type
-        date1.each_index do |i|
-          next if i <= @header_row_index
-          id = get_druid_or_row_number(i)
-          report_invalid_value(key_date[i], @yes_terms, id, current_headers['key_date'])
-          report_invalid_value(date3_key_date[i], @yes_terms, id, current_headers['date3_key_date'])
-          report_invalid_value(date1_qualifier[i], @date_qualifier_terms, id, current_headers['date1_qualifier'])
-          report_invalid_value(date2_qualifier[i], @date_qualifier_terms, id, current_headers['date2_qualifier'])
-          report_invalid_value(date3_qualifier[i], @date_qualifier_terms, id, current_headers['date3_qualifier'])
-          report_invalid_value(date1_point[i], @date_point_terms, id, current_headers['date1_point'])
-          report_invalid_value(date2_point[i], @date_point_terms, id, current_headers['date2_point'])
-          report_invalid_value(encoding[i], @date_encoding_terms, id, current_headers['encoding'])
-          report_invalid_value(date3_encoding[i], @date_encoding_terms, id, current_headers['date3_encoding'])
-          # Report missing date point values if two dates are present (dateCreated & dateCreated2, etc.)
-          if value_is_not_blank?(date1[i]) && value_is_not_blank?(date2[i])
-            if value_is_blank?(date1_point[i])
-              log_error(@warning, id, "Possible date range missing #{current_headers['date1_point']}")
-            end
-            if value_is_blank?(date2_point[i])
-              log_error(@warning, id, "Possible date range missing #{current_headers['date2_point']}")
-            end
-          end
-          # Report attribute values without an associated date value
-          if value_is_blank?(date1[i])
-            if value_is_not_blank?(key_date[i])
-              log_error(@warning, id, "Unnecessary #{current_headers['key_date']} value for blank #{current_headers['date1']}")
-            end
-            if value_is_not_blank?(encoding[i]) && value_is_blank?(date2[i])
-              log_error(@warning, id, "Unnecessary #{current_headers['encoding']} value for blank #{current_headers['date1']}")
-            end
-            if value_is_not_blank?(date1_qualifier[i])
-              log_error(@warning, id, "Unnecessary #{current_headers['date1_qualifier']} value for blank #{current_headers['date1']}")
-            end
-            if value_is_not_blank?(date1_point[i])
-              log_error(@warning, id, "Unnecessary #{current_headers['date1_point']} value for blank #{current_headers['date1']}")
-            end
-          end
-          if value_is_blank?(date2[i])
-            if value_is_not_blank?(date2_qualifier[i])
-              log_error(@warning, id, "Unnecessary #{current_headers['date2_qualifier']} value for blank #{current_headers['date2']}")
-            end
-            if value_is_not_blank?(date2_point[i])
-              log_error(@warning, id, "Unnecessary #{current_headers['date2_point']} value for blank #{current_headers['date2']}")
-            end
-          end
-          if value_is_blank?(date3[i])
-            if value_is_not_blank?(date3_key_date[i])
-              log_error(@warning, id, "Unnecessary #{current_headers['date3_key_date']} value for blank #{current_headers['date3']}")
-            end
-            if value_is_not_blank?(date3_encoding[i])
-              log_error(@warning, id, "Unnecessary #{current_headers['date3_encoding']} value for blank #{current_headers['date3']}")
-            end
-            if value_is_not_blank?(date3_qualifier[i])
-              log_error(@warning, id, "Unnecessary #{current_headers['date3_qualifier']} value for blank #{current_headers['date3']}")
-            end
-          end
-          # Report dates declared w3cdtf but invalid syntax
-          if value_is_not_blank?(date1[i]) && encoding[i] == 'w3cdtf' && /^\d\d\d\d$|^\d\d\d\d-\d\d$|^\d\d\d\d-\d\d-\d\d$/.match(date1[i].to_s) == nil
-            log_error(@error, id, "Date #{date1[i]} in #{current_headers['date1']} does not match stated #{encoding[i]} encoding")
-          end
-          if value_is_not_blank?(date2[i]) && encoding[i] == 'w3cdtf' && /^\d\d\d\d$|^\d\d\d\d-\d\d$|^\d\d\d\d-\d\d-\d\d$/.match(date2[i].to_s) == nil
-            log_error(@error, id, "Date #{date2[i]} in #{current_headers['date2']} does not match stated #{encoding[i]} encoding")
-          end
-          if value_is_not_blank?(date3[i]) && date3_encoding[i] == 'w3cdtf' && /^\d\d\d\d$|^\d\d\d\d-\d\d$|^\d\d\d\d-\d\d-\d\d$/.match(date3[i].to_s) == nil
-            log_error(@error, id, "Date #{date3[i]} in #{current_headers['date3']} does not match stated #{date3_encoding[i]} encoding")
-          end
-          # Get key dates for comparison across date types
-          if value_is_not_blank?(date1[i]) || value_is_not_blank?(date2[i])
-            if key_dates.keys.include?(i)
-              key_dates[i] << key_date[i]
-            else
-              key_dates[i] = [key_date[i]]
-            end
-          end
-          if value_is_not_blank?(date3[i])
-            if key_dates.keys.include?(i)
-              key_dates[i] << date3_key_date[i]
-            else
-              key_dates[i] = [date3_key_date[i]]
-            end
-          end
+        if value_is_not_blank?(current_values['date3'])
+          key_dates << current_values['date3_key_date']
         end
       end
     end
-
     # Report if key date not declared or declared multiple times
-    key_dates.each do |i, d|
-      valid_values = d.select {|x| x == "yes"}
-      if valid_values.size > 1
-        log_error(@error, get_druid_or_row_number(i), "Multiple key dates declared")
-      elsif valid_values.size == 0
-        log_error(@warning, get_druid_or_row_number(i), "No key date declared")
+    valid_values = key_dates.select {|x| x == "yes"}
+    if valid_values.size > 1
+      log_error(@error, id, "Multiple key dates declared")
+    elsif valid_values.size == 0
+      log_error(@warning, id, "No key date declared")
+    end
+  end
+
+  def get_current_date_headers_and_values(prefix, date_group_term, date_group_headers, row)
+    # date_group_term = dateCreated, dateIssued, dateCaptured, copyrightDate
+    date_base = "#{prefix}#{date_group_term}"
+    current_headers = {}
+    current_values = @date_value_types.merge
+    date_group_headers.each do |h|
+      # Single date or start of range (dateCreated, etc.)
+      if h == date_base
+        current_values['date1'] = get_value_by_header(h, row)
+        current_headers['date1'] = h
+      else
+        # Get values by header suffix
+        h_uniq = h.gsub(date_base,"")
+        case h_uniq
+        when "KeyDate"
+          current_values['key_date'] = get_value_by_header(h, row)
+          current_headers['key_date'] = h
+        when "Encoding"
+          current_values['encoding'] = get_value_by_header(h, row)
+          current_headers['encoding'] = h
+        when "Qualifier"
+          current_values['date1_qualifier'] = get_value_by_header(h, row)
+          current_headers['date1_qualifier'] = h
+         when "Point"
+          current_values['date1_point'] = get_value_by_header(h, row)
+          current_headers['date1_point'] = h
+        when "2"
+          current_values['date2'] = get_value_by_header(h, row)
+          current_headers['date2'] = h
+        when "2Qualifier"
+          current_values['date2_qualifier'] = get_value_by_header(h, row)
+          current_headers['date2_qualifier'] = h
+        when "2Point"
+          current_values['date2_point'] = get_value_by_header(h, row)
+          current_headers['date2_point'] = h
+        when "3"
+          current_values['date3'] = get_value_by_header(h, row)
+          current_headers['date3'] = h
+        when "3KeyDate"
+          current_values['date3_key_date'] = get_value_by_header(h, row)
+          current_headers['date3_key_date'] = h
+        when "3Encoding"
+          current_values['date3_encoding'] = get_value_by_header(h, row)
+          current_headers['date3_encoding'] = h
+        when "3Qualifier"
+          current_values['date3_qualifier'] = get_value_by_header(h, row)
+          current_headers['date3_qualifier'] = h
+        end
       end
     end
+    return current_headers, current_values
+  end
 
-    ## Issuance
+  def report_invalid_date_values(current_headers, current_values, id)
+    # Report invalid values for each field in this date type
+    report_invalid_value(current_values['key_date'], @yes_terms, id, current_headers['key_date'])
+    report_invalid_value(current_values['date3_key_date'], @yes_terms, id, current_headers['date3_key_date'])
+    report_invalid_value(current_values['date1_qualifier'], @date_qualifier_terms, id, current_headers['date1_qualifier'])
+    report_invalid_value(current_values['date2_qualifier'], @date_qualifier_terms, id, current_headers['date2_qualifier'])
+    report_invalid_value(current_values['date3_qualifier'], @date_qualifier_terms, id, current_headers['date3_qualifier'])
+    report_invalid_value(current_values['date1_point'], @date_point_terms, id, current_headers['date1_point'])
+    report_invalid_value(current_values['date2_point'], @date_point_terms, id, current_headers['date2_point'])
+    report_invalid_value(current_values['encoding'], @date_encoding_terms, id, current_headers['encoding'])
+    report_invalid_value(current_values['date3_encoding'], @date_encoding_terms, id, current_headers['date3_encoding'])
+  end
 
-    # Report invalid issuance term
-    all_issuance = select_by_pattern(@header_row_terms, 'issuance')
-    all_issuance.each do |issuance|
-      report_invalid_values_by_header(issuance, @issuance_terms)
+  def report_missing_date_point_values(current_headers, current_values, id)
+    # Report missing date point values if two dates are present (dateCreated & dateCreated2, etc.)
+    if value_is_not_blank?(current_values['date1']) && value_is_not_blank?(current_values['date2'])
+      if value_is_blank?(current_values['date1_point'])
+        log_error(@warning, id, "Possible date range missing #{current_headers['date1_point']}")
+      end
+      if value_is_blank?(current_values['date2_point'])
+        log_error(@warning, id, "Possible date range missing #{current_headers['date2_point']}")
+      end
+    end
+  end
+
+  def report_unnecessary_date_attributes(current_headers, current_values, id)
+    # Report attribute values without an associated date value
+    if value_is_blank?(current_values['date1'])
+      if value_is_not_blank?(current_values['key_date'])
+        log_error(@warning, id, "Unnecessary #{current_headers['key_date']} value for blank #{current_headers['date1']}")
+      end
+      if value_is_not_blank?(current_values['encoding']) && value_is_blank?(current_values['date2'])
+        log_error(@warning, id, "Unnecessary #{current_headers['encoding']} value for blank #{current_headers['date1']}")
+      end
+      if value_is_not_blank?(current_values['date1_qualifier'])
+        log_error(@warning, id, "Unnecessary #{current_headers['date1_qualifier']} value for blank #{current_headers['date1']}")
+      end
+      if value_is_not_blank?(current_values['date1_point'])
+        log_error(@warning, id, "Unnecessary #{current_headers['date1_point']} value for blank #{current_headers['date1']}")
+      end
+    end
+    if value_is_blank?(current_values['date2'])
+      if value_is_not_blank?(current_values['date2_qualifier'])
+        log_error(@warning, id, "Unnecessary #{current_headers['date2_qualifier']} value for blank #{current_headers['date2']}")
+      end
+      if value_is_not_blank?(current_values['date2_point'])
+        log_error(@warning, id, "Unnecessary #{current_headers['date2_point']} value for blank #{current_headers['date2']}")
+      end
+    end
+    if value_is_blank?(current_values['date3'])
+      if value_is_not_blank?(current_values['date3_key_date'])
+        log_error(@warning, id, "Unnecessary #{current_headers['date3_key_date']} value for blank #{current_headers['date3']}")
+      end
+      if value_is_not_blank?(current_values['date3_encoding'])
+        log_error(@warning, id, "Unnecessary #{current_headers['date3_encoding']} value for blank #{current_headers['date3']}")
+      end
+      if value_is_not_blank?(current_values['date3_qualifier'])
+        log_error(@warning, id, "Unnecessary #{current_headers['date3_qualifier']} value for blank #{current_headers['date3']}")
+      end
+    end
+  end
+
+  def report_invalid_date_encoding(current_headers, current_values, id)
+    # Report dates declared w3cdtf but invalid syntax
+    if value_is_not_blank?(current_values['date1']) && current_values['encoding'] == 'w3cdtf' && /^\d\d\d\d$|^\d\d\d\d-\d\d$|^\d\d\d\d-\d\d-\d\d$/.match(current_values['date1'].to_s) == nil
+      log_error(@error, id, "Date #{current_values['date1']} in #{current_headers['date1']} does not match stated #{current_values['encoding']} encoding")
+    end
+    if value_is_not_blank?(current_values['date2']) && current_values['encoding'] == 'w3cdtf' && /^\d\d\d\d$|^\d\d\d\d-\d\d$|^\d\d\d\d-\d\d-\d\d$/.match(current_values['date2'].to_s) == nil
+      log_error(@error, id, "Date #{current_values['date2']} in #{current_headers['date2']} does not match stated #{current_values['encoding']} encoding")
+    end
+    if value_is_not_blank?(current_values['date3']) && current_values['date3_encoding'] == 'w3cdtf' && /^\d\d\d\d$|^\d\d\d\d-\d\d$|^\d\d\d\d-\d\d-\d\d$/.match(current_values['date3'].to_s) == nil
+      log_error(@error, id, "Date #{current_values['date3']} in #{current_headers['date3']} does not match stated #{current_values['date3_encoding']} encoding")
     end
   end
 
@@ -638,23 +632,19 @@ class Validator
     return subject_headers
   end
 
-  def validate_subject
-    value_type_indexes.each do |value, type|
-      value_column = @spreadsheet.column(value+1)
-      type_column = @spreadsheet.column(type+1)
-      value_column.each_with_index do |v, i|
-        next if i <= @header_row_index
-        next if value_is_blank?(v) && value_is_blank?(type_column[i])
-        if value_is_not_blank?(v) && value_is_blank?(type_column[i])
-          log_error(@error, get_druid_or_row_number(i), "Missing subject type in #{@header_row[type]}")
-        elsif value_is_blank?(v) && value_is_not_blank?(type_column[i])
-          log_error(@warning, get_druid_or_row_number(i), "Subject type provided but subject is empty in #{@header_row[value]}")
-        elsif value_is_not_blank?(v) && value_is_not_error?(v)
-          if value_column[@header_row_index].match(/^su\d+:|^sn\d+:p[2-5]/) && !@subject_subelements.include?(type_column[i])
-            log_error(@error, get_druid_or_row_number(i), "Invalid subject type \"#{type_column[i]}\" in #{@header_row[type]}")
-          elsif value_column[@header_row_index].match(/^sn\d+:p1/) && !@name_type_terms.include?(type_column[i])
-            log_error(@error, get_druid_or_row_number(i), "Invalid name type \"#{type_column[i]}\" in #{@header_row[type]}")
-          end
+  def validate_subject(row, id)
+    # Report missing subject subelement, subject type without associated value, and invalid subject subelement type
+    @value_type_indexes.each do |value, type|
+      next if value_is_blank?(row[value]) && value_is_blank?(row[type])
+      if value_is_not_blank?(row[value]) && value_is_blank?(row[type])
+        log_error(@error, id, "Missing subject type in #{@header_row[type]}")
+      elsif value_is_blank?(row[value]) && value_is_not_blank?(row[type])
+        log_error(@warning, id, "Subject type provided but subject is empty in #{@header_row[value]}")
+      elsif value_is_not_blank?(row[value]) && value_is_not_blank?(row[type])
+        if @header_row[value].match(/^su\d+:|^sn\d+:p[2-5]/) && !@subject_subelements.include?(row[type])
+          log_error(@error, id, "Invalid subject type \"#{row[type]}\" in #{@header_row[type]}")
+        elsif @header_row[value].match(/^sn\d+:p1/) && !@name_type_terms.include?(row[type])
+          log_error(@error, id, "Invalid subject name type \"#{row[type]}\" in #{@header_row[type]}")
         end
       end
     end
