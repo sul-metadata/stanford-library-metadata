@@ -243,6 +243,19 @@ class Validator
       log_error(@warning, "ty1:typeOfResource", "Recommended column missing")
     end
 
+    subject_headers = get_subject_headers
+    subject_headers.each_value do |v|
+      value = v.index {|x| x.match(/:value$|:name$/)}
+      type = v.index {|x| x.match(/:type$|:nameType$/)}
+      if value == nil
+        log_error(@error, "headers", "Missing subject value column header for #{v[type]}")
+      elsif type == nil
+        log_error(@error, "headers", "Missing subject type column header for #{v[value]}")
+      else
+        @value_type_indexes[@header_row.find_index(v[value])] = @header_row.find_index(v[type])
+      end
+    end
+
   end
 
   def validate_rows
@@ -551,22 +564,12 @@ class Validator
     end
   end
 
+  def get_subject_headers
+    subject_headers = collect_by_pattern(@header_row_terms, /^(su\d+:p[1-5]:)/).merge(collect_by_pattern(@header_row_terms, /^(sn\d+:p[1-5]:)/))
+    return subject_headers
+  end
+
   def validate_subject
-    # Report missing subject subelement, subject type without associated value, and invalid subject subelement type
-    subject_header_parts = collect_by_pattern(@header_row_terms, /^(su\d+:p[1-5]:)/)
-    subject_header_parts.merge!(collect_by_pattern(@header_row_terms, /^(sn\d+:p[1-5]:)/))
-    value_type_indexes = {}
-    subject_header_parts.each_value do |v|
-      value = v.index {|x| x.match(/:value$|:name$/)}
-      type = v.index {|x| x.match(/:type$|:nameType$/)}
-      if value == nil
-        log_error(@error, "row 1", "Missing subject value column header for #{v[type]}")
-      elsif type == nil
-        log_error(@error, "row 1", "Missing subject type column header for #{v[value]}")
-      else
-        value_type_indexes[@header_row.find_index(v[value])] = @header_row.find_index(v[type])
-      end
-    end
     value_type_indexes.each do |value, type|
       value_column = @spreadsheet.column(value+1)
       type_column = @spreadsheet.column(type+1)
