@@ -116,18 +116,11 @@ class Validator
 
 
   def validate_spreadsheet
-    # Check for allowed file extensions and fail if invalid
-    extension = File.extname(@filename)
-    @spreadsheet = case extension
-    when '.csv' then Roo::Spreadsheet.open(@file, extension: :csv)
-    when '.xls' then Roo::Spreadsheet.open(@file, extension: :xls)
-    when '.xlsx' then Roo::Spreadsheet.open(@file, extension: :xlsx)
-    else
-      log_error(@fail, "Invalid input file extension #{extension}: use .csv, .xls, or .xlsx", "filename")
-      return true
-    end
-    @errors = {@error => [], @warning => [], @info => []}
     @exit = false
+    # Check for allowed file extensions and fail if invalid
+    validate_file_extension
+    return true if @exit == true
+    @errors = {@error => [], @warning => [], @info => []}
     validate_encoding
     return true if @exit == true
     validate_headers
@@ -142,6 +135,13 @@ class Validator
     validate_subject
     validate_location
     report_errors
+  end
+
+  def validate_file_extension
+    unless ['.csv', '.xls', '.xlsx'].include?(@extension)
+      log_error(@fail, "Invalid input file extension #{@extension}: use .csv, .xls, or .xlsx", "filename")
+      @exit = true
+    end
   end
 
   def validate_encoding
