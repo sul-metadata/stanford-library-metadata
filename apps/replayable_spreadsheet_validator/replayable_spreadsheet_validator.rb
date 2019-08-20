@@ -197,7 +197,7 @@ class Validator
     @xlsx = nil
     begin
       if @extension == '.xlsx'
-        @xlsx = Roo::Excelx.new(@filename)
+        xlsx_open = Roo::Excelx.new(@filename)
       else
         CSV.foreach(@filename) do |row|
           break
@@ -229,8 +229,10 @@ class Validator
         end
       end
     else
+      @xlsx = Roo::Excelx.new(@filename)
       i = 0
       @xlsx.each_row_streaming(pad_cells: true, max_rows: 10) do |row|
+        row.map! {|x| (x == nil ? x.to_s : x.value) }
         if [row[0], row[1]] == ['druid', 'sourceId']
           @header_row = row
           @header_row_index = i
@@ -308,13 +310,12 @@ class Validator
       end
     when '.xlsx'
       @xlsx.each_row_streaming(pad_cells: true) do |row|
-        CSV.foreach(@filename) do |row|
-          if report_blank_row(row, row_index) || row_index <= @header_row_index
-            row_index += 1
-          else
-            process_row(row, row_index)
-            row_index += 1
-          end
+        row.map! {|x| (x == nil ? x.to_s : x.value) }
+        if report_blank_row(row, row_index) || row_index <= @header_row_index
+          row_index += 1
+        else
+          process_row(row, row_index)
+          row_index += 1
         end
       end
     end
@@ -576,6 +577,8 @@ class Validator
         end
       end
     end
+    puts @extension.inspect
+    puts current_values.inspect
     return current_headers, current_values
   end
 
