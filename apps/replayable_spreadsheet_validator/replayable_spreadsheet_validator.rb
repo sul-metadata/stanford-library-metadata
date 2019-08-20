@@ -391,9 +391,10 @@ class Validator
   end
 
   def validate_cells(cell, cell_index, row_index)
-    return false if cell == nil || cell.class != String || cell.empty?
+    return false if cell == nil || value_is_blank?(cell)
     cell_ref = "#{get_column_ref(cell_index)}#{row_index + 1}"
-    validate_characters(cell, cell_ref)
+    validate_characters(cell, cell_ref) if cell.class == String
+    validate_xlsx_cell_types(cell, cell_ref) if @extension == '.xlsx'
     identify_formula_errors(cell, cell_ref)
     if cell_index == 1
       identify_missing_sourceid(cell, cell_ref)
@@ -411,8 +412,16 @@ class Validator
     end
   end
 
+  def validate_xlsx_cell_types(cell, cell_ref)
+    if cell.class == Integer
+      log_error(@info, cell_ref, "Non-text Excel formatting: #{cell.class}")
+    elsif cell.class != String
+      log_error(@warning, cell_ref, "Non-text Excel formatting: #{cell.class}")
+    end
+  end
+
   def identify_formula_errors(cell, cell_ref)
-    case cell
+    case cell.to_s
     when '#N/A'
       @formula_errors['na'] << cell_ref
     when '#REF!'
@@ -421,7 +430,7 @@ class Validator
       @formula_errors['zero'] << cell_ref
     when '#NAME?'
       @formula_errors['name'] << cell_ref
-    when '#VALUE?'
+    when '#VALUE!'
       @formula_errors['value'] << cell_ref
     end
   end
@@ -461,7 +470,7 @@ class Validator
     }
     @formula_errors.each do |error_type, errors|
       next if value_is_blank?(errors)
-      log_error(formula_error_messages[1], errors.join(', '), formula_error_messages[0])
+      log_error(formula_error_messages[error_type][1], errors.join(', '), formula_error_messages[error_type][0])
     end
   end
 
@@ -577,8 +586,6 @@ class Validator
         end
       end
     end
-    puts @extension.inspect
-    puts current_values.inspect
     return current_headers, current_values
   end
 

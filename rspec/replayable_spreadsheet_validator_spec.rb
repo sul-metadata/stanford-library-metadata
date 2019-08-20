@@ -13,7 +13,10 @@ RSpec.describe Validator do
     @xlsx.validate_headers
     @xlsx.validate_rows
     @xlsx_errors = @xlsx.errors.to_a.flatten
-    puts @xlsx.errors.inspect
+    puts 'csv'
+    puts @csv_errors
+    puts 'xlsx'
+    puts @xlsx_errors
     # test_files = [csv, xlsx]
     @non_utf8_csv = './fixtures/test_word.csv'
     @non_utf8_xlsx = './fixtures/test_word.xlsx'
@@ -271,18 +274,6 @@ RSpec.describe Validator do
     it 'skips empty value for xlsx' do
       expect(@xlsx.validate_cells("",1,2)).to be(false)
     end
-    it 'skips non-string value for csv' do
-      expect(@csv.validate_cells(1,1,2)).to be(false)
-    end
-    it 'skips non-string value for xlsx' do
-      expect(@xlsx.validate_cells(1,1,2)).to be(false)
-    end
-    it 'does not skip string value for csv' do
-      expect(@csv.validate_cells("a",1,2)).to be(nil)
-    end
-    it 'does not skip string value for xlsx' do
-      expect(@xlsx.validate_cells("a",1,2)).to be(nil)
-    end
   end
 
   describe 'reports blank row:' do
@@ -300,35 +291,52 @@ RSpec.describe Validator do
     end
   end
 
-  # test in xlsx only
-  # describe 'validates characters' do test
-  #   it 'reports newline character' do
-  #
-  #   end
-  #   it 'reports control character' do
-  #
-  #   end
-  #   it 'reports unclosed quotation mark at beginning of value' do
-  #
-  #   end
-  # end
-  #
+  #incomplete
+  describe 'validate_characters' do
+    # it reports line breaks in cell text
+    # it reports control characters in cell text
+    it 'reports non-string cell formats for xlsx' do
+      expect(@xlsx_errors).to include("Non-text Excel formatting: Date")
+    end
+  end
+
   describe 'identifies and reports formula errors:' do
     ### do differently for xlsx
     it 'reports n/a error for csv' do
       expect(@csv.formula_errors['na']).to eq(['D4'])
     end
+    it 'reports n/a error for xlsx' do
+      expect(@xlsx.formula_errors['na']).to eq(['D4'])
+    end
     it 'reports ref error for csv' do
       expect(@csv.formula_errors['ref']).to eq(['E4'])
+    end
+    it 'reports ref error for xlsx' do
+      expect(@xlsx.formula_errors['ref']).to eq(['E4'])
     end
     it 'reports 0 value for csv' do
       expect(@csv.formula_errors['zero']).to eq(['H4'])
     end
+    it 'reports 0 value for xlsx' do
+      expect(@xlsx.formula_errors['zero']).to eq(['G4', 'H4'])
+    end
     it 'reports name error for csv' do
       expect(@csv.formula_errors['name']).to eq(['I4'])
     end
+    it 'reports name error for xlsx' do
+      expect(@xlsx.formula_errors['name']).to eq(['I4'])
+    end
     it 'reports value error for csv' do
       expect(@csv.formula_errors['value']).to eq(['J4'])
+    end
+    it 'reports value error for xlsx' do
+      expect(@xlsx.formula_errors['value']).to eq(['J4'])
+    end
+    it 'reports the correct number of errors for csv' do
+      expect(@csv.formula_errors.values.flatten.size).to eq(5)
+    end
+    it 'reports the correct number of errors for xlsx' do
+      expect(@xlsx.formula_errors.values.flatten.size).to eq(6)
     end
   end
 
@@ -867,7 +875,7 @@ RSpec.describe Validator do
       expect(@csv_errors).to include('Date 1900-1-1 in dt:dateCreated does not match stated w3cdtf encoding')
     end
     it 'reports invalid w3cdtf encoding for xlsx' do
-      expect(@xlsx_errors).to include('Date 1/1/1900 in dt:dateCreated does not match stated w3cdtf encoding')
+      expect(@xlsx_errors).to include('Date 2/2/1902 in dt:dateCreated2 does not match stated w3cdtf encoding')
     end
   end
 

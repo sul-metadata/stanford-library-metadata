@@ -1,5 +1,5 @@
 druid,sourceId,ti1:title,ty1:typeOfResource,ge1:genre,ge1:genre,not:header,su1:p1:value,su1:p1:type,ti2:type,ti3:type,na1:type,na2:type,ty1:manuscript,or2:issuance,na1:usage,dt:dateCreated,dt:dateCreatedKeyDate,dt:dateCreatedEncoding,dt:dateCreatedQualifier,dt:dateCreatedPoint,dt:dateCreated2,dt:dateCreated2Qualifier,dt:dateCreated2Point,dt:dateCreated3,dt:dateCreated3KeyDate,dt:dateCreated3Encoding,dt:dateCreated3Qualifier,dt:dateIssued,dt:dateIssuedKeyDate,dt:dateIssuedEncoding,dt:dateIssuedQualifier,dt:dateIssuedPoint,dt:dateIssued2,dt:dateIssued2Qualifier,dt:dateIssued2Point,dt:dateIssued3,dt:dateIssued3KeyDate,dt:dateIssued3Encoding,dt:dateIssued3Qualifier,lo:purl,sn1:p1:nameType,sn1:p1:name
 aa111aa1111,,title,,,,,,mineral,,,,,,,,1900,,,,,1905,,,,,,,,,,,,,,,,,,,,ineffable,A. Z. Fell
 ,source id,,,,,,,topic,,,,,,,,,yes,w3cdtf,approximate,start,,,,,yes,,,,,,,,,,,,,,,,,
-bb2222bb222,,title2,#N/A,#REF!,,,0,#NAME?,#VALUE?,bad type,fictional,,,never,secondary,,no,w3c,circa,starting,,,,,,,,,,,,,,,,,,,,,,
+bb2222bb222,,title2,#N/A,#REF!,,,0,#NAME?,#VALUE!,bad type,fictional,,,never,secondary,,no,w3c,circa,starting,,,,,,,,,,,,,,,,,,,,,,
 aa111aa1111,source id,title,software,,,,cats,,,,,,no,,,1900-1-1,yes,w3cdtf,,,,,,1905,yes,,,,,,,,,,,,,,,,,
