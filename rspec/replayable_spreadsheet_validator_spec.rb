@@ -13,11 +13,6 @@ RSpec.describe Validator do
     @xlsx.validate_headers
     @xlsx.validate_rows
     @xlsx_errors = @xlsx.errors.to_a.flatten
-    puts 'csv'
-    puts @csv_errors
-    puts 'xlsx'
-    puts @xlsx_errors
-    # test_files = [csv, xlsx]
     @non_utf8_csv = './fixtures/test_word.csv'
     @non_utf8_xlsx = './fixtures/test_word.xlsx'
     @no_header_csv = './fixtures/no_header.csv'
@@ -294,14 +289,13 @@ RSpec.describe Validator do
   #incomplete
   describe 'validate_characters' do
     # it reports line breaks in cell text
-    # it reports control characters in cell text
+    # it reports control characters in cell text (see also above)
     it 'reports non-string cell formats for xlsx' do
       expect(@xlsx_errors).to include("Non-text Excel formatting: Date")
     end
   end
 
   describe 'identifies and reports formula errors:' do
-    ### do differently for xlsx
     it 'reports n/a error for csv' do
       expect(@csv.formula_errors['na']).to eq(['D4'])
     end
