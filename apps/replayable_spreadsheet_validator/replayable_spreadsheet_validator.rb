@@ -393,7 +393,6 @@ class Validator
   end
 
   def validate_cells(cell, cell_index, row_index)
-    # return false if cell == nil || value_is_blank?(cell)
     cell = "" if cell == nil
     cell_ref = "#{get_column_ref(cell_index)}#{row_index + 1}"
     validate_characters(cell, cell_ref) if cell.class == String
@@ -458,7 +457,7 @@ class Validator
 
   def report_duplicate_sourceids
     # Report duplicate source IDs
-    if has_duplicates?(@sourceids.compact)
+    if has_duplicates?(@sourceids)
       log_error(@info, get_duplicates(@sourceids), "Duplicate source IDs")
     end
   end
@@ -772,12 +771,14 @@ class Validator
 
   # Check for duplicates in given list of values
   def has_duplicates?(terms)
-    return true if terms.compact.size != terms.compact.uniq.size
+    term_values = terms.compact.delete_if {|x| x.empty?}
+    return true if term_values.size != term_values.uniq.size
   end
 
   # Return list of duplicate terms as string
   def get_duplicates(terms)
-    return terms.compact.group_by {|d| d}.select {|k, v| v.size > 1}.to_h.keys.join(", ")
+    term_values = terms.compact.delete_if {|x| x.empty?}
+    return term_values.group_by {|d| d}.select {|k, v| v.size > 1}.to_h.keys.join(", ")
   end
 
   # Return druid, or row number if druid is not present, of a given value
