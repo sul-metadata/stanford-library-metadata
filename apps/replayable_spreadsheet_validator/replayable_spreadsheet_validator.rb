@@ -393,7 +393,8 @@ class Validator
   end
 
   def validate_cells(cell, cell_index, row_index)
-    return false if cell == nil || value_is_blank?(cell)
+    # return false if cell == nil || value_is_blank?(cell)
+    cell = "" if cell == nil
     cell_ref = "#{get_column_ref(cell_index)}#{row_index + 1}"
     validate_characters(cell, cell_ref) if cell.class == String
     validate_xlsx_cell_types(cell, cell_ref) if @extension == '.xlsx'

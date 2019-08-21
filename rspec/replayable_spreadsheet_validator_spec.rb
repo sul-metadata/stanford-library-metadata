@@ -257,17 +257,11 @@ RSpec.describe Validator do
   end
 
   describe 'validates cells:' do
-    it 'skips nil value for csv' do
-      expect(@csv.validate_cells(nil,1,2)).to be(false)
+    it 'identifies missing source IDs for csv' do
+      expect(@csv_errors).to include("B2, B4")
     end
-    it 'skips nil value for xlsx' do
-      expect(@xlsx.validate_cells(nil,1,2)).to be(false)
-    end
-    it 'skips empty value for csv' do
-      expect(@csv.validate_cells("",1,2)).to be(false)
-    end
-    it 'skips empty value for xlsx' do
-      expect(@xlsx.validate_cells("",1,2)).to be(false)
+    it 'identifies missing source IDs for xlsx' do
+      expect(@xlsx_errors).to include("B2, B4")
     end
   end
 
