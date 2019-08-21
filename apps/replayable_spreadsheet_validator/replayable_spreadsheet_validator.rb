@@ -723,8 +723,15 @@ class Validator
   end
 
   def report_error_type(type)
+    uniquify_errors_by_type(type)
     @errors[type].each do |e|
       @report << e
+    end
+  end
+
+  def uniquify_errors_by_type(type)
+    if has_duplicates?(@errors[type])
+      @errors[type].uniq!
     end
   end
 
