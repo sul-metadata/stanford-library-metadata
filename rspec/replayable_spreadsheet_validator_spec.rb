@@ -14,10 +14,8 @@ RSpec.describe Validator do
     @xlsx.validate_rows
     @xlsx_errors = @xlsx.errors.to_a.flatten
     @non_utf8_csv = './fixtures/test_word.csv'
-    @non_utf8_xlsx = './fixtures/test_word.xlsx'
     @no_header_csv = './fixtures/no_header.csv'
     @no_header_xlsx = './fixtures/no_header.xlsx'
-    # @control_chars = './fixtures/control_chars_utf8.csv' test in xlsx only
     @druid_sourceid_csv = './fixtures/druid_sourceid.csv'
     @druid_sourceid_xlsx = './fixtures/druid_sourceid.xlsx'
     @subject_type_no_value_csv = './fixtures/subject_type_no_value.csv'
@@ -56,6 +54,8 @@ RSpec.describe Validator do
     end
   end
 
+  #describe 'validates file open:'
+
   describe 'validates headers:' do
     it 'identifies header row for csv' do
       expect(@csv.header_row_terms).not_to eq([])
@@ -79,11 +79,7 @@ RSpec.describe Validator do
       no_header_csv.validate_headers
       expect(no_header_csv.exit).to eq(true)
     end
-    # it 'reports invalid character' do #test this and line breaks for xlsx only
-      # control_chars = Validator.new(@control_chars)
-      # control_chars.validate_headers
-      # expect(control_chars.exit).to eq(true)
-    # end
+    # it reports invalid characters in header row
     it 'reports duplicate headers for csv' do
       expect(@csv_errors).to include('Contains duplicate headers')
     end
@@ -169,18 +165,6 @@ RSpec.describe Validator do
     it 'selects issuance header for xlsx' do
       expect(@xlsx.selected_headers['issuance']).to eq(['or2:issuance'])
     end
-    it 'identifies druid for csv' do
-      expect(@csv.druids).to include('aa111aa1111')
-    end
-    it 'identifies druid for xlsx' do
-      expect(@xlsx.druids).to include('aa111aa1111')
-    end
-    it 'reports blank druid for csv' do
-      expect(@csv_errors).to include('Missing druid')
-    end
-    it 'reports blank druid for xlsx' do
-      expect(@xlsx_errors).to include('Missing druid')
-    end
   end
 
   describe 'gets date headers:' do
@@ -256,12 +240,18 @@ RSpec.describe Validator do
     end
   end
 
-  describe 'validates cells:' do
-    it 'identifies missing source IDs for csv' do
-      expect(@csv_errors).to include("B2, B4")
+  describe 'processes row:' do
+    it 'identifies druid for csv' do
+      expect(@csv.druids).to include('aa111aa1111')
     end
-    it 'identifies missing source IDs for xlsx' do
-      expect(@xlsx_errors).to include("B2, B4")
+    it 'identifies druid for xlsx' do
+      expect(@xlsx.druids).to include('aa111aa1111')
+    end
+    it 'reports blank druid for csv' do
+      expect(@csv_errors).to include('Missing druid')
+    end
+    it 'reports blank druid for xlsx' do
+      expect(@xlsx_errors).to include('Missing druid')
     end
   end
 
@@ -280,12 +270,65 @@ RSpec.describe Validator do
     end
   end
 
-  #incomplete
-  describe 'validate_characters' do
+  describe 'validates druid:' do
+    it 'reports invalid druid for csv' do
+      expect(@csv_errors).to include('Invalid druid')
+    end
+    it 'reports invalid druid for xlsx' do
+      expect(@xlsx_errors).to include('Invalid druid')
+    end
+    it 'identifies valid druid for csv' do
+      expect(@csv.druid_is_valid_pattern?('aa111aa1111')).to eq(true)
+    end
+    it 'identifies valid druid for xlsx' do
+      expect(@xlsx.druid_is_valid_pattern?('aa111aa1111')).to eq(true)
+    end
+  end
+
+  describe 'validates cells:' do
+    it 'identifies missing source IDs for csv' do
+      expect(@csv_errors).to include("B2, B4")
+    end
+    it 'identifies missing source IDs for xlsx' do
+      expect(@xlsx_errors).to include("B2, B4")
+    end
+  end
+
+  # describe 'validate_characters' do
+    # waiting for example fixtures
     # it reports line breaks in cell text
-    # it reports control characters in cell text (see also above)
+    # it reports control characters in cell text
+
+  describe 'validates xlsx cell types' do
     it 'reports non-string cell formats for xlsx' do
       expect(@xlsx_errors).to include("Non-text Excel formatting: Date")
+    end
+  end
+
+  describe 'reports duplicate druids:' do
+    it 'reports duplicate druids for csv' do
+      expect(@csv_errors).to include('Duplicate druids')
+    end
+    it 'reports duplicate druids for xlsx' do
+      expect(@xlsx_errors).to include('Duplicate druids')
+    end
+  end
+
+  describe 'reports missing source ids:' do
+    it 'reports missing source id for csv' do
+      expect(@csv_errors).to include('Blank source ID')
+    end
+    it 'reports missing source id for xlsx' do
+      expect(@xlsx_errors).to include('Blank source ID')
+    end
+  end
+
+  describe 'reports duplicate source ids:' do
+    it 'reports duplicate source ids for csv' do
+      expect(@csv_errors).to include('Duplicate source IDs')
+    end
+    it 'reports duplicate source ids for xlsx' do
+      expect(@xlsx_errors).to include('Duplicate source IDs')
     end
   end
 
@@ -320,47 +363,11 @@ RSpec.describe Validator do
     it 'reports value error for xlsx' do
       expect(@xlsx.formula_errors['value']).to eq(['J4'])
     end
-    it 'reports the correct number of errors for csv' do
+    it 'reports the correct number of formula errors for csv' do
       expect(@csv.formula_errors.values.flatten.size).to eq(5)
     end
-    it 'reports the correct number of errors for xlsx' do
+    it 'reports the correct number of formula errors for xlsx' do
       expect(@xlsx.formula_errors.values.flatten.size).to eq(6)
-    end
-  end
-
-  describe 'validates druid and checks for duplicates:' do
-    it 'reports invalid druid for csv' do
-      expect(@csv_errors).to include('Invalid druid')
-    end
-    it 'reports invalid druid for xlsx' do
-      expect(@xlsx_errors).to include('Invalid druid')
-    end
-    it 'identifies valid druid for csv' do
-      expect(@csv.druid_is_valid_pattern?('aa111aa1111')).to eq(true)
-    end
-    it 'identifies valid druid for xlsx' do
-      expect(@xlsx.druid_is_valid_pattern?('aa111aa1111')).to eq(true)
-    end
-    it 'reports duplicate druids for csv' do
-      expect(@csv_errors).to include('Duplicate druids')
-    end
-    it 'reports duplicate druids for xlsx' do
-      expect(@xlsx_errors).to include('Duplicate druids')
-    end
-  end
-
-  describe 'checks for duplicate or missing source ids:' do
-    it 'reports duplicate source ids for csv' do
-      expect(@csv_errors).to include('Duplicate source IDs')
-    end
-    it 'reports duplicate source ids for xlsx' do
-      expect(@xlsx_errors).to include('Duplicate source IDs')
-    end
-    it 'reports missing source id for csv' do
-      expect(@csv_errors).to include('Blank source ID')
-    end
-    it 'reports missing source id for xlsx' do
-      expect(@xlsx_errors).to include('Blank source ID')
     end
   end
 
@@ -876,6 +883,8 @@ RSpec.describe Validator do
     end
   end
 
+  # describe 'gets subject headers:'
+
   describe 'validates subject:' do
     it 'reports missing subject type for csv' do
       expect(@csv_errors).to include('Missing subject type in su1:p1:type')
@@ -926,16 +935,40 @@ RSpec.describe Validator do
       expect(no_header_xlsx.report.closed?).to be(true)
     end
     it 'logs non-fail error for csv' do
-      expect(@csv_errors).to include('Blank source ID')
+      expect(@csv.errors['ERROR']).to include(["ERROR", "Contains duplicate headers", "ge1:genre"])
     end
     it 'logs non-fail error for xlsx' do
-      expect(@xlsx_errors).to include('Blank source ID')
+      expect(@xlsx.errors['ERROR']).to include(["ERROR", "Contains duplicate headers", "ge1:genre"])
     end
-    it 'logs the expected number of errors for csv' do
-      expect(@csv_errors.size).to eq(139)
+    it 'logs warning for csv' do
+      expect(@csv.errors['WARNING']).to include(["WARNING", "Blank ty1:typeOfResource", "aa111aa1111"])
     end
-    it 'logs the expected number of errors for xlsx' do
-      expect(@xlsx_errors.size).to eq(139)
+    it 'logs warning for xlsx' do
+      expect(@xlsx.errors['WARNING']).to include(["WARNING", "Blank ty1:typeOfResource", "aa111aa1111"])
+    end
+    it 'logs info for csv' do
+      expect(@csv.errors['INFO']).to include(["INFO", "Header not in XML template", "not:header"])
+    end
+    it 'logs info for xlsx' do
+      expect(@xlsx.errors['INFO']).to include(["INFO", "Header not in XML template", "not:header"])
+    end
+    it 'logs the expected number of non-fail errors for csv' do
+      expect(@csv.errors['ERROR'].size).to eq(139)
+    end
+    it 'logs the expected number of non-fail errors for xlsx' do
+      expect(@xlsx.errors['ERROR'].size).to eq(139)
+    end
+    it 'logs the expected number of warnings for csv' do
+      expect(@csv.errors['WARNING'].size).to eq(139)
+    end
+    it 'logs the expected number of warnings for xlsx' do
+      expect(@xlsx.errors['WARNING'].size).to eq(139)
+    end
+    it 'logs the expected number of info for csv' do
+      expect(@csv.errors['INFO'].size).to eq(139)
+    end
+    it 'logs the expected number of info for xlsx' do
+      expect(@xlsx.errors['INFO'].size).to eq(139)
     end
   end
 
