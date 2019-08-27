@@ -6,12 +6,10 @@ RSpec.describe Validator do
 
   before(:all) do
     @csv = Validator.new('./fixtures/test.csv')
-    @csv.validate_headers
-    @csv.validate_rows
+    @csv.validate_spreadsheet
     @csv_errors = @csv.errors.to_a.flatten
     @xlsx = Validator.new('./fixtures/test.xlsx')
-    @xlsx.validate_headers
-    @xlsx.validate_rows
+    @xlsx.validate_spreadsheet
     @xlsx_errors = @xlsx.errors.to_a.flatten
     @non_utf8_csv = './fixtures/test_word.csv'
     @no_header_csv = './fixtures/no_header.csv'
@@ -953,22 +951,22 @@ RSpec.describe Validator do
       expect(@xlsx.errors['INFO']).to include(["INFO", "Header not in XML template", "not:header"])
     end
     it 'logs the expected number of non-fail errors for csv' do
-      expect(@csv.errors['ERROR'].size).to eq(139)
+      expect(@csv.errors['ERROR'].size).to eq(26)
     end
     it 'logs the expected number of non-fail errors for xlsx' do
-      expect(@xlsx.errors['ERROR'].size).to eq(139)
+      expect(@xlsx.errors['ERROR'].size).to eq(26)
     end
     it 'logs the expected number of warnings for csv' do
-      expect(@csv.errors['WARNING'].size).to eq(139)
+      expect(@csv.errors['WARNING'].size).to eq(22)
     end
     it 'logs the expected number of warnings for xlsx' do
-      expect(@xlsx.errors['WARNING'].size).to eq(139)
+      expect(@xlsx.errors['WARNING'].size).to eq(23)
     end
     it 'logs the expected number of info for csv' do
-      expect(@csv.errors['INFO'].size).to eq(139)
+      expect(@csv.errors['INFO'].size).to eq(3)
     end
     it 'logs the expected number of info for xlsx' do
-      expect(@xlsx.errors['INFO'].size).to eq(139)
+      expect(@xlsx.errors['INFO'].size).to eq(8)
     end
   end
 
