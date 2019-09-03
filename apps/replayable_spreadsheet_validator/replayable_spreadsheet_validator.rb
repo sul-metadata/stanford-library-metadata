@@ -20,6 +20,7 @@ class Validator
     ## Additional accessors for testing
     @header_row_index = nil
     @header_row_terms = []
+    @blank_header_index = []
     @selected_headers = {}
 
     ## Error data collection
@@ -260,7 +261,7 @@ class Validator
     File.open(@template, 'rb') {|f| xml_template_headers << f.read.scan(/\[.*?\]\]/) }
     xml_template_headers.flatten!
     xml_template_headers.map! {|x| x.slice(2..-3)}
-    headers_not_in_template = @header_row_terms - xml_template_headers - ["druid", "sourceId"]
+    headers_not_in_template = @header_row_terms.select {|x| value_is_not_blank?(x)} - xml_template_headers - ["druid", "sourceId"]
     if headers_not_in_template != []
       log_error(@info, headers_not_in_template.uniq.join(", "), "Header not in XML template")
     end
@@ -300,6 +301,7 @@ class Validator
       'issuance' => select_by_pattern(@header_row_terms, 'issuance')
     }
     row_index = 0
+    get_blank_header_index
     case @extension
     when '.csv'
       CSV.foreach(@filename) do |row|
@@ -354,6 +356,7 @@ class Validator
       validate_druid(druid)
     end
     validate_cells_in_row(row, row_index)
+    report_missing_header(row)
     validate_title(row, row_index, id, @selected_headers['title_type'])
     validate_name(row, id, @selected_headers['name_type'])
     validate_type_of_resource(row, row_index, id, @selected_headers['type_of_resource'])
@@ -460,6 +463,27 @@ class Validator
     # Report duplicate source IDs
     if has_duplicates?(@sourceids)
       log_error(@info, get_duplicates(@sourceids), "Duplicate source IDs")
+    end
+  end
+
+  def get_blank_header_index
+    # Get indexes of columns with no header row value
+    @header_row.each_with_index do |h, i|
+      if value_is_blank?(h)
+        @blank_header_index << i
+      end
+    end
+  end
+
+  def report_missing_header(row)
+    # Check if a cell with data is in a column without a header
+    row.each_with_index do |v, i|
+      if value_is_not_blank?(v) && @blank_header_index.include?(i)
+        log_error(@info, get_column_ref(i), "Data present in column without header")
+        @blank_header_index.delete(i)
+      elsif value_is_not_blank?(v) && i >= @header_row.size
+        log_error(@info, get_column_ref(i), "Data present in column without header at end of row")
+      end
     end
   end
 
