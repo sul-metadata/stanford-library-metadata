@@ -479,10 +479,10 @@ class Validator
     # Check if a cell with data is in a column without a header
     row.each_with_index do |v, i|
       if value_is_not_blank?(v) && @blank_header_index.include?(i)
-        log_error(@info, get_column_ref(i), "Data present in column without header")
+        log_error(@info, "column #{get_column_ref(i)}", "Data present in column without header")
         @blank_header_index.delete(i)
       elsif value_is_not_blank?(v) && i >= @header_row.size
-        log_error(@info, get_column_ref(i), "Data present in column without header at end of row")
+        log_error(@info, "column #{get_column_ref(i)}", "Data present in column without header at end of row")
       end
     end
   end
