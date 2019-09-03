@@ -5,7 +5,7 @@ gem 'sinatra'
 gem 'roo'
 gem 'roo-xls'
 gem 'csv'
-gem 'nokogiri'
+gem 'nokogiri', ">= 1.10.4"
 gem 'rubyzip'
 gem 'equivalent-xml'
 gem 'rails'
