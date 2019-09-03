@@ -409,9 +409,10 @@ class Validator
     elsif cell.match(/[\u0000-\u001F]/)
       log_error(@error, cell_ref, "Control character in cell text")
     end
-    if cell.match(/^["“”][^"]*/)
-      log_error(@warning, cell_ref, "Cell value begins with unclosed double quotation mark")
-    end
+    ## TODO: fix
+    # if cell.match(/^["“”][^"]*/)
+    #   log_error(@warning, cell_ref, "Cell value begins with unclosed double quotation mark")
+    # end
   end
 
   def validate_xlsx_cell_types(cell, cell_ref)
