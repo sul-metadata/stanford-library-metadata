@@ -330,6 +330,19 @@ RSpec.describe Validator do
     end
   end
 
+  describe 'reports data with no header:' do
+    it 'reports data with no header within the spreadsheet for csv' do
+      expect(@csv_errors).to include('Data present in column without header')
+    end
+    it 'reports data with no header within the spreadsheet for xlsx' do
+      expect(@xlsx_errors).to include('Data present in column without header')
+    end
+    # CSV counts empty cells at end of row as part of header
+    it 'reports data with no header at the end of the spreadsheet for xlsx' do
+      expect(@xlsx_errors).to include('Data present in column without header at end of row')
+    end
+  end
+
   describe 'identifies and reports formula errors:' do
     it 'reports n/a error for csv' do
       expect(@csv.formula_errors['na']).to eq(['D4'])
@@ -963,10 +976,10 @@ RSpec.describe Validator do
       expect(@xlsx.errors['WARNING'].size).to eq(23)
     end
     it 'logs the expected number of info for csv' do
-      expect(@csv.errors['INFO'].size).to eq(3)
+      expect(@csv.errors['INFO'].size).to eq(5)
     end
     it 'logs the expected number of info for xlsx' do
-      expect(@xlsx.errors['INFO'].size).to eq(8)
+      expect(@xlsx.errors['INFO'].size).to eq(10)
     end
   end
 
