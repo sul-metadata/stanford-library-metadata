@@ -156,7 +156,7 @@ DEPENDENCIES
   csv
   equivalent-xml
   json
-  nokogiri
+  nokogiri (>= 1.10.4)
   rails
   roo
   roo-xls
