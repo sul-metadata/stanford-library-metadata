@@ -59,9 +59,8 @@ post '/rps_validator_deliver' do
 end
 
 def validate_rps
-  file = params[:file][:tempfile]
   filename = params[:file][:tempfile].path
-  result = Validator.new(file, filename).validate_spreadsheet
+  result = Validator.new(filename).validate_spreadsheet
 end
 
 def generate_report_table
