@@ -45,8 +45,18 @@ post '/rps_validator_index' do
 end
 
 post '/rps_validator_process' do
-  validate_rps
-  redirect to('/rps_validator_download')
+  Thread.new {validate_rps}
+  redirect to('/rps_validator_in_process')
+end
+
+get '/rps_validator_in_process' do
+  # if File.zero?('./public/rps_validator/report.csv')
+  if system %Q[lsof './public/rps_validator/report.csv']
+    sleep 5
+    redirect to('rps_validator_in_process')
+  else
+    redirect to('rps_validator_download')
+  end
 end
 
 get '/rps_validator_download' do

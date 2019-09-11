@@ -456,7 +456,9 @@ class Validator
 
   def report_missing_sourceids
     # Report empty cells in source ID column
-    log_error(@info, @missing_sourceids.join(", "), "Blank source ID")
+    unless @missing_sourceids.empty?
+      log_error(@info, @missing_sourceids.join(", "), "Blank source ID")
+    end
   end
 
   def report_duplicate_sourceids
@@ -739,11 +741,13 @@ class Validator
   end
 
   def write_errors_to_output
-    @report << ["Type", "Description", "Locator"]
-    report_error_type(@fail)
-    report_error_type(@error)
-    report_error_type(@warning)
-    report_error_type(@info)
+    unless @errors.values.uniq == [[]]
+      @report << ["Type", "Description", "Locator"]
+      report_error_type(@fail)
+      report_error_type(@error)
+      report_error_type(@warning)
+      report_error_type(@info)
+    end
     @report.close
   end
 
