@@ -36,18 +36,47 @@ end
 
 get '/rps_validator_index' do
   clear_files('./public/rps_validator')
+  @status = 'none'
   erb :rps_validator_index
 end
 
 post '/rps_validator_index' do
   clear_files('./public/rps_validator')
+  @status = 'none'
   erb :rps_validator_index
 end
 
 post '/rps_validator_process' do
-  validate_rps
-  redirect to('/rps_validator_download')
+
+  Thread.new {validate_rps}
+  redirect to('/rps_validator_in_process')
 end
+
+get '/rps_validator_in_process' do
+  if File.zero?('./public/rps_validator/report.csv')
+    # file is also zero if no results
+    erb :rps_validator_process
+  else
+    redirect to('rps_validator_download')
+  end
+end
+
+# post '/rps_validator_process' do
+#   validate_rps
+#   @task = Thread.new {
+#     redirect to('/rps_validator_in_process')
+#   }
+# end
+#
+# get '/rps_validator_in_process' do
+#   @task.join
+#   puts @status.inspect
+#   if @status == 'complete'
+#     redirect to('/rps_validator_download')
+#   else
+#     erb :rps_validator_process
+#   end
+# end
 
 get '/rps_validator_download' do
   generate_report_table
@@ -59,8 +88,10 @@ post '/rps_validator_deliver' do
 end
 
 def validate_rps
+  @status = 'processing'
   filename = params[:file][:tempfile].path
   result = Validator.new(filename).validate_spreadsheet
+  @status = 'complete'
 end
 
 def generate_report_table
