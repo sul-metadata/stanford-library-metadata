@@ -108,25 +108,33 @@ class ReverseModsulator
   def process_zip_file
     Zip::File.open(@source) do |zip_file|
       zip_file.each do |entry|
-        druid = get_druid_from_filename(entry.name)
-        content = entry.get_input_stream
-        mods_file = MODSFile.new(druid, Nokogiri::XML(content), @template_xml, @namespace)
-        process_mods_file(mods_file, druid)
+        if entry.directory?
+          puts 'is a directory'
+        else
+          process_zip_entry(entry)
+        end
       end
       write_output if @analysis_only == false
     end
   end
 
   def process_zip_stream
-    Zip::File.open_buffer(@source) do |zip_file|
-      zip_file.each do |entry|
-        druid = get_druid_from_filename(entry.name)
-        content = entry.get_input_stream
-        mods_file = MODSFile.new(druid, Nokogiri::XML(content), @template_xml, @namespace)
-        process_mods_file(mods_file, druid)
+    Zip::File.open_buffer(@source) do |zip_stream|
+      zip_stream.each do |entry|
+        puts entry.name
+        next if entry.directory?
+        process_zip_entry(entry)
       end
       write_output if @analysis_only == false
     end
+  end
+
+  def process_zip_entry(entry)
+    druid = get_druid_from_filename(entry.name)
+    return unless druid_is_valid?(druid)
+    content = entry.get_input_stream
+    mods_file = MODSFile.new(druid, Nokogiri::XML(content), @template_xml, @namespace)
+    process_mods_file(mods_file, druid)
   end
 
   # Transform MODS file to replayable spreadsheet.
@@ -140,8 +148,17 @@ class ReverseModsulator
   # Get the druid for output from the MODS filename.
   # @param [String] mods_filename   Name of MODS input file.
   def get_druid_from_filename(mods_filename)
-    mods_filename.gsub('druid:','').gsub('.xml','')
+    File.basename(mods_filename, '.xml')
   end
+
+  def druid_is_valid?(druid)
+    if druid.match?(/^[a-z][a-z][0-9][0-9][0-9][a-z][a-z][0-9][0-9][0-9][0-9]$/)
+      return true
+    else
+      return false
+    end
+  end
+
 
   # Write CSV data output to file.
   # @param [Hash]   data        Processed data output.
