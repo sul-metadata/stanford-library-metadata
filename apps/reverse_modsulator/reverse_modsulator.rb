@@ -108,10 +108,8 @@ class ReverseModsulator
   def process_zip_file
     Zip::File.open(@source) do |zip_file|
       zip_file.each do |entry|
-        if entry.directory?
-          puts 'is a directory'
-        else
-          process_zip_entry(entry)
+        next if entry.directory?
+        process_zip_entry(entry)
         end
       end
       write_output if @analysis_only == false
@@ -121,7 +119,6 @@ class ReverseModsulator
   def process_zip_stream
     Zip::File.open_buffer(@source) do |zip_stream|
       zip_stream.each do |entry|
-        puts entry.name
         next if entry.directory?
         process_zip_entry(entry)
       end
