@@ -19,6 +19,7 @@ class ReverseModsulator
     @source = source
     @filename = filename
     @data = {}
+    @data_loss = []
 
     if options[:input] == 'file' || @source.class == String && @source.end_with?('.xml')
       @process = 'file'
@@ -87,6 +88,7 @@ class ReverseModsulator
       process_mods_file(mods_file, druid)
     end
     write_output if @analysis_only == false
+    report_data_loss
   end
 
   # Process a compiled file of MODS records using the xmlDocs/xmlDoc structure.
@@ -103,6 +105,7 @@ class ReverseModsulator
       process_mods_file(mods_file, druid)
     end
     write_output if @analysis_only == false
+    report_data_loss
   end
 
   def process_zip_file
@@ -113,6 +116,7 @@ class ReverseModsulator
       end
       write_output if @analysis_only == false
     end
+    report_data_loss
   end
 
   def process_zip_stream
@@ -123,6 +127,7 @@ class ReverseModsulator
       end
       write_output if @analysis_only == false
     end
+    report_data_loss
   end
 
   def process_zip_entry(entry)
@@ -257,16 +262,14 @@ class ReverseModsulator
   # @param [MODSFile] mods_file     The MODSFile object for the record being processed.
   # @param [String]   druid         The druid associated with the MODS record being processed.
   def compare_mods_to_template(mods_file, druid)
-    log = []
     mods_elements, mods_attributes = get_element_and_attribute_counts(mods_file.mods)
     mods_elements.keys.each do |e|
       next if ["mods/subject/genre", "mods/subject/geographic", "mods/subject/topic"].include?(e)
-      log << compare_path_counts(mods_elements, @template_elements, e, druid)
+      @data_loss << compare_path_counts(mods_elements, @template_elements, e, druid)
     end
     mods_attributes.keys.each do |a|
-      log << compare_path_counts(mods_attributes, @template_attributes, a, druid)
+      @data_loss << compare_path_counts(mods_attributes, @template_attributes, a, druid)
     end
-    write_to_logfile(log)
   end
 
   # Compare a single path  in the MODS record and the template and report when it has more
@@ -287,11 +290,11 @@ class ReverseModsulator
 
   # Write results of data loss analysis to log file.
   # @param [Array] log              Messages to write to log.
-  def write_to_logfile(log)
-    if log.compact.size > 0
+  def report_data_loss
+    if @data_loss.compact.size > 0
       CSV.open(@logfile, 'wb') do |csv|
         csv << ["Druid", "Description"]
-        log.compact.each do |l|
+        @data_loss.compact.each do |l|
           csv << l
         end
       end
