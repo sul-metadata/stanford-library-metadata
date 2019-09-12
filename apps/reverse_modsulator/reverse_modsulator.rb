@@ -108,11 +108,8 @@ class ReverseModsulator
   def process_zip_file
     Zip::File.open(@source) do |zip_file|
       zip_file.each do |entry|
-        if entry.directory?
-          puts 'is a directory'
-        else
-          process_zip_entry(entry)
-        end
+        next if entry.directory?
+        process_zip_entry(entry)
       end
       write_output if @analysis_only == false
     end
@@ -121,7 +118,6 @@ class ReverseModsulator
   def process_zip_stream
     Zip::File.open_buffer(@source) do |zip_stream|
       zip_stream.each do |entry|
-        puts entry.name
         next if entry.directory?
         process_zip_entry(entry)
       end
@@ -148,7 +144,8 @@ class ReverseModsulator
   # Get the druid for output from the MODS filename.
   # @param [String] mods_filename   Name of MODS input file.
   def get_druid_from_filename(mods_filename)
-    File.basename(mods_filename, '.xml')
+    f = File.basename(mods_filename, '.xml')
+    f.gsub(/druid[:_]/, '')
   end
 
   def druid_is_valid?(druid)
