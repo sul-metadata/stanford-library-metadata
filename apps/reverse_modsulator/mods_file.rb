@@ -27,6 +27,7 @@ class MODSFile
       'abstract',
       'tableOfContents',
       'identifier',
+      'part',
       'recordInfo'
     ]
 
@@ -137,7 +138,7 @@ class MODSFile
   # @return [Hash]                          Key: header code; value: metadata value.
   def extract_self_value(mods_node, template_node)
     self_value = {}
-    return {} if mods_node == nil || template_node == nil || mods_node.name == 'text' || mods_node.children.size > 1
+    return {} if mods_node == nil || template_node == nil || mods_node.children.size > 1
     header_code = template_node.content.strip
     if header_code.start_with?('[[')
       self_value[header_code.slice(2..-3)] = mods_node.content
@@ -150,7 +151,7 @@ class MODSFile
   # @return [Array]                         List of child element names (strings).
   def get_child_element_names(mods_node)
     return [] if mods_node == nil
-    child_element_names = mods_node.children.map {|x| x.name}.uniq.reject {|y| y == 'text'}.compact
+    child_element_names = mods_node.elements.map {|x| x.name}.uniq
   end
 
   # Extract the data and attribute values for code/text elements that may be paired.
@@ -248,10 +249,13 @@ class MODSFile
     template_children = template_node.children.map {|x| x if x.content.match(/\S/)}.compact
     # Skip titleInfo in template if not present in data - template uses snX:p2
     # for both titleInfo and topic etc. subject type, throwing off the index matching if the
-    # data uses the second p2 pattern and not the first.
+    # data uses the second p2 pattern and not the first. Ditto if namePart + additional
+    # subjects without titleInfo.
     child_subject_types = mods_children.map {|x| x.name}
     if child_subject_types.include?('name') && !child_subject_types.include?('titleInfo')
       template_children.delete(template_children[1])
+    elsif child_subject_types.include?('titleInfo') && !child_subject_types.include?('name')
+      template_children.delete(template_children[0])
     end
     mods_children.each_with_index do |s, i|
       subject_values_and_attributes.merge!(extract_subject_child_attributes_and_values(s, template_children[i]))
