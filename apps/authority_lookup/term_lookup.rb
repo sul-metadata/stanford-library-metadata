@@ -10,10 +10,13 @@ class TermLookup
     @search_term = search_term
     @authority = authority
     @base_url = base_url
+    @exit = false
 
-    exit if @search_term == nil || @search_term == ""
-    exit if @authority == nil || @authority == ""
-    exit if @base_url == nil || @base_url == ""
+    @exit = true if @search_term == nil || @search_term == ""
+    @exit = true if @authority == nil || @authority == ""
+    @exit = true if @base_url == nil || @base_url == ""
+
+    exit if @exit
 
     if options[:subauthority] == nil
       @subauthority = ""
@@ -33,12 +36,7 @@ class TermLookup
       @language = options[:language]
     end
 
-    @result = {@search_term => []}
-    @encoded_search_term = encode_search_term
-    @query_url = construct_query
-    @response = run_query
-    parse_query_response
-    return @result
+
   end
 
   def encode_search_term
@@ -61,6 +59,15 @@ class TermLookup
     parsed_response.each do |r|
       @result[@search_term] << r
     end
+  end
+
+  def lookup_term
+    @result = {@search_term => []}
+    @encoded_search_term = encode_search_term
+    @query_url = construct_query
+    @response = run_query
+    parse_query_response
+    return @result
   end
 
 end
