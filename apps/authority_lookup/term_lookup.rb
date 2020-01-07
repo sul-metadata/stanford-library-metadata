@@ -4,9 +4,9 @@ require 'json'
 
 class TermLookup
 
-  attr_reader :result
+  attr_reader :result, :subauthority, :limit, :language
 
-  def initialize(search_term, authority, base_url, options = {})
+  def initialize(search_term, authority, base_url, subauthority: '', limit: 10, language: 'en')
     @search_term = search_term
     @authority = authority
     @base_url = base_url
@@ -18,25 +18,9 @@ class TermLookup
 
     exit if @exit
 
-    if options[:subauthority] == nil
-      @subauthority = ""
-    else
-      @subauthority = options[:subauthority]
-    end
-
-    if options[:limit] == nil
-      @limit = 10
-    else
-      @limit = options[:limit]
-    end
-
-    if options[:language] == nil
-      @language = 'en'
-    else
-      @language = options[:language]
-    end
-
-
+    @subauthority = subauthority
+    @limit = limit
+    @language = language
   end
 
   def encode_search_term
