@@ -4,7 +4,7 @@ require 'json'
 
 class TermLookup
 
-  attr_reader :result, :subauthority, :limit, :language
+  attr_reader :result, :subauthority, :limit, :language, :exit
 
   def initialize(search_term, authority, base_url, subauthority: '', limit: 10, language: 'en')
     @search_term = search_term
@@ -23,34 +23,34 @@ class TermLookup
     @language = language
   end
 
-  def encode_search_term
-    encoded_search_term = CGI::escape(@search_term)
+  def encode_search_term(search_term)
+    encoded_search_term = CGI::escape(search_term)
   end
 
-  def construct_query
+  def construct_query(encoded_search_term)
     query_url = "#{@base_url}#{@authority}"
     query_url += "/#{@subauthority}" if @subauthority != ""
-    query_url += "?q=#{@encoded_search_term}&maxRecords=#{@limit}&lang=#{@language}"
+    query_url += "?q=#{encoded_search_term}&maxRecords=#{@limit}&lang=#{@language}"
   end
 
-  def run_query
-    query = URI(@query_url)
+  def run_query(query_url)
+    query = URI(query_url)
     Net::HTTP.get(query)
   end
 
-  def parse_query_response
-    parsed_response = JSON.parse(@response)
+  def parse_query_response(search_term, response)
+    parsed_response = JSON.parse(response)
     parsed_response.each do |r|
-      @result[@search_term] << r
+      @result[search_term] << r
     end
   end
 
-  def lookup_term
-    @result = {@search_term => []}
-    @encoded_search_term = encode_search_term
-    @query_url = construct_query
-    @response = run_query
-    parse_query_response
+  def lookup_term(search_term)
+    @result = {search_term => []}
+    encoded_search_term = encode_search_term(search_term)
+    query_url = construct_query(encoded_search_term)
+    response = run_query(query_url)
+    parse_query_response(search_term, response)
     return @result
   end
 
