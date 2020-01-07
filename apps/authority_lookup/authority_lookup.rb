@@ -3,6 +3,8 @@ require_relative 'result_parser'
 
 class AuthorityLookup
 
+  attr_reader :result_set
+
   def initialize(term_list, authority, base_url, outfile, subauthority: '', limit: 10, language: 'en')
     @term_list = term_list
     @authority = authority
