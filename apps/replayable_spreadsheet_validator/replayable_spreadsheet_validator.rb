@@ -6,7 +6,7 @@ class Validator
 
   def initialize(filename)
     @filename = filename
-    @template = './apps/replayable_spreadsheet_validator/modsulator_template.xml'
+    @template = File.expand_path('./modsulator_template.xml', File.dirname(__FILE__))
     @extension = File.extname(@filename)
     @report = CSV.new(File.open('./public/rps_validator/report.csv', 'w'))
 
