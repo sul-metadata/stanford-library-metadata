@@ -6,10 +6,13 @@ class TermLookup
 
   attr_reader :result, :subauthority, :limit, :language, :exit
 
-  def initialize(search_term, authority, base_url, subauthority: '', limit: 10, language: 'en')
+  def initialize(search_term, authority, base_url, subauthority, limit, language)
     @search_term = search_term
     @authority = authority
     @base_url = base_url
+    @subauthority = subauthority
+    @limit = limit
+    @language = language
     @exit = false
 
     @exit = true if @search_term == nil || @search_term == ""
@@ -18,9 +21,6 @@ class TermLookup
 
     exit if @exit
 
-    @subauthority = subauthority
-    @limit = limit
-    @language = language
   end
 
   def encode_search_term(search_term)
@@ -29,7 +29,7 @@ class TermLookup
 
   def construct_query(encoded_search_term)
     query_url = "#{@base_url}#{@authority}"
-    query_url += "/#{@subauthority}" if @subauthority != ""
+    query_url += "/#{@subauthority}" unless @subauthority == nil || @subauthority.empty?
     query_url += "?q=#{encoded_search_term}&maxRecords=#{@limit}&lang=#{@language}"
   end
 
