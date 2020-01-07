@@ -13,6 +13,7 @@ class ResultParser
   def write_results_to_file
     outfile = CSV.new(File.open(@filename, 'w'))
     outfile << @headers
+    # puts @result_set.inspect
     @result_set.each do |match_query|
       match_query.each do |term, matches|
         if matches.empty?
