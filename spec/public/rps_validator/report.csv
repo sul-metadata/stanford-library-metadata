@@ -1,0 +1,2 @@
+Type,Description,Locator
+FAIL,"Invalid header row, must begin with druid & sourceId (case-sensitive) and appear in first ten lines of file",headers
