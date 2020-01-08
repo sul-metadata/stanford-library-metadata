@@ -74,28 +74,33 @@ class Transformer
     spreadsheet.each do |row|
       # Skip header row
       next if row == data_fields
-      # Convert all values to strings
-      row.map! {|x| x.to_s}
-      # Populate row hash with constant string data from mapfile
-      data_out = Hash.new.merge(@string_data)
-      # Add source data to row hash based on simple mapping
-      @map_data.each do |target, source|
-        data_out[target] = row[data_fields.index(source)] if data_fields.include?(source)
-      end
-      # Add source data to row hash incorporating {variables}
-      @complex_data.each do |target, source|
-        # Generate data only if all variable names are also present in data field names
-        data_out[target] = source.gsub(/{[^}]*}/) {|s| row[data_fields.index(s[1..-2])]} if source.scan(/{([^}]*)}/).flatten - data_fields == []
-      end
-      # Delete data from row hash when required dependency is not present
-      @data_rules.each do |target, rule|
-        if data_fields.index(rule) == nil || row[data_fields.index(rule)] == nil || row[data_fields.index(rule)] =~ /^\s*$/
-          data_out[target] = nil
-        end
-      end
+      data_out = process_row(row, data_fields)
       outfile << output_row_data(data_out)
     end
     outfile.close
+  end
+
+  def process_row(row, data_fields)
+    # Convert all values to strings
+    row.map! {|x| x.to_s}
+    # Populate row hash with constant string data from mapfile
+    data_out = Hash.new.merge(@string_data)
+    # Add source data to row hash based on simple mapping
+    @map_data.each do |target, source|
+      data_out[target] = row[data_fields.index(source)] if data_fields.include?(source)
+    end
+    # Add source data to row hash incorporating {variables}
+    @complex_data.each do |target, source|
+      # Generate data only if all variable names are also present in data field names
+      data_out[target] = source.gsub(/{[^}]*}/) {|s| row[data_fields.index(s[1..-2])]} if source.scan(/{([^}]*)}/).flatten - data_fields == []
+    end
+    # Delete data from row hash when required dependency is not present
+    @data_rules.each do |target, rule|
+      if data_fields.index(rule) == nil || row[data_fields.index(rule)] == nil || row[data_fields.index(rule)] =~ /^\s*$/
+        data_out[target] = nil
+      end
+    end
+    return data_out
   end
 
   def output_row_data(row)
