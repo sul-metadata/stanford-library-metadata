@@ -8,7 +8,7 @@ require 'cgi'
 require 'net/http'
 require 'json'
 require './apps/replayable_spreadsheet_validator/replayable_spreadsheet_validator'
-require './apps/process_metadata_mapping/process_metadata_mapping'
+require './apps/transform_spreadsheet/transform_spreadsheet'
 require './apps/virtual_object_manifest/manifest_generator'
 require './apps/reverse_modsulator/reverse_modsulator'
 require './apps/transform_to_datacite/lib/modsulator'
@@ -27,7 +27,7 @@ end
 get '/clear_cache' do
   clear_files('./public/reverse_modsulator')
   clear_files('./public/replayable_spreadsheet_validator')
-  clear_files('./public/transform_to_rps')
+  clear_files('./public/transform_spreadsheet')
   clear_files('./public/virtual_object_manifest')
 end
 
@@ -74,33 +74,33 @@ end
 
 ##### Transform spreadsheet to replayable spreadsheet
 
-get '/transform_to_rps_index' do
-  clear_files('./public/transform_to_rps')
-  erb :transform_to_rps_index
+get '/transform_spreadsheet_index' do
+  clear_files('./public/transform_spreadsheet')
+  erb :transform_spreadsheet_index
 end
 
-post '/transform_to_rps_index' do
-  clear_files('./public/transform_to_rps')
-  erb :transform_to_rps_index
+post '/transform_spreadsheet_index' do
+  clear_files('./public/transform_spreadsheet')
+  erb :transform_spreadsheet_index
 end
 
-post '/transform_to_rps_process' do
-  transform_to_rps
-  redirect to('/transform_to_rps_download')
+post '/transform_spreadsheet_process' do
+  transform_spreadsheet
+  redirect to('/transform_spreadsheet_download')
 end
 
-get '/transform_to_rps_download' do
-  erb :transform_to_rps_download
+get '/transform_spreadsheet_download' do
+  erb :transform_spreadsheet_download
 end
 
-post '/transform_to_rps_deliver' do
-  send_file('./public/transform_to_rps/replayable_spreadsheet.csv', :type => 'csv', :disposition => 'attachment')
+post '/transform_spreadsheet_deliver' do
+  send_file('./public/transform_spreadsheet/replayable_spreadsheet.csv', :type => 'csv', :disposition => 'attachment')
 end
 
-def transform_to_rps
+def transform_spreadsheet
   in_filename = params[:datafile][:tempfile].path
   map_filename = params[:mapfile][:tempfile].path
-  Transformer.new(in_filename, map_filename, './public/transform_to_rps/replayable_spreadsheet.csv').transform
+  Transformer.new(in_filename, map_filename, './public/transform_spreadsheet/replayable_spreadsheet.csv').transform
 end
 
 ##### Virtual object manifest
