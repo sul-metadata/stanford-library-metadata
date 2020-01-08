@@ -26,35 +26,35 @@ end
 
 get '/clear_cache' do
   clear_files('./public/reverse_modsulator')
-  clear_files('./public/rps_validator')
+  clear_files('./public/replayable_spreadsheet_validator')
   clear_files('./public/transform_to_rps')
   clear_files('./public/virtual_object_manifest')
 end
 
 ##### Replayable spreadsheet validator
 
-get '/rps_validator_index' do
-  clear_files('./public/rps_validator')
-  erb :rps_validator_index
+get '/replayable_spreadsheet_validator_index' do
+  clear_files('./public/replayable_spreadsheet_validator')
+  erb :replayable_spreadsheet_validator_index
 end
 
-post '/rps_validator_index' do
-  clear_files('./public/rps_validator')
-  erb :rps_validator_index
+post '/replayable_spreadsheet_validator_index' do
+  clear_files('./public/replayable_spreadsheet_validator')
+  erb :replayable_spreadsheet_validator_index
 end
 
-post '/rps_validator_process' do
+post '/replayable_spreadsheet_validator_process' do
   validate_rps
-  redirect to('/rps_validator_download')
+  redirect to('/replayable_spreadsheet_validator_download')
 end
 
-get '/rps_validator_download' do
+get '/replayable_spreadsheet_validator_download' do
   generate_report_table
-  erb :rps_validator_download
+  erb :replayable_spreadsheet_validator_download
 end
 
-post '/rps_validator_deliver' do
-  send_file('./public/rps_validator/report.csv', :type => 'csv', :disposition => 'attachment')
+post '/replayable_spreadsheet_validator_deliver' do
+  send_file('./public/replayable_spreadsheet_validator/report.csv', :type => 'csv', :disposition => 'attachment')
 end
 
 def validate_rps
@@ -63,12 +63,12 @@ def validate_rps
 end
 
 def generate_report_table
-  if File.zero?('./public/rps_validator/report.csv')
+  if File.zero?('./public/replayable_spreadsheet_validator/report.csv')
     @validator_table = "No errors logged."
     @validator_download_display = ""
   else
-    @validator_table = generate_html_table('./public/rps_validator/report.csv')
-    @validator_download_display = generate_download_button("/rps_validator_deliver", "post", "Download report")
+    @validator_table = generate_html_table('./public/replayable_spreadsheet_validator/report.csv')
+    @validator_download_display = generate_download_button("/replayable_spreadsheet_validator_deliver", "post", "Download report")
   end
 end
 

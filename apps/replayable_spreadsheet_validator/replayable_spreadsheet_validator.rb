@@ -8,7 +8,7 @@ class Validator
     @filename = filename
     @template = File.expand_path('./modsulator_template.xml', File.dirname(__FILE__))
     @extension = File.extname(@filename)
-    @report = CSV.new(File.open('./public/rps_validator/report.csv', 'w'))
+    @report = CSV.new(File.open('./public/replayable_spreadsheet_validator/report.csv', 'w'))
 
     @exit = false
     @value_type_indexes = {}

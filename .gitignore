@@ -1,4 +1,8 @@
+/.gitignore
 /test/
 /test.rb
 /helpers.rb
-/rspec/public/rps_validator/report.csv
+/spec/public/authority_lookup/*
+/spec/public/replayable_spreadsheet_validator/*
+/public/replayable_spreadsheet_validator/*
+/public/authority_lookup/*
