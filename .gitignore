@@ -3,6 +3,10 @@
 /test.rb
 /helpers.rb
 /spec/public/authority_lookup/*
+/spec/public/transform_spreadsheet/*
 /spec/public/replayable_spreadsheet_validator/*
+/spec/public/virtual_object_manifest/*
 /public/replayable_spreadsheet_validator/*
+/public/transform_spreadsheet/*
 /public/authority_lookup/*
+/public/virtual_object_manifest/*

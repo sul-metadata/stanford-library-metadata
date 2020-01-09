@@ -4,16 +4,21 @@ require 'roo-xls'
 # Methods for processing and validating input file
 class ManifestSheet
 
+  attr_reader :sheet, :rows, :errors
+
   # Creates a new ManifestSheet
   # @param [File]  file    The input file object
   def initialize(file)
     @sheet = Roo::Spreadsheet.open(file)
     @error_report = File.open('./public/virtual_object_manifest/errors.csv', 'w')
+    @exit = false
   end
 
   def validate
     # Check that all required headers are present
-    validate_header
+    headers = @sheet.row(1)
+    validate_headers(headers)
+    exit if @exit == true
     # Parse data columns based on headers
     @rows = @sheet.parse(sequence: 'sequence', root: 'root', druid: 'druid')
     # Hash
@@ -26,15 +31,15 @@ class ManifestSheet
     @sheet
   end
 
-  def validate_header
+  def validate_headers(headers)
     # Checks that header contains sequence, root, and druid
-    if !@sheet.row(1).include?('sequence') || !@sheet.row(1).include?('root') || !@sheet.row(1).include?('druid')
-      @error_report.write("Validation failed due to header error!! Input data must contain 'sequence', 'root', and 'druid' in first row")
+    unless ['sequence', 'root', 'druid'] & headers == ['sequence', 'root', 'druid']
+      @exit = true
     end
   end
 
   def validate_data
-    @rows.each do |row|
+    @rows.each_with_index do |row, i|
       # Checks druid pattern
       unless row[:druid] =~ /^druid:[a-z]{2}[0-9]{3}[a-z]{2}[0-9]{4}$/ || row[:druid] =~ /^[a-z]{2}[0-9]{3}[a-z]{2}[0-9]{4}$/
         @errors << "Druid not recognized: #{row[:druid]}"
@@ -42,8 +47,8 @@ class ManifestSheet
       # begin block to handle ArgumentError for integer test
       begin
         # Checks for empty cells
-        if row.values.compact.count != row.values.count || row.values.count < 3
-          @errors << "Missing value in #{row}"
+        if row.values.include?(nil)
+          @errors << "Missing value in row #{i+2}"
         elsif @root_sequence.key?(row[:root].to_s)
           @root_sequence[row[:root].to_s] << Integer(row[:sequence])
         else
@@ -51,7 +56,7 @@ class ManifestSheet
         end
         # Handles error if row[:sequence] cannot be converted to integer
       rescue ArgumentError
-        @errors << "Sequence value cannot be converted to integer in #{row}"
+        @errors << "Sequence value cannot be converted to integer for #{row[:druid]}"
       end
     end
   end
