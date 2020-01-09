@@ -207,45 +207,45 @@ end
 
 ##### Transform to DataCite
 
-get '/transform_to_datacite_index' do
-  clear_files('./public/transform_to_datacite')
-  erb :transform_to_datacite_index
+get '/transform_to_datacite_xml_index' do
+  clear_files('./public/transform_to_datacite_xml')
+  erb :transform_to_datacite_xml_index
 end
 
-post '/transform_to_datacite_index' do
-  clear_files('./public/transform_to_datacite')
-  erb :transform_to_datacite_index
+post '/transform_to_datacite_xml_index' do
+  clear_files('./public/transform_to_datacite_xml')
+  erb :transform_to_datacite_xml_index
 end
 
-post '/transform_to_datacite_process' do
-  transform_to_datacite
-  redirect to('/transform_to_datacite_download')
+post '/transform_to_datacite_xml_process' do
+  transform_to_datacite_xml
+  redirect to('/transform_to_datacite_xml_download')
 end
 
-get '/transform_to_datacite_download' do
-  erb :transform_to_datacite_download
+get '/transform_to_datacite_xml_download' do
+  erb :transform_to_datacite_xml_download
 end
 
-post '/transform_to_datacite_deliver' do
-  send_file('./public/transform_to_datacite/datacite_xml.zip', :type => 'zip', :disposition => 'attachment')
+post '/transform_to_datacite_xml_deliver' do
+  send_file('./public/transform_to_datacite_xml/datacite_xml.zip', :type => 'zip', :disposition => 'attachment')
 end
 
-post '/transform_to_datacite_template' do
-  send_file('./public/transform_to_datacite/datacite_template_20190618.xlsx', :type => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', :disposition => 'attachment')
+post '/transform_to_datacite_xml_template' do
+  send_file('./public/transform_to_datacite_xml/datacite_template_20190618.xlsx', :type => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', :disposition => 'attachment')
 end
 
-post '/transform_to_datacite_template_dc_only' do
-  send_file('./public/transform_to_datacite/datacite_only_template_20190626.xlsx', :type => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', :disposition => 'attachment')
+post '/transform_to_datacite_xml_template_dc_only' do
+  send_file('./public/transform_to_datacite_xml/datacite_only_template_20190626.xlsx', :type => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', :disposition => 'attachment')
 end
 
-def transform_to_datacite
+def transform_to_datacite_xml
   in_file = params[:file][:tempfile]
   in_filename = params[:file][:tempfile].path
   xml = Modsulator.new(in_file, in_filename).convert_rows
   doc = Nokogiri::XML(xml)
   records = doc.xpath('//*[local-name()="resource"]')
   xml_declaration = '<?xml version="1.0" encoding="UTF-8"?>'
-  Zip::File.open('./public/transform_to_datacite/datacite_xml.zip', Zip::File::CREATE) do |z|
+  Zip::File.open('./public/transform_to_datacite_xml/datacite_xml.zip', Zip::File::CREATE) do |z|
     records.each do |resource|
       druid = resource.parent['objectId']
       z.get_output_stream("#{druid}.xml") {|f| f.puts "#{xml_declaration}\n#{resource.to_s}"}
