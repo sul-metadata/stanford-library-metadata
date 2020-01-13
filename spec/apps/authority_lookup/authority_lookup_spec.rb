@@ -1,5 +1,6 @@
 require '../apps/authority_lookup/authority_lookup'
 require '../apps/authority_lookup/file_parser'
+require './spec_helper'
 
 RSpec.describe AuthorityLookup do
 
@@ -53,7 +54,7 @@ RSpec.describe AuthorityLookup do
       expect(lookup_result['Dorothy Dunnett']).not_to eq([])
     end
     it 'returns results for each term in a list' do
-      term_list = FileParser.new('./fixtures/lookup_list.txt').terms
+      term_list = FileParser.new(File.join(FIXTURES_DIR, 'authority_lookup/lookup_list.txt')).terms
       expect(term_list.size).to eq(2)
       results = AuthorityLookup.new(term_list, 'LOCNAMES_LD4L_CACHE', 'https://lookup.ld4l.org/authorities/search/linked_data/').process_term_list
       expect(results.size).to eq(2)

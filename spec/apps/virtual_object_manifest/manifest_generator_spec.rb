@@ -1,9 +1,10 @@
 require '../apps/virtual_object_manifest/manifest_generator'
+require './spec_helper'
 
 RSpec.describe ManifestGenerator do
 
   before(:all) do
-    @manifest_test_object = ManifestGenerator.new('./fixtures/manifest_test.xlsx')
+    @manifest_test_object = ManifestGenerator.new(File.join(FIXTURES_DIR, 'virtual_object_manifest/manifest_test.xlsx'))
     @manifest_test_process = @manifest_test_object.generate_manifest
   end
 
@@ -12,7 +13,7 @@ RSpec.describe ManifestGenerator do
       expect(@manifest_test_object.infile).to be_a(ManifestSheet)
     end
     it 'does not process data with validation errors' do
-      manifest_errors_object = ManifestGenerator.new('./fixtures/manifest_test_errors.xlsx')
+      manifest_errors_object = ManifestGenerator.new(File.join(FIXTURES_DIR, 'virtual_object_manifest/manifest_test_errors.xlsx'))
       expect(manifest_errors_object.generate_manifest).to eq(0)
     end
     it 'parses a row in the ManifestSheet' do
@@ -46,10 +47,10 @@ RSpec.describe ManifestGenerator do
 
   describe 'generates output:' do
     it 'generates expected data statistics output' do
-      expect(File.read('./public/virtual_object_manifest/stats.csv')).to eq(File.read('./fixtures/manifest_stats.csv'))
+      expect(File.read('./public/virtual_object_manifest/stats.csv')).to eq(File.read(File.join(FIXTURES_DIR, 'virtual_object_manifest/manifest_stats.csv')))
     end
     it 'generates expected manifest output' do
-      expect(File.read('./public/virtual_object_manifest/manifest.csv')).to eq(File.read('./fixtures/manifest.csv'))
+      expect(File.read('./public/virtual_object_manifest/manifest.csv')).to eq(File.read(File.join(FIXTURES_DIR, 'virtual_object_manifest/manifest.csv')))
     end
   end
 

@@ -1,3 +1,4 @@
+require 'rspec'
 require 'equivalent-xml/rspec_matchers'
 
 FIXTURES_DIR = File.expand_path('fixtures', __dir__)

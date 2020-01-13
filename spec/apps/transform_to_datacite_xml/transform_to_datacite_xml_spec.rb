@@ -8,7 +8,7 @@ require './spec_helper'
 RSpec.describe Modsulator do
 
   before(:all) do
-    @dc = Modsulator.new(File.open('./fixtures/datacite_template_20200110_test.xlsx'), './fixtures/datacite_template_20200110_test.xlsx')
+    @dc = Modsulator.new(File.open(File.join(FIXTURES_DIR, 'transform_to_datacite_xml/datacite_template_20200110_test.xlsx')), File.join(FIXTURES_DIR, './transform_to_datacite_xml/datacite_template_20200110_test.xlsx'))
   end
 
 
@@ -19,8 +19,8 @@ RSpec.describe Modsulator do
     it 'converts rows to expected XML' do
       xml = @dc.convert_rows
       generated_xml = Nokogiri::XML(xml)
-      expected_xml = Nokogiri::XML(File.read('./fixtures/datacite.xml'))
-      expect(generated_xml).to be_equivalent_to(expected_xml).ignoring_attr_values('datetime')
+      expected_xml = Nokogiri::XML(File.read(File.join(FIXTURES_DIR, 'transform_to_datacite_xml/datacite.xml')))
+      expect(generated_xml.to_s).to be_equivalent_to(expected_xml.to_s).ignoring_attr_values('datetime', 'sourceFile')
     end
   end
 

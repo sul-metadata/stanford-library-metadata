@@ -1,4 +1,5 @@
 require '../apps/authority_lookup/result_parser'
+require './spec_helper'
 
 RSpec.describe ResultParser do
 
@@ -35,7 +36,7 @@ RSpec.describe ResultParser do
 
   describe 'parses results for CSV:' do
     it 'generates csv' do
-      expect(File.read(@outfile)).to eq(File.read('./fixtures/lookup_results.csv'))
+      expect(File.read(@outfile)).to eq(File.read(File.join(FIXTURES_DIR, 'authority_lookup/lookup_results.csv')))
     end
   end
 

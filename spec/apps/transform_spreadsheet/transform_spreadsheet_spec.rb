@@ -1,10 +1,11 @@
 require '../apps/transform_spreadsheet/transform_spreadsheet'
+require './spec_helper'
 
 RSpec.describe Transformer do
 
   before(:all) do
-    @source_filename = './fixtures/test_source.xlsx'
-    @map_filename = './fixtures/test_mapping.xlsx'
+    @source_filename = File.join(FIXTURES_DIR, 'transform_spreadsheet/test_source.xlsx')
+    @map_filename = File.join(FIXTURES_DIR, 'transform_spreadsheet/test_mapping.xlsx')
     @out_filename = './public/transform_spreadsheet/output.csv'
     @transform_object = Transformer.new(@source_filename, @map_filename, @out_filename)
     @transform_process = @transform_object.transform
@@ -59,8 +60,8 @@ RSpec.describe Transformer do
 
   describe 'outputs transformed data' do
     it 'outputs correct data' do
-      expect(File.read(@out_filename)).to eq(File.read('./fixtures/transform_output.csv'))
+      expect(File.read(@out_filename)).to eq(File.read(File.join(FIXTURES_DIR, 'transform_spreadsheet/transform_output.csv')))
     end
   end
-  
+
 end

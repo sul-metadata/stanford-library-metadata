@@ -1,27 +1,28 @@
 require '../apps/replayable_spreadsheet_validator/replayable_spreadsheet_validator'
+require './spec_helper'
 require 'csv'
 require 'roo'
 
 RSpec.describe Validator do
 
   before(:all) do
-    @csv = Validator.new('./fixtures/test.csv')
+    @csv = Validator.new(File.join(FIXTURES_DIR, 'replayable_spreadsheet_validator/test.csv'))
     @csv.validate_spreadsheet
     @csv_errors = @csv.errors.to_a.flatten
-    @xlsx = Validator.new('./fixtures/test.xlsx')
+    @xlsx = Validator.new(File.join(FIXTURES_DIR, 'replayable_spreadsheet_validator/test.xlsx'))
     @xlsx.validate_spreadsheet
     @xlsx_errors = @xlsx.errors.to_a.flatten
-    @non_utf8_csv = './fixtures/test_word.csv'
-    @no_header_csv = './fixtures/no_header.csv'
-    @no_header_xlsx = './fixtures/no_header.xlsx'
-    @druid_sourceid_csv = './fixtures/druid_sourceid.csv'
-    @druid_sourceid_xlsx = './fixtures/druid_sourceid.xlsx'
-    @subject_type_no_value_csv = './fixtures/subject_type_no_value.csv'
-    @subject_type_no_value_xlsx = './fixtures/subject_type_no_value.xlsx'
-    @subject_value_no_type_csv = './fixtures/subject_value_no_type.csv'
-    @subject_value_no_type_xlsx = './fixtures/subject_value_no_type.xlsx'
-    @date_content_csv = './fixtures/date_content.csv'
-    @date_content_xlsx = './fixtures/date_content.xlsx'
+    @non_utf8_csv = File.join(FIXTURES_DIR, 'replayable_spreadsheet_validator/test_word.csv')
+    @no_header_csv = File.join(FIXTURES_DIR, 'replayable_spreadsheet_validator/no_header.csv')
+    @no_header_xlsx = File.join(FIXTURES_DIR, 'replayable_spreadsheet_validator/no_header.xlsx')
+    @druid_sourceid_csv = File.join(FIXTURES_DIR, 'replayable_spreadsheet_validator/druid_sourceid.csv')
+    @druid_sourceid_xlsx = File.join(FIXTURES_DIR, 'replayable_spreadsheet_validator/druid_sourceid.xlsx')
+    @subject_type_no_value_csv = File.join(FIXTURES_DIR, 'replayable_spreadsheet_validator/subject_type_no_value.csv')
+    @subject_type_no_value_xlsx = File.join(FIXTURES_DIR, 'replayable_spreadsheet_validator/subject_type_no_value.xlsx')
+    @subject_value_no_type_csv = File.join(FIXTURES_DIR, 'replayable_spreadsheet_validator/subject_value_no_type.csv')
+    @subject_value_no_type_xlsx = File.join(FIXTURES_DIR, 'replayable_spreadsheet_validator/subject_value_no_type.xlsx')
+    @date_content_csv = File.join(FIXTURES_DIR, 'replayable_spreadsheet_validator/date_content.csv')
+    @date_content_xlsx = File.join(FIXTURES_DIR, 'replayable_spreadsheet_validator/date_content.xlsx')
   end
 
   describe 'validates file extension:' do
