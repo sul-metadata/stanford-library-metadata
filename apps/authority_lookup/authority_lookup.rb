@@ -6,7 +6,7 @@ class AuthorityLookup
 
   attr_reader :subauthority, :limit, :language, :exit
 
-  def initialize(term_list, authority, base_url, subauthority: '', limit: 10, language: 'en')
+  def initialize(term_list, authority, base_url, subauthority: '', limit: 10, language: '')
     @term_list = term_list
     @authority = authority
     @base_url = base_url
@@ -49,7 +49,9 @@ class AuthorityLookup
   def construct_query(encoded_search_term)
     query_url = "#{@base_url}#{@authority}"
     query_url += "/#{@subauthority}" unless @subauthority == nil || @subauthority.empty?
-    query_url += "?q=#{encoded_search_term}&maxRecords=#{@limit}&lang=#{@language}"
+    query_url += "?q=#{encoded_search_term}&maxRecords=#{@limit}"
+    query_url += "&lang=#{@language}" unless @language == nil || @language.empty?
+    query_url
   end
 
   def run_query(query_url)

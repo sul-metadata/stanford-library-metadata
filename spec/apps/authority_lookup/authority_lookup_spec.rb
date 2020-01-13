@@ -4,7 +4,7 @@ require '../apps/authority_lookup/file_parser'
 RSpec.describe AuthorityLookup do
 
   before(:all) do
-    @authority_lookup_test = AuthorityLookup.new(['Dorothy Dunnett'], 'LOCNAMES_LD4L_CACHE', 'https://lookup.ld4l.org/authorities/search/linked_data/')
+    @authority_lookup_test = AuthorityLookup.new(['Dorothy Dunnett'], 'LOCNAMES_LD4L_CACHE', 'https://lookup.ld4l.org/authorities/search/linked_data/', language: 'en')
   end
 
   describe 'exits if arguments missing:' do
