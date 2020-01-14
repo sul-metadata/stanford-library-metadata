@@ -4,7 +4,7 @@ require_relative 'response_parser'
 
 class AuthorityLookup
 
-  attr_reader :subauthority, :limit, :language, :exit
+  attr_reader :subauthority, :limit, :language, :parameter, :exit
 
   def initialize(term_list, authority, base_url, subauthority: '', limit: 10, language: '', parameter: '')
     @term_list = term_list

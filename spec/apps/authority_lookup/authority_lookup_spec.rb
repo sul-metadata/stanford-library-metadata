@@ -5,7 +5,7 @@ require './spec_helper'
 RSpec.describe AuthorityLookup do
 
   before(:all) do
-    @authority_lookup_test = AuthorityLookup.new(['Dorothy Dunnett'], 'LOCNAMES_LD4L_CACHE', 'https://lookup.ld4l.org/authorities/search/linked_data/', language: 'en')
+    @authority_lookup_test = AuthorityLookup.new(['Dorothy Dunnett'], 'LOCNAMES_RWO_LD4L_CACHE', 'https://lookup.ld4l.org/authorities/search/linked_data/', language: 'en', parameter: '&context=true')
   end
 
   describe 'exits if arguments missing:' do
@@ -30,8 +30,12 @@ RSpec.describe AuthorityLookup do
       expect(limit_option.limit).to eq(1)
     end
     it 'sets language' do
-      language_option = AuthorityLookup.new('term', 'authority', 'http://example.com/', language: 'ru')
+      language_option = AuthorityLookup.new(['term'], 'authority', 'http://example.com/', language: 'ru')
       expect(language_option.language).to eq('ru')
+    end
+    it 'sets terminal parameter' do
+      parameter_option = AuthorityLookup.new(['term'], 'authority', 'http://example.com/', parameter: '&context=true')
+      expect(parameter_option.parameter).to eq('&context=true')
     end
   end
 
@@ -40,11 +44,11 @@ RSpec.describe AuthorityLookup do
       expect(@authority_lookup_test.encode_search_term('Dorothy Dunnett')).to eq('Dorothy+Dunnett')
     end
     it 'constructs a basic query' do
-      expect(@authority_lookup_test.construct_query('Dorothy+Dunnett')).to eq('https://lookup.ld4l.org/authorities/search/linked_data/LOCNAMES_LD4L_CACHE?q=Dorothy+Dunnett&maxRecords=10&lang=en')
+      expect(@authority_lookup_test.construct_query('Dorothy+Dunnett')).to eq('https://lookup.ld4l.org/authorities/search/linked_data/LOCNAMES_RWO_LD4L_CACHE?q=Dorothy+Dunnett&maxRecords=10&lang=en&context=true')
     end
     it 'constructs a query with options' do
-      options_test = AuthorityLookup.new('Dorothy Dunnett', 'LOCNAMES_LD4L_CACHE', 'https://lookup.ld4l.org/authorities/search/linked_data/', subauthority: 'naf', limit: 1, language: 'ru')
-      expect(options_test.construct_query('Dorothy+Dunnett')).to eq('https://lookup.ld4l.org/authorities/search/linked_data/LOCNAMES_LD4L_CACHE/naf?q=Dorothy+Dunnett&maxRecords=1&lang=ru')
+      options_test = AuthorityLookup.new('Dorothy Dunnett', 'LOCNAMES_RWO_LD4L_CACHE', 'https://lookup.ld4l.org/authorities/search/linked_data/', subauthority: 'naf', limit: 1, language: 'ru', parameter: '&context=true')
+      expect(options_test.construct_query('Dorothy+Dunnett')).to eq('https://lookup.ld4l.org/authorities/search/linked_data/LOCNAMES_RWO_LD4L_CACHE/naf?q=Dorothy+Dunnett&maxRecords=1&lang=ru&context=true')
     end
   end
 
@@ -56,7 +60,7 @@ RSpec.describe AuthorityLookup do
     it 'returns results for each term in a list' do
       term_list = FileParser.new(File.join(FIXTURES_DIR, 'authority_lookup/lookup_list.txt')).terms
       expect(term_list.size).to eq(2)
-      results = AuthorityLookup.new(term_list, 'LOCNAMES_LD4L_CACHE', 'https://lookup.ld4l.org/authorities/search/linked_data/').process_term_list
+      results = AuthorityLookup.new(term_list, 'LOCNAMES_RWO_LD4L_CACHE', 'https://lookup.ld4l.org/authorities/search/linked_data/', parameter: '&context=true').process_term_list
       expect(results.size).to eq(2)
     end
   end
