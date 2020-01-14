@@ -2,18 +2,28 @@ require 'csv'
 
 class ResultParser
 
-  def initialize(result_set, filename, fields=['label', 'uri'])
+  def initialize(result_set, filename)
     @result_set = result_set
     @filename = filename
-    @fields = fields
-    @headers = ['search term', @fields[0..-1]].flatten
+    @headers = get_headers
     write_results_to_file
+  end
+
+  def get_headers
+    @fields = []
+    @result_set.each do |match_query|
+      match_query.each do |term, matches|
+        next if matches.empty?
+        @fields = matches.first.keys.sort
+        break
+      end
+    end
+    headers = ['search term', @fields].flatten
   end
 
   def write_results_to_file
     outfile = CSV.new(File.open(@filename, 'w'))
     outfile << @headers
-    # puts @result_set.inspect
     @result_set.each do |match_query|
       match_query.each do |term, matches|
         if matches.empty?

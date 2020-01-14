@@ -1,18 +1,19 @@
 require 'cgi'
 require 'net/http'
-require 'json'
+require_relative 'response_parser'
 
 class AuthorityLookup
 
   attr_reader :subauthority, :limit, :language, :exit
 
-  def initialize(term_list, authority, base_url, subauthority: '', limit: 10, language: '')
+  def initialize(term_list, authority, base_url, subauthority: '', limit: 10, language: '', parameter: '')
     @term_list = term_list
     @authority = authority
     @base_url = base_url
     @subauthority = subauthority
     @limit = limit
     @language = language
+    @parameter = parameter
     @exit = false
 
     @exit = true if @term_list == nil || @term_list == []
@@ -38,7 +39,9 @@ class AuthorityLookup
     query_url = construct_query(encoded_search_term)
     # puts query_url.inspect
     response = run_query(query_url)
-    parsed_response = JSON.parse(response)
+    parser = ResponseParser.new(response, @authority)
+    parser.parse_response
+    parsed_response = parser.result
     result = {search_term => parsed_response}
   end
 
@@ -51,6 +54,7 @@ class AuthorityLookup
     query_url += "/#{@subauthority}" unless @subauthority == nil || @subauthority.empty?
     query_url += "?q=#{encoded_search_term}&maxRecords=#{@limit}"
     query_url += "&lang=#{@language}" unless @language == nil || @language.empty?
+    query_url += @parameter
     query_url
   end
 
