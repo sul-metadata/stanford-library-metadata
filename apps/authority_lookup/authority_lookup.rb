@@ -37,7 +37,6 @@ class AuthorityLookup
   def lookup_term(search_term)
     encoded_search_term = encode_search_term(search_term)
     query_url = construct_query(encoded_search_term)
-    # puts query_url.inspect
     response = run_query(query_url)
     parser = ResponseParser.new(response, @authority)
     parser.parse_response
