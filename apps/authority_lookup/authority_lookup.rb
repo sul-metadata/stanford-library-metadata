@@ -35,12 +35,9 @@ class AuthorityLookup
   end
 
   def lookup_term(search_term)
-    encoded_search_term = encode_search_term(search_term)
-    query_url = construct_query(encoded_search_term)
+    query_url = construct_query(search_term)
     response = run_query(query_url)
-    parser = ResponseParser.new(response, @authority)
-    parser.parse_response
-    parsed_response = parser.result
+    parsed_response = parse_search_response(response, @authority)
     result = {search_term => parsed_response}
   end
 
@@ -48,7 +45,8 @@ class AuthorityLookup
     encoded_search_term = CGI::escape(search_term)
   end
 
-  def construct_query(encoded_search_term)
+  def construct_query(search_term)
+    encoded_search_term = encode_search_term(search_term)
     query_url = "#{@base_url}#{@authority}"
     query_url += "/#{@subauthority}" unless @subauthority == nil || @subauthority.empty?
     query_url += "?q=#{encoded_search_term}&maxRecords=#{@limit}"
@@ -61,5 +59,10 @@ class AuthorityLookup
     query = URI(query_url)
     Net::HTTP.get(query)
   end
+
+   def parse_search_response(response, authority)
+     parser = ResponseParser.new(response, authority)
+     parser.parsed_response
+   end
 
 end
