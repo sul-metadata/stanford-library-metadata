@@ -2,42 +2,33 @@ require 'json'
 
 class ResponseParser
 
-  attr_reader :result
+  attr_reader :parsed_response
 
   def initialize(response, authority)
     @response = response
     @authority = authority
-    @result = []
+    @parsed_response = []
+
+    parse_response
   end
 
   def parse_response
 
     if @authority == 'LOCNAMES_RWO_LD4L_CACHE'
-      parser = LOCNAMES_RWO_LD4L_CACHE.new(@response)
-      parser.parse_response
-      @result = parser.result
+      @parsed_response = parse_response_LOCNAMES_RWO_LD4L_CACHE
     end
 
   end
 
-end
-
-class LOCNAMES_RWO_LD4L_CACHE < ResponseParser
-
-  attr_reader :result
-
-  def initialize(response)
-    @response = response
-    @result = []
-  end
-
-  def parse_response
+  def parse_response_LOCNAMES_RWO_LD4L_CACHE
+    result = []
     parsed_json = JSON.parse(@response)
     parsed_json.each do |match|
       label = match['label']
       uri = match["context"].select { |item| item["property"] == "Authority URI" }.first["values"].first
-      @result << {'label' => label, 'uri' => uri}
+      result << {'label' => label, 'uri' => uri}
     end
+    result
   end
 
 end
