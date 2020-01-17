@@ -1,0 +1,150 @@
+[{
+  "uri": "http://id.loc.gov/rwo/agents/no2013046209",
+  "id": "no2013046209",
+  "label": "Dorothy Dunnett Society",
+  "context": [{
+    "property": "Preferred label",
+    "values": ["Dorothy Dunnett Society"],
+    "selectable": true,
+    "drillable": false
+  }, {
+    "property": "Type",
+    "values": ["http://xmlns.com/foaf/0.1/Organization", "http://www.loc.gov/mads/rdf/v1#RWO", "http://id.loc.gov/ontologies/bibframe/Organization"],
+    "selectable": false,
+    "drillable": false
+  }, {
+    "property": "VIAF match",
+    "values": ["http://viaf.org/viaf/sourceID/LC%7Cno2013046209#skos:Concept"],
+    "selectable": false,
+    "drillable": false
+  }, {
+    "property": "Citation note",
+    "values": ["t.p. (Dorothy Dunnett Society, Edinburgh ; www.dorothydunnett.org)"],
+    "selectable": false,
+    "drillable": false
+  }, {
+    "property": "Citation source",
+    "values": ["The miraculous mirror, 2013:"],
+    "selectable": false,
+    "drillable": false
+  }, {
+    "property": "Authority URI",
+    "values": ["http://id.loc.gov/authorities/names/no2013046209"],
+    "selectable": false,
+    "drillable": false
+  }]
+}, {
+  "uri": "http://id.loc.gov/rwo/agents/no2008168101",
+  "id": "no2008168101",
+  "label": "Dorothy Dunnett Readers' Association",
+  "context": [{
+    "property": "Preferred label",
+    "values": ["Dorothy Dunnett Readers' Association"],
+    "selectable": true,
+    "drillable": false
+  }, {
+    "property": "Type",
+    "values": ["http://xmlns.com/foaf/0.1/Organization", "http://www.loc.gov/mads/rdf/v1#RWO", "http://id.loc.gov/ontologies/bibframe/Organization"],
+    "selectable": false,
+    "drillable": false
+  }, {
+    "property": "VIAF match",
+    "values": ["http://viaf.org/viaf/sourceID/LC%7Cno2008168101#skos:Concept"],
+    "selectable": false,
+    "drillable": false
+  }, {
+    "property": "Citation note",
+    "values": ["t.p. (Dorothy Dunnett Readers' Association; DDRA)"],
+    "selectable": false,
+    "drillable": false
+  }, {
+    "property": "Citation source",
+    "values": ["The proving climb, 2008:"],
+    "selectable": false,
+    "drillable": false
+  }, {
+    "property": "Authority URI",
+    "values": ["http://id.loc.gov/authorities/names/no2008168101"],
+    "selectable": false,
+    "drillable": false
+  }]
+}, {
+  "uri": "http://id.loc.gov/rwo/agents/n50025011",
+  "id": "n 50025011",
+  "label": "Dunnett, Dorothy",
+  "context": [{
+    "property": "Preferred label",
+    "values": ["Dunnett, Dorothy"],
+    "selectable": true,
+    "drillable": false
+  }, {
+    "property": "Type",
+    "values": ["http://id.loc.gov/ontologies/bibframe/Person", "http://www.loc.gov/mads/rdf/v1#RWO", "http://xmlns.com/foaf/0.1/Person"],
+    "selectable": false,
+    "drillable": false
+  }, {
+    "group": "Dates",
+    "property": "Birth date",
+    "values": ["19230825"],
+    "selectable": false,
+    "drillable": false
+  }, {
+    "group": "Dates",
+    "property": "Death date",
+    "values": ["20011109"],
+    "selectable": false,
+    "drillable": false
+  }, {
+    "property": "Field of activity",
+    "values": ["Historical fiction"],
+    "selectable": false,
+    "drillable": false
+  }, {
+    "property": "Occupation",
+    "values": ["Author"],
+    "selectable": false,
+    "drillable": false
+  }, {
+    "group": "Places",
+    "property": "Birth place",
+    "values": ["Dunfermline, Scotland"],
+    "selectable": false,
+    "drillable": false
+  }, {
+    "group": "Places",
+    "property": "Death place",
+    "values": ["Edinburgh, Scotland"],
+    "selectable": false,
+    "drillable": false
+  }, {
+    "property": "VIAF match",
+    "values": ["http://viaf.org/viaf/sourceID/LC%7Cn+50025011#skos:Concept"],
+    "selectable": false,
+    "drillable": false
+  }, {
+    "property": "Variant label",
+    "values": ["\xD0\x94\xD0\xB0\xD0\xBD\xD0\xBD\xD0\xB5\xD1\x82, \xD0\x94\xD0\xBE\xD1\x80\xD0\xBE\xD1\x82\xD0\xB8", "Halliday, Dorothy"],
+    "selectable": false,
+    "drillable": false
+  }, {
+    "property": "Citation note",
+    "values": ["CIP t.p. (Dorothy Dunnett) data sheet (b. 8/25/23)", "obit. (Dorothy Dunnett; died No. 9, 2001 in Edinburgh, Scot.)", "(Dorothy Dunnett OBE (n\xC3\xA9e Halliday, 25 August 1923, Dunfermline, Fife-9 November 2001) was a Scottish historical novelist)"],
+    "selectable": false,
+    "drillable": false
+  }, {
+    "property": "Citation source",
+    "values": ["Her The game of kings, 1961.", "Her Dolly and the bird of paradise, 1984:", "Washington Post, 17 November 2001:", "Wikipedia, 28 May 2012"],
+    "selectable": false,
+    "drillable": false
+  }, {
+    "property": "Editorial note",
+    "values": ["[Machine-derived non-Latin script reference project.]", "[Non-Latin script reference not evaluated.]"],
+    "selectable": false,
+    "drillable": false
+  }, {
+    "property": "Authority URI",
+    "values": ["http://id.loc.gov/authorities/names/n50025011"],
+    "selectable": false,
+    "drillable": false
+  }]
+}]
