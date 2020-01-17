@@ -57,6 +57,10 @@ RSpec.describe AuthorityLookup do
       lookup_result = @authority_lookup_test.lookup_term('Dorothy Dunnett')
       expect(lookup_result['Dorothy Dunnett']).not_to eq([])
     end
+    it 'returns a result for a search term with a non-ASCII character' do
+      lookup_result = @authority_lookup_test.lookup_term('Renée Vivien')
+      expect(lookup_result['Renée Vivien']).not_to eq([])
+    end
     it 'returns results for each term in a list' do
       term_list = FileParser.new(File.join(FIXTURES_DIR, 'authority_lookup/lookup_list.txt')).terms
       expect(term_list.size).to eq(2)
