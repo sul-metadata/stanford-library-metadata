@@ -185,6 +185,7 @@ class MODSFile
   def extract_languages(mods_nodes, template_nodes)
     languages_scripts = {}
     mods_nodes.each_with_index do | l, i|
+      languages_scripts.merge!(extract_attributes(l, template_nodes[i]))
       languages_scripts.merge!(extract_code_text_values_and_attributes(l, template_nodes[i]))
     end
     languages_scripts
