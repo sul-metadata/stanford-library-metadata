@@ -3,7 +3,7 @@ require_relative 'reverse_modsulator'
 
 class MODSFile
 
-  attr_reader :mods, :template, :modified_template, :ns
+  attr_reader :mods, :template, :ns, :column_hash
 
   # @param [String] filename                Name of MODS file to process.
   # @param [Nokogiri::XML] template         Template as nokogiri document.
@@ -230,7 +230,7 @@ class MODSFile
   # @return [Nokogiri::NodeSet] template_subject_other_nodes  Template data nodes with only topic, geographic, temporal, genre subelements.
   def get_subject_other_nodes(mods_subject_nodes, template_subject_nodes, mods_subject_name_nodes)
     mods_subject_other_nodes = mods_subject_nodes.xpath("#{@ns}:topic|#{@ns}:geographic|#{@ns}:temporal|#{@ns}:genre").map {|x| x.parent}.uniq
-    mods_subject_other_nodes.map {|x| mods_subject_other_nodes.delete(x) if mods_subject_name_nodes.include?(x)}
+    mods_subject_other_nodes.delete_if { |x| mods_subject_name_nodes.include?(x) }
     template_subject_other_nodes = template_subject_nodes.grep(/su[\d]+:/)
     return mods_subject_other_nodes, template_subject_other_nodes
   end
