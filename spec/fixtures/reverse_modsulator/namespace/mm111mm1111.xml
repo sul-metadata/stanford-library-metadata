@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<mods:mods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mods="http://www.loc.gov/mods/v3" version="3.5" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-5.xsd">
+  <mods:titleInfo>
+    <mods:title>Title</mods:title>
+    <mods:subTitle>subtitle</mods:subTitle>
+  </mods:titleInfo>
+  <mods:name>
+    <mods:namePart>Name</mods:namePart>
+  </mods:name>
+  <mods:genre authority="aat">AAT genre</mods:genre>
+  <mods:genre authority="tgm">TGM genre</mods:genre>
+  <mods:genre>Genre</mods:genre>
+  <mods:language>
+    <mods:languageTerm authority="iso639-2b" authorityURI="http://id.loc.gov/vocabulary/iso639-2" valueURI="http://id.loc.gov/vocabulary/iso639-2/eng" type="code">eng</mods:languageTerm>
+    <mods:languageTerm authority="iso639-2b" authorityURI="http://id.loc.gov/vocabulary/iso639-2" valueURI="http://id.loc.gov/vocabulary/iso639-2/eng" type="text">English</mods:languageTerm>
+  </mods:language>
+  <mods:language>
+    <mods:languageTerm type="text">Russian</mods:languageTerm>
+  </mods:language>
+  <mods:language>
+    <mods:languageTerm authority="iso639-2b" authorityURI="http://id.loc.gov/vocabulary/iso639-2" valueURI="http://id.loc.gov/vocabulary/iso639-2/eng" type="code">lat</mods:languageTerm>
+  </mods:language>
+  <mods:typeOfResource>text</mods:typeOfResource>
+  <mods:subject authority="lcsh">
+    <mods:name type="personal" authority="naf">
+      <mods:namePart>Name subject - name</mods:namePart>
+    </mods:name>
+    <mods:topic authority="lcsh" authorityURI="https://id.loc.gov/authorities/names/n12345">Name subject - topic</mods:topic>
+  </mods:subject>
+  <mods:subject authority="lcsh">
+    <mods:name type="personal" authority="naf">
+      <mods:namePart>Name-title subject - name</mods:namePart>
+    </mods:name>
+    <mods:titleInfo>
+      <mods:title>Name-title subject - title</mods:title>
+    </mods:titleInfo>
+    <mods:topic>Name-title subject - topic</mods:topic>
+  </mods:subject>
+  <mods:subject authority="lcsh">
+    <mods:titleInfo authority="naf" type="uniform">
+      <mods:title>Title subject - title</mods:title>
+    </mods:titleInfo>
+  </mods:subject>
+  <mods:subject>
+    <mods:topic>Topic subject</mods:topic>
+  </mods:subject>
+  <mods:subject>
+    <mods:cartographics>
+      <mods:scale>Scale</mods:scale>
+      <mods:coordinates>Coordinates</mods:coordinates>
+    </mods:cartographics>
+  </mods:subject>
+  <mods:location>
+    <mods:physicalLocation type="repository" authority="naf" valueURI="http://id.loc.gov/authorities/names/no12345">Repository</mods:physicalLocation>
+    <mods:physicalLocation>Physical location</mods:physicalLocation>
+    <mods:shelfLocator>Shelf locator</mods:shelfLocator>
+    <mods:url usage="primary display">https://purl.stanford.edu/aa11aaa1111</mods:url>
+    <mods:url>https://example.com</mods:url>
+  </mods:location>
+  <mods:relatedItem>
+    <mods:titleInfo>
+      <mods:title>Related item - title</mods:title>
+    </mods:titleInfo>
+    <mods:abstract>Related item - abstract</mods:abstract>
+  </mods:relatedItem>
+  <mods:relatedItem type="host">
+    <mods:titleInfo>
+      <mods:title>Another related item</mods:title>
+    </mods:titleInfo>
+  </mods:relatedItem>
+</mods:mods>

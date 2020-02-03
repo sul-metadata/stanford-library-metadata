@@ -99,6 +99,7 @@ class ReverseModsulator
     doc = Nokogiri::XML(File.open(@source))
     records = doc.xpath('//*[local-name()="mods"]')
     records.each do |record|
+      #  record
       druid = record.parent['objectId']
       doc_node = Nokogiri::XML(record.to_s)
       mods_file = MODSFile.new(druid, doc_node, @template_xml, @namespace)
