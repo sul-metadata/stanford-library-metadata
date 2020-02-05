@@ -56,6 +56,10 @@ class ReverseModsulator
     @template_xml = Nokogiri::XML(modify_template)
     get_template_elements_and_attributes
 
+  end
+
+  # Process input according to its format.
+  def process_input
     if @process == 'directory'
       process_directory
     elsif @process == 'file'
@@ -65,7 +69,6 @@ class ReverseModsulator
     elsif @process == 'zip-stream'
       process_zip_stream
     end
-
   end
 
   # Replace subject subelements given as header codes with 'topic' for parseable XML.
