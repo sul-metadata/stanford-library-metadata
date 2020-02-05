@@ -8,7 +8,7 @@ class MODSFile
   # @param [String] filename                Name of MODS file to process.
   # @param [Nokogiri::XML] template         Template as nokogiri document.
   # @param [String] namespace               Namespace used in file for the MODS schema.
-  def initialize(druid, mods_doc_node, template, namespace)
+  def initialize(mods_doc_node, template, namespace)
     @mods = mods_doc_node
     @template = template
     @ns = namespace

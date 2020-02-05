@@ -84,7 +84,7 @@ class ReverseModsulator
     Dir.foreach(@source) do |f|
       next unless f.match(/[a-z]{2}[0-9]{3}[a-z]{2}[0-9]{4}\.xml/)
       druid = get_druid_from_filename(f)
-      mods_file = MODSFile.new(druid, Nokogiri::XML(File.open(File.join(@source, f))), @template_xml, @namespace)
+      mods_file = MODSFile.new(Nokogiri::XML(File.open(File.join(@source, f))), @template_xml, @namespace)
       process_mods_file(mods_file, druid)
     end
     write_output if @analysis_only == false
@@ -102,7 +102,7 @@ class ReverseModsulator
       #  record
       druid = record.parent['objectId']
       doc_node = Nokogiri::XML(record.to_s)
-      mods_file = MODSFile.new(druid, doc_node, @template_xml, @namespace)
+      mods_file = MODSFile.new(doc_node, @template_xml, @namespace)
       process_mods_file(mods_file, druid)
     end
     write_output if @analysis_only == false
@@ -135,7 +135,7 @@ class ReverseModsulator
     druid = get_druid_from_filename(entry.name)
     return unless druid_is_valid?(druid)
     content = entry.get_input_stream
-    mods_file = MODSFile.new(druid, Nokogiri::XML(content), @template_xml, @namespace)
+    mods_file = MODSFile.new(Nokogiri::XML(content), @template_xml, @namespace)
     process_mods_file(mods_file, druid)
   end
 

@@ -8,7 +8,7 @@ RSpec.describe MODSFile do
     reverse_modsulator_test = ReverseModsulator.new(File.join(FIXTURES_DIR, 'reverse_modsulator/aa111aa1111.zip'), File.join(PUBLIC_DIR, 'reverse_modsulator/aa111aa1111.csv'))
     template = reverse_modsulator_test.template_xml
     mods = Nokogiri::XML(File.open(File.join(FIXTURES_DIR, 'reverse_modsulator/aa111aa1111.xml')))
-    @mods_file_test = MODSFile.new('aa111aa1111', mods, template, 'xmlns')
+    @mods_file_test = MODSFile.new(mods, template, 'xmlns')
     @mods_file_test.transform_mods_file
   end
 
@@ -159,7 +159,7 @@ RSpec.describe MODSFile do
       reverse_modsulator_test_namespace = ReverseModsulator.new(File.join(FIXTURES_DIR, 'reverse_modsulator/namespace'), File.join(PUBLIC_DIR, 'reverse_modsulator/mm111mm1111.csv'), namespace: 'mods', template_file: File.join(FIXTURES_DIR, 'reverse_modsulator/modified_template.xml'))
       template_namespace = reverse_modsulator_test_namespace.template_xml
       mods_namespace = Nokogiri::XML(File.open(File.join(FIXTURES_DIR, 'reverse_modsulator/namespace/mm111mm1111.xml')))
-      @mods_file_test_namespace = MODSFile.new('mm111mm1111', mods_namespace, template_namespace, 'mods')
+      @mods_file_test_namespace = MODSFile.new(mods_namespace, template_namespace, 'mods')
       @mods_file_test_namespace.transform_mods_file
     end
     it 'extracts element data with non-default namespace' do
