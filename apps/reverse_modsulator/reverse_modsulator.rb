@@ -32,15 +32,17 @@ class ReverseModsulator
     else
       abort("Input type not recognized. Input must be a compiled MODS file, a ZIP file, or a directory.")
     end
-    if options[:template_file]
-      @template_filename = options[:template_file]
-    else
-      @template_filename = './apps/reverse_modsulator/modsulator_template.xml'
-    end
     if options[:namespace]
       @namespace = options[:namespace]
     else
       @namespace = 'xmlns'
+    end
+    if options[:template_file]
+      @template_filename = options[:template_file]
+    elsif @namespace == 'mods'
+      @template_filename = './apps/reverse_modsulator/mods_namespace_template.xml'
+    else
+      @template_filename = './apps/reverse_modsulator/modsulator_template.xml'
     end
     if options[:logfile]
       @logfile = options[:logfile]
@@ -75,8 +77,8 @@ class ReverseModsulator
   # @return [StringIO]          Modified template.
   def modify_template
     template = File.read(@template_filename)
-    working_template = template.gsub(/\[\[s[un]\d+:p\d:type\]\]/, 'topic')
-    StringIO.new(string=working_template, 'r')
+    template.gsub!(/\[\[s[un]\d+:p\d:type\]\]/, 'topic')
+    StringIO.new(string=template, 'r')
   end
 
   # Process a directory of single-record MODS files where the filename is the druid.
