@@ -39,10 +39,12 @@ class Normalizer
     return false if attributes.empty?
 
     attributes.each do |key, value|
-      next unless tag == 'typeOfResource'
+      # next unless tag == 'typeOfResource'
+      next unless tag == 'resourceType'
       # Note that according to the MODS schema, any other value than 'yes' for these attributes is invalid
-      if (key == 'collection' && value.to_s.casecmp('yes').zero?) ||
-         (key == 'manuscript' && value.to_s.casecmp('yes').zero?)
+      # if (key == 'collection' && value.to_s.casecmp('yes').zero?) ||
+      #    (key == 'manuscript' && value.to_s.casecmp('yes').zero?)
+      if key == 'resourceTypeGeneral' && value.to_s != (nil || "")
         return true
       end
     end
