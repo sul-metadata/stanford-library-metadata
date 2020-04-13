@@ -3,12 +3,12 @@ require_relative 'reverse_modsulator'
 
 class MODSFile
 
-  attr_reader :mods, :template, :modified_template, :ns
+  attr_reader :mods, :template, :ns, :column_hash
 
   # @param [String] filename                Name of MODS file to process.
   # @param [Nokogiri::XML] template         Template as nokogiri document.
   # @param [String] namespace               Namespace used in file for the MODS schema.
-  def initialize(druid, mods_doc_node, template, namespace)
+  def initialize(mods_doc_node, template, namespace)
     @mods = mods_doc_node
     @template = template
     @ns = namespace
@@ -185,6 +185,7 @@ class MODSFile
   def extract_languages(mods_nodes, template_nodes)
     languages_scripts = {}
     mods_nodes.each_with_index do | l, i|
+      languages_scripts.merge!(extract_attributes(l, template_nodes[i]))
       languages_scripts.merge!(extract_code_text_values_and_attributes(l, template_nodes[i]))
     end
     languages_scripts
@@ -230,7 +231,7 @@ class MODSFile
   # @return [Nokogiri::NodeSet] template_subject_other_nodes  Template data nodes with only topic, geographic, temporal, genre subelements.
   def get_subject_other_nodes(mods_subject_nodes, template_subject_nodes, mods_subject_name_nodes)
     mods_subject_other_nodes = mods_subject_nodes.xpath("#{@ns}:topic|#{@ns}:geographic|#{@ns}:temporal|#{@ns}:genre").map {|x| x.parent}.uniq
-    mods_subject_other_nodes.map {|x| mods_subject_other_nodes.delete(x) if mods_subject_name_nodes.include?(x)}
+    mods_subject_other_nodes.delete_if { |x| mods_subject_name_nodes.include?(x) }
     template_subject_other_nodes = template_subject_nodes.grep(/su[\d]+:/)
     return mods_subject_other_nodes, template_subject_other_nodes
   end

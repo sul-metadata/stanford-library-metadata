@@ -32,15 +32,17 @@ class ReverseModsulator
     else
       abort("Input type not recognized. Input must be a compiled MODS file, a ZIP file, or a directory.")
     end
-    if options[:template_file]
-      @template_filename = options[:template_file]
-    else
-      @template_filename = './apps/reverse_modsulator/modsulator_template.xml'
-    end
     if options[:namespace]
       @namespace = options[:namespace]
     else
       @namespace = 'xmlns'
+    end
+    if options[:template_file]
+      @template_filename = options[:template_file]
+    elsif @namespace == 'mods'
+      @template_filename = './apps/reverse_modsulator/mods_namespace_template.xml'
+    else
+      @template_filename = './apps/reverse_modsulator/modsulator_template.xml'
     end
     if options[:logfile]
       @logfile = options[:logfile]
@@ -56,6 +58,10 @@ class ReverseModsulator
     @template_xml = Nokogiri::XML(modify_template)
     get_template_elements_and_attributes
 
+  end
+
+  # Process input according to its format.
+  def process_input
     if @process == 'directory'
       process_directory
     elsif @process == 'file'
@@ -65,15 +71,14 @@ class ReverseModsulator
     elsif @process == 'zip-stream'
       process_zip_stream
     end
-
   end
 
   # Replace subject subelements given as header codes with 'topic' for parseable XML.
   # @return [StringIO]          Modified template.
   def modify_template
     template = File.read(@template_filename)
-    working_template = template.gsub(/\[\[s[un]\d+:p\d:type\]\]/, 'topic')
-    StringIO.new(string=working_template, 'r')
+    template.gsub!(/\[\[s[un]\d+:p\d:type\]\]/, 'topic')
+    StringIO.new(string=template, 'r')
   end
 
   # Process a directory of single-record MODS files where the filename is the druid.
@@ -84,7 +89,7 @@ class ReverseModsulator
     Dir.foreach(@source) do |f|
       next unless f.match(/[a-z]{2}[0-9]{3}[a-z]{2}[0-9]{4}\.xml/)
       druid = get_druid_from_filename(f)
-      mods_file = MODSFile.new(druid, Nokogiri::XML(File.open(File.join(@source, f))), @template_xml, @namespace)
+      mods_file = MODSFile.new(Nokogiri::XML(File.open(File.join(@source, f))), @template_xml, @namespace)
       process_mods_file(mods_file, druid)
     end
     write_output if @analysis_only == false
@@ -99,9 +104,10 @@ class ReverseModsulator
     doc = Nokogiri::XML(File.open(@source))
     records = doc.xpath('//*[local-name()="mods"]')
     records.each do |record|
+      #  record
       druid = record.parent['objectId']
       doc_node = Nokogiri::XML(record.to_s)
-      mods_file = MODSFile.new(druid, doc_node, @template_xml, @namespace)
+      mods_file = MODSFile.new(doc_node, @template_xml, @namespace)
       process_mods_file(mods_file, druid)
     end
     write_output if @analysis_only == false
@@ -134,7 +140,7 @@ class ReverseModsulator
     druid = get_druid_from_filename(entry.name)
     return unless druid_is_valid?(druid)
     content = entry.get_input_stream
-    mods_file = MODSFile.new(druid, Nokogiri::XML(content), @template_xml, @namespace)
+    mods_file = MODSFile.new(Nokogiri::XML(content), @template_xml, @namespace)
     process_mods_file(mods_file, druid)
   end
 

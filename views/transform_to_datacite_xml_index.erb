@@ -1,0 +1,23 @@
+<h1>Transform metadata from a spreadsheet template into DataCite XML</h1>
+<hr>
+<h2>Transform a file</h2>
+
+<form action="/transform_to_datacite_xml_process" method="post" enctype="multipart/form-data">
+  <h3>Select the metadata spreadsheet</h3>
+  <input type="file" name="file">
+  <p>
+  <button class="button" type="submit">Submit the file</button>
+</form>
+<hr>
+<form action="/transform_to_datacite_xml_template" method="post">
+  <h4>Download the spreadsheet template for MODS and DataCite</h4>
+  <button class="button" type="submit">Download combined template (last updated 2020-01-10)</button>
+</form>
+<form action="/transform_to_datacite_xml_template_dc_only" method="post">
+  <h4>Download the spreadsheet template for DataCite only</h4>
+  <button class="button" type="submit">Download DataCite-only template (last updated 2019-06-26)</button>
+</form>
+
+<p>
+<hr>
+<a href="/"><button class="button-return">Return to main menu</button></a>

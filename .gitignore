@@ -1,4 +1,15 @@
+/.gitignore
 /test/
 /test.rb
 /helpers.rb
-/rspec/public/rps_validator/report.csv
+/spec/public/authority_lookup/*
+/spec/public/transform_spreadsheet/*
+/spec/public/replayable_spreadsheet_validator/*
+/spec/public/reverse_modsulator/*
+/spec/public/virtual_object_manifest/*
+/public/authority_lookup/*
+/public/reverse_modsulator/*
+/public/replayable_spreadsheet_validator/*
+/public/transform_spreadsheet/*
+/public/virtual_object_manifest/*
+/apps/authority_lookup/*OLD.rb

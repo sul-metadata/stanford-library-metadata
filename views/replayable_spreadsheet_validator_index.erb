@@ -1,0 +1,84 @@
+<h2>Replayable spreadsheet validator</h2>
+<hr>
+<h3>Validate a file</h3>
+
+<form action="/replayable_spreadsheet_validator_process" method="post" enctype="multipart/form-data">
+  <input type="file" name="file" id="file">
+  <p>
+  <button class="button" type="submit">Submit the file</button>
+</form>
+
+<hr>
+
+<h3>Guidelines</h3>
+
+<p><em>To faciliate the processing of large files, please delete any columns without data and submit the file in CSV format.</em></p>
+
+<p>Validates a replayable spreadsheet (.xlsx or .csv) against the modsulator template and checks for other problems with the metadata.</p>
+
+<p>The validator classes issues into failures, errors, warnings, and information. Failures prevent the spreadsheet from being parsed for validation; errors mean system or schema metadata requirements are not met; warnings mean metadata recommendations are not met; information means the data suggests an error may be present, or is missing from a non-essential field.</p>
+
+<h4>Validation criteria</h4>
+
+<h5>Failure</h5>
+<ul>
+  <li>File extension is not .xlsx or .csv</li>
+  <li>The file cannot be opened</li>
+  <li>Spreadsheet includes invalid characters or encoding</li>
+  <li>Header row does not begin with "druid" and "sourceId"</li>
+</ul>
+
+<h5>Error</h5>
+<ul>
+  <li>Duplicate headers</li>
+  <li>Missing main title column header (ti1:title)</li>
+  <li>Subject value header is present without the corresponding type header</li>
+  <li>Subject type header is present without the corresponding value header</li>
+  <li>Data row without a druid</li>
+  <li>Blank row within the data</li>
+  <li>Druid does not match valid alphanumeric pattern</li>
+  <li>Line breaks or control characters in cell values</li>
+  <li>Duplicate druids</li>
+  <li>Cell value is a spreadsheet formula error (#NA, #REF!, #VALUE?, #NAME?)</li>
+  <li>Main title column (ti1:title) is blank</li>
+  <li>More than one keyDate is declared for a record</li>
+  <li>Date format does not match stated encoding</li>
+  <li>Subject value without a declared type</li>
+  <li>MODS controlled field values do not match specified vocabulary</li>
+    <ul>
+      <li>Title type (tiX:type)</li>
+      <li>Name usage (na1:usage)</li>
+      <li>Name type (na1:type)</li>
+      <li>Type of resource (ty1:typeOfResource)</li>
+      <li>Manuscript (ty1:manuscript)</li>
+      <li>All dates: keyDate, qualifier, point, encoding</li>
+      <li>Issuance (orX:issuance)</li>
+      <li>Subject types (snX:p1:nameType, suX:pX:type)</li>
+    </ul>
+</ul>
+
+<h5>Warning</h5>
+<ul>
+  <li>Type of resource column header is missing (ty1:typeOfResource)</li>
+  <li>Type of resource value is missing</li>
+  <li>For Excel spreadsheets, the cell format is not text or numeric</li>
+  <li>Cell value is 0</li>
+  <li>No keyDate is declared</li>
+  <li>Date range point values missing if two dates are given</li>
+  <li>Date keyDate, qualifier, point, and/or encoding field have value but the corresponding date field does not</li>
+  <li>Subject type has value but the corresponding subject does not</li>
+  <li>Missing value in the lo:purl field</li>
+</ul>
+
+<h5>Information</h5>
+<ul>
+  <li>Headers appearing in spreadsheet are not in modsulator XML template</li>
+  <li>For Excel spreadsheets, the cell format is numeric</li>
+  <li>Missing source ID</li>
+  <li>Duplicate source IDs</li>
+  <li>Data is present in a column without a header</li>
+</ul>
+
+<p>
+<hr>
+<a href="/"><button class="button-return">Return to main menu</button></a>

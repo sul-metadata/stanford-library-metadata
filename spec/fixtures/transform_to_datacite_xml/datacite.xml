@@ -1,0 +1,74 @@
+<?xml version="1.0"?>
+<xmlDocs xmlns="http://library.stanford.edu/xmlDocs" datetime="2020-01-10 01:41:28PM" sourceFile="./fixtures/datacite_template_20200110_test.xlsx">
+  <xmlDoc id="descMetadata" objectId="aa111aa1111">
+    <resource xmlns="http://datacite.org/schema/kernel-4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4/metadata.xsd">
+      <titles>
+        <title>Title</title>
+      </titles>
+      <creators>
+        <creator>
+          <creatorName nameType="Personal">Family name, Given name</creatorName>
+          <givenName>Given name</givenName>
+          <familyName>Family name</familyName>
+          <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">orcid</nameIdentifier>
+          <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">isni</nameIdentifier>
+          <affiliation>affiliation</affiliation>
+        </creator>
+        <creator>
+          <creatorName nameType="Personal">Family name 2, Given name 2</creatorName>
+          <givenName>Given name 2</givenName>
+          <familyName>Family name 2</familyName>
+          <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">orcid 2</nameIdentifier>
+          <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">isni 2</nameIdentifier>
+          <affiliation>affiliation 2</affiliation>
+        </creator>
+      </creators>
+      <contributors>
+        <contributor contributorType="Sponsor">
+          <contributorName nameType="Organizational">Institution 1</contributorName>
+        </contributor>
+        <contributor contributorType="Sponsor">
+          <contributorName nameType="Organizational">Institution 2</contributorName>
+        </contributor>
+        <contributor contributorType="ResearchGroup">
+          <contributorName nameType="Organizational">Project X</contributorName>
+        </contributor>
+      </contributors>
+      <fundingReferences>
+        <fundingReference>
+          <funderName>Funder 1</funderName>
+          <awardNumber>Award 1</awardNumber>
+        </fundingReference>
+      </fundingReferences>
+      <resourceType resourceTypeGeneral="Text">Book Chapter</resourceType>
+      <sizes>
+        <size>50 pages</size>
+      </sizes>
+      <publisher>Stanford Digital Repository</publisher>
+      <publicationYear>1940</publicationYear>
+      <dates>
+        <date dateType="Created">1920/1930</date>
+      </dates>
+      <descriptions>
+        <description descriptionType="Abstract">abstract</description>
+      </descriptions>
+      <subjects>
+        <subject xml:lang="en-US">Art &amp; Art History</subject>
+        <subject xml:lang="en-US">kw1</subject>
+        <subject xml:lang="en-US">kw2</subject>
+        <subject xml:lang="en-US">kw3</subject>
+        <subject xml:lang="en-US">kw4</subject>
+        <subject xml:lang="en-US">kw5</subject>
+        <subject xml:lang="en-US">London</subject>
+        <subject xml:lang="en-US">1900-1940</subject>
+      </subjects>
+      <identifier identifierType="DOI">doi</identifier>
+      <alternateIdentifiers>
+        <alternateIdentifier alternateIdentifierType="PURL">https://purl.stanford.edu/aa111aa1111</alternateIdentifier>
+      </alternateIdentifiers>
+      <rightsList>
+        <rights>rights</rights>
+      </rightsList>
+    </resource>
+  </xmlDoc>
+</xmlDocs>

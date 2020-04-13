@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<mods xmlns="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.6" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-6.xsd">
+  <titleInfo>
+    <title>Title</title>
+    <subTitle>subtitle</subTitle>
+  </titleInfo>
+  <name>
+    <namePart>Name</namePart>
+  </name>
+  <genre authority="aat">AAT genre</genre>
+  <genre authority="tgm">TGM genre</genre>
+  <genre>Genre</genre>
+  <language objectPart="notes">
+    <languageTerm authority="iso639-2b" authorityURI="http://id.loc.gov/vocabulary/iso639-2" valueURI="http://id.loc.gov/vocabulary/iso639-2/eng" type="code">eng</languageTerm>
+    <languageTerm authority="iso639-2b" authorityURI="http://id.loc.gov/vocabulary/iso639-2" valueURI="http://id.loc.gov/vocabulary/iso639-2/eng" type="text">English</languageTerm>
+  </language>
+  <language>
+    <languageTerm type="text">Russian</languageTerm>
+  </language>
+  <language>
+    <languageTerm authority="iso639-2b" authorityURI="http://id.loc.gov/vocabulary/iso639-2" valueURI="http://id.loc.gov/vocabulary/iso639-2/eng" type="code">lat</languageTerm>
+  </language>
+  <typeOfResource>text</typeOfResource>
+  <subject authority="lcsh">
+    <name type="personal" authority="naf">
+      <namePart>Name subject - name</namePart>
+    </name>
+    <topic authority="lcsh" authorityURI="https://id.loc.gov/authorities/names/n12345">Name subject - topic</topic>
+  </subject>
+  <subject authority="lcsh">
+    <name type="personal" authority="naf">
+      <namePart>Name-title subject - name</namePart>
+    </name>
+    <titleInfo>
+      <title>Name-title subject - title</title>
+    </titleInfo>
+    <topic>Name-title subject - topic</topic>
+  </subject>
+  <subject authority="lcsh">
+    <titleInfo authority="naf" type="uniform">
+      <title>Title subject - title</title>
+    </titleInfo>
+  </subject>
+  <subject authority="lcsh">
+    <topic authority="naf">Topic subject</topic>
+  </subject>
+  <subject>
+    <cartographics>
+      <scale>Scale</scale>
+      <coordinates>Coordinates</coordinates>
+    </cartographics>
+  </subject>
+  <location>
+    <physicalLocation type="repository" authority="naf" valueURI="http://id.loc.gov/authorities/names/no12345">Repository</physicalLocation>
+    <physicalLocation>Physical location</physicalLocation>
+    <shelfLocator>Shelf locator</shelfLocator>
+    <url usage="primary display">https://purl.stanford.edu/aa11aaa1111</url>
+    <url>https://example.com</url>
+  </location>
+  <relatedItem>
+    <titleInfo>
+      <title>Related item - title</title>
+    </titleInfo>
+    <abstract>Related item - abstract</abstract>
+  </relatedItem>
+  <relatedItem type="host">
+    <titleInfo>
+      <title>Another related item</title>
+    </titleInfo>
+  </relatedItem>
+</mods>

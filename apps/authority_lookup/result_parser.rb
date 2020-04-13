@@ -2,12 +2,26 @@ require 'csv'
 
 class ResultParser
 
-  def initialize(result_set, filename, fields=['label', 'uri'])
+  def initialize(result_set, filename)
     @result_set = result_set
     @filename = filename
-    @fields = fields
-    @headers = ['search term', @fields[0..-1]].flatten
+    @headers = get_headers
     write_results_to_file
+  end
+
+  def get_headers
+    @fields = []
+    @result_set.each do |match_query|
+      match_query.each do |term, matches|
+        next if matches.empty? || matches.class != Array
+        matches.each do |match|
+          next if match.empty? || match.class != Hash
+          @fields = match.keys.sort
+          break
+        end
+      end
+    end
+    headers = ['search term', @fields].flatten
   end
 
   def write_results_to_file
@@ -21,7 +35,7 @@ class ResultParser
         else
           matches.each do |match|
             row = [term]
-            if match.class == Array
+            if match.class != Hash
               row << "lookup error"
             else
               @fields.each do |f|
