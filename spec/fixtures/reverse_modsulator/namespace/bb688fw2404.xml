@@ -1,0 +1,56 @@
+<mods:mods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:mods="http://www.loc.gov/mods/v3" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+    <mods:identifier type="local" displayLabel="Source ID">ars0056_b4_143</mods:identifier>
+    <mods:titleInfo>
+        <mods:title>Oral history interview with Margaret Stein, December 7, 1986</mods:title>
+    </mods:titleInfo>
+    <mods:originInfo>
+        <mods:dateCreated encoding="w3cdtf" keyDate="yes">1986-12-07</mods:dateCreated>
+    </mods:originInfo>
+    <mods:physicalDescription>
+        <mods:form authority="rdacarrier">audiocassette</mods:form>
+        <mods:extent>1 tape</mods:extent>
+        <mods:reformattingQuality>access</mods:reformattingQuality>
+        <mods:internetMediaType>audio/mpeg</mods:internetMediaType>
+        <mods:digitalOrigin>reformatted digital</mods:digitalOrigin>
+    </mods:physicalDescription>
+    <mods:typeOfResource>sound recording-nonmusical</mods:typeOfResource>
+    <mods:genre authority="marcgt">interview</mods:genre>
+    <mods:name authority="local" type="personal">
+        <mods:namePart>Stein, Margaret</mods:namePart>
+        <mods:role>
+            <mods:roleTerm authority="marcrelator" type="text" valueURI="http://id.loc.gov/vocabulary/relators/ive">Interviewee</mods:roleTerm>
+        </mods:role>
+    </mods:name>
+    <mods:subject authority="lcsh" valueURI="http://id.loc.gov/authorities/names/n50081271">
+        <mods:name type="corporate">
+            <mods:namePart>Women's International League for Peace and Freedom</mods:namePart>
+        </mods:name>
+    </mods:subject>
+    <mods:subject authority="lcsh" valueURI="http://id.loc.gov/authorities/subjects/sh85147431">
+        <mods:topic>Women and peace</mods:topic>
+    </mods:subject>
+    <mods:subject authority="lcsh" valueURI="http://id.loc.gov/authorities/subjects/sh94002517">
+        <mods:topic>Women pacifists</mods:topic>
+    </mods:subject>
+    <mods:location>
+        <mods:physicalLocation authority="naf" valueURI="http://id.loc.gov/authorities/names/nr00021832" displayLabel="Repository" type="repository">Stanford Archive of Recorded Sound</mods:physicalLocation>
+        <mods:physicalLocation displayLabel="Collection call number">ARS0056</mods:physicalLocation>
+        <mods:url>http://purl.stanford.edu/bb688fw2404</mods:url>
+    </mods:location>
+    <mods:language>
+        <mods:languageTerm type="code" authority="iso639-2b">eng</mods:languageTerm>
+    </mods:language>
+    <mods:relatedItem type="host">
+        <mods:titleInfo>
+            <mods:title>Women's International League for Peace and Freedom Collection</mods:title>
+        </mods:titleInfo>
+        <mods:identifier type="uri">http://purl.stanford.edu/dn166mg9206</mods:identifier>
+        <mods:typeOfResource collection="yes"/>
+    </mods:relatedItem>
+    <mods:recordInfo>
+        <mods:languageOfCataloging>
+            <mods:languageTerm authority="iso639-2b">eng</mods:languageTerm>
+        </mods:languageOfCataloging>
+        <mods:recordContentSource authority="marcorg">CSt</mods:recordContentSource>
+    </mods:recordInfo>
+</mods:mods>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mods xmlns="http://www.loc.gov/mods/v3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.4" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+    <titleInfo>
+      <title>1st Annual San Francisco Mardi Gras</title>
+    </titleInfo>
+    <name type="corporate" authority="naf" valueURI="http://id.loc.gov/authorities/names/no98095678">
+      <namePart>STOP AIDS Project</namePart>
+      <role>
+        <roleTerm>creator</roleTerm>
+      </role>
+    </name>
+    <typeOfResource>still image</typeOfResource>
+    <originInfo>
+      <dateCreated encoding="w3cdtf" keyDate="yes">1999-02-16</dateCreated>
+    </originInfo>
+    <physicalDescription>
+      <extent>1 poster</extent>
+      <extent>16 x 28 inches</extent>
+      <form authority="aat">posters</form>
+      <digitalOrigin>reformatted digital</digitalOrigin>
+      <internetMediaType>image/jpeg</internetMediaType>
+    </physicalDescription>
+    <genre authority="lcsh" valueURI="http://id.loc.gov/authorities/subjects/sh2008009714">Public health posters</genre>
+    <genre authority="aat">posters</genre>
+    <subject authority="lcsh" valueURI="http://id.loc.gov/authorities/subjects/sh86005275">
+      <topic>AIDS (Disease)--Prevention</topic>
+    </subject>
+    <location>
+      <physicalLocation type="repository" authority="naf" valueURI="http://id.loc.gov/authorities/names/no2014019980">Stanford University. Libraries. Department of Special
+               Collections and University Archives</physicalLocation>
+      <physicalLocation displayLabel="Collection call number">M1463</physicalLocation>
+    </location>
+    <identifier type="local" displayLabel="Source ID">M1463_S4_MF07_001.1</identifier>
+    <recordInfo>
+      <recordContentSource authority="marcorg">CSt</recordContentSource>
+      <languageOfCataloging>
+        <languageTerm authority="iso639-2b">eng</languageTerm>
+      </languageOfCataloging>
+    </recordInfo>
+    <relatedItem type="host">
+      <titleInfo>
+        <title>STOP AIDS Project records, 1985-2011</title>
+      </titleInfo>
+      <location>
+        <url>https://purl.stanford.edu/sf766bw2868</url>
+      </location>
+      <typeOfResource collection="yes"/>
+    </relatedItem>
+    <accessCondition type="useAndReproduction">All requests to reproduce, publish, quote from, or otherwise use collection materials must be submitted in writing to speccollref@stanford.edu. Consent is given on behalf of Special Collections as the owner of the physical items and is not intended to include or imply permission from the copyright owner. Such permission must be obtained from the copyright owner, heir(s) or assigns. See: http://library.stanford.edu/depts/spc/pubserv/permissions.html.</accessCondition>
+    <accessCondition type="copyright">STOP AIDS Project Records, M1463. Dept. of Special Collections, Stanford University Libraries, Stanford, Calif.</accessCondition>
+  </mods>

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mods xmlns="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="3.5" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-5.xsd">
+    <typeOfResource>still image</typeOfResource>
+    <titleInfo>
+      <title>Athletics -- women's fencing, 1914 fencing team</title>
+    </titleInfo>
+    <genre authority="aat" valueURI="http://vocab.getty.edu/aat/300127104">photographic prints</genre>
+    <originInfo>
+      <dateCreated keyDate="yes" encoding="w3cdtf">1914</dateCreated>
+    </originInfo>
+    <physicalDescription>
+      <form>black and white photographic print</form>
+      <extent>1 photograph; 7 in. x 5 in.</extent>
+      <internetMediaType>image/jpeg</internetMediaType>
+      <digitalOrigin>reformatted digital</digitalOrigin>
+    </physicalDescription>
+    <language>
+      <languageTerm type="code" authority="iso639-2b">eng</languageTerm>
+    </language>
+    <note>"1914 Fencing team Stanford, Harry Maloney, coach" written on back.</note>
+    <note>Digitized by Stanford University Libraries.</note>
+    <subject authority="lcsh" authorityURI="http://id.loc.gov/authorities/subjects" valueURI="http://id.loc.gov/authorities/subjects/sh86000158">
+      <topic>College athletes</topic>
+    </subject>
+    <subject authority="lcsh" authorityURI="http://id.loc.gov/authorities/subjects" valueURI="http://id.loc.gov/authorities/subjects/sh2001011161">
+      <topic>Fencing for women</topic>
+    </subject>
+    <subject authority="lcsh" authorityURI="http://id.loc.gov/authorities/subjects" valueURI="http://id.loc.gov/authorities/subjects/sh85028338">
+      <topic>College sports</topic>
+    </subject>
+    <subject>
+      <name type="personal">
+        <namePart>Maloney, Harry</namePart>
+      </name>
+    </subject>
+    <identifier type="local" displayLabel="SHPC Photo ID">1197</identifier>
+    <location>
+      <physicalLocation type="repository" authority="naf" authorityURI="http://id.loc.gov/authorities/names" valueURI="http://id.loc.gov/authorities/names/no2014019980">Stanford University. Libraries. Department of Special Collections and University Archives</physicalLocation>
+      <physicalLocation type="location">Box: 7, Folder: Athletics--women's fencing</physicalLocation>
+      <shelfLocator>SC1071</shelfLocator>
+    </location>
+    <relatedItem type="host" displayLabel="Series">
+      <titleInfo>
+        <title>General Photographs</title>
+      </titleInfo>
+    </relatedItem>
+    <recordInfo>
+      <recordContentSource authority="marcorg">CSt</recordContentSource>
+      <recordOrigin>Transformed from legacy Luna Insight data, Luna Object ID 4314</recordOrigin>
+      <languageOfCataloging>
+        <languageTerm authority="iso639-2b">eng</languageTerm>
+      </languageOfCataloging>
+    </recordInfo>
+    <relatedItem type="host">
+      <titleInfo>
+        <title>Stanford historical photograph collection, 1887-circa 1996 (inclusive)</title>
+      </titleInfo>
+      <location>
+        <url>https://purl.stanford.edu/kx532cb7981</url>
+      </location>
+      <typeOfResource collection="yes"/>
+    </relatedItem>
+    <accessCondition type="useAndReproduction">Property rights reside with the repository. Literary rights reside with the creators of the documents or their heirs. To obtain permission to publish or reproduce, please contact the Special Collections Public Services Librarian at speccollref@stanford.edu.</accessCondition>
+  </mods>
