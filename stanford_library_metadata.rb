@@ -231,11 +231,11 @@ post '/transform_to_datacite_xml_deliver' do
 end
 
 post '/transform_to_datacite_xml_template' do
-  send_file('./public/transform_to_datacite_xml/datacite_template_20200110.xlsx', :type => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', :disposition => 'attachment')
+  send_file('./public/transform_to_datacite_xml/datacite_template_20200413.xlsx', :type => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', :disposition => 'attachment')
 end
 
 post '/transform_to_datacite_xml_template_dc_only' do
-  send_file('./public/transform_to_datacite_xml/datacite_only_template_20190626.xlsx', :type => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', :disposition => 'attachment')
+  send_file('./public/transform_to_datacite_xml/datacite_only_template_20200415.xlsx', :type => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', :disposition => 'attachment')
 end
 
 def transform_to_datacite_xml

@@ -1,7 +1,5 @@
-<?xml version="1.0"?>
-<xmlDocs xmlns="http://library.stanford.edu/xmlDocs" datetime="2020-01-10 01:41:28PM" sourceFile="./fixtures/datacite_template_20200110_test.xlsx">
-  <xmlDoc id="descMetadata" objectId="aa111aa1111">
-    <resource xmlns="http://datacite.org/schema/kernel-4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4/metadata.xsd">
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns="http://datacite.org/schema/kernel-4" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://datacite.org/schema/kernel-4 http://schema.datacite.org/meta/kernel-4.3/metadata.xsd">
       <titles>
         <title>Title</title>
       </titles>
@@ -10,65 +8,59 @@
           <creatorName nameType="Personal">Family name, Given name</creatorName>
           <givenName>Given name</givenName>
           <familyName>Family name</familyName>
-          <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">orcid</nameIdentifier>
-          <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">isni</nameIdentifier>
-          <affiliation>affiliation</affiliation>
+          <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">ORCID</nameIdentifier>
+          <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">ISNI</nameIdentifier>
+          <affiliation affiliationIdentifier="affiliation_identifier" affiliationIdentifierScheme="scheme">Affiliation 1</affiliation>
         </creator>
         <creator>
           <creatorName nameType="Personal">Family name 2, Given name 2</creatorName>
           <givenName>Given name 2</givenName>
           <familyName>Family name 2</familyName>
-          <nameIdentifier nameIdentifierScheme="ORCID" schemeURI="http://www.orcid.org">orcid 2</nameIdentifier>
-          <nameIdentifier nameIdentifierScheme="ISNI" schemeURI="http://www.isni.org">isni 2</nameIdentifier>
-          <affiliation>affiliation 2</affiliation>
         </creator>
       </creators>
       <contributors>
-        <contributor contributorType="Sponsor">
-          <contributorName nameType="Organizational">Institution 1</contributorName>
+        <contributor contributorType="Other">
+          <contributorName nameType="Organizational">Institution #1 name</contributorName>
         </contributor>
-        <contributor contributorType="Sponsor">
-          <contributorName nameType="Organizational">Institution 2</contributorName>
+        <contributor contributorType="Other">
+          <contributorName nameType="Organizational">Institution #2 name</contributorName>
         </contributor>
         <contributor contributorType="ResearchGroup">
-          <contributorName nameType="Organizational">Project X</contributorName>
+          <contributorName nameType="Organizational">Project name</contributorName>
         </contributor>
       </contributors>
       <fundingReferences>
         <fundingReference>
-          <funderName>Funder 1</funderName>
+          <funderName>Grantor 1</funderName>
           <awardNumber>Award 1</awardNumber>
         </fundingReference>
       </fundingReferences>
-      <resourceType resourceTypeGeneral="Text">Book Chapter</resourceType>
+      <resourceType resourceTypeGeneral="Dataset">Edited Book</resourceType>
       <sizes>
-        <size>50 pages</size>
+        <size>5 files</size>
       </sizes>
       <publisher>Stanford Digital Repository</publisher>
-      <publicationYear>1940</publicationYear>
+      <publicationYear>2017</publicationYear>
       <dates>
-        <date dateType="Created">1920/1930</date>
+        <date dateType="Created">2015/2016</date>
       </dates>
       <descriptions>
-        <description descriptionType="Abstract">abstract</description>
+        <description descriptionType="Abstract">Abstract</description>
       </descriptions>
       <subjects>
         <subject xml:lang="en-US">Art &amp; Art History</subject>
-        <subject xml:lang="en-US">kw1</subject>
-        <subject xml:lang="en-US">kw2</subject>
-        <subject xml:lang="en-US">kw3</subject>
-        <subject xml:lang="en-US">kw4</subject>
-        <subject xml:lang="en-US">kw5</subject>
-        <subject xml:lang="en-US">London</subject>
-        <subject xml:lang="en-US">1900-1940</subject>
+        <subject xml:lang="en-US">Topic keyword #1</subject>
+        <subject xml:lang="en-US">Place #1</subject>
+        <subject xml:lang="en-US">Time #1</subject>
       </subjects>
-      <identifier identifierType="DOI">doi</identifier>
+      <identifier identifierType="DOI">12345/67890</identifier>
       <alternateIdentifiers>
         <alternateIdentifier alternateIdentifierType="PURL">https://purl.stanford.edu/aa111aa1111</alternateIdentifier>
       </alternateIdentifiers>
+      <relatedIdentifiers>
+        <relatedIdentifier relatedIdentifierType="DOI" relationType="IsSupplementTo">related identifier</relatedIdentifier>
+      </relatedIdentifiers>
       <rightsList>
-        <rights>rights</rights>
+        <rights>I do what I want</rights>
       </rightsList>
     </resource>
-  </xmlDoc>
-</xmlDocs>
