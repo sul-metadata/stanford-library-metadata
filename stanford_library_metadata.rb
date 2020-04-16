@@ -17,6 +17,7 @@ require './apps/transform_to_datacite_xml/app/models/normalizer'
 require './apps/authority_lookup/authority_lookup'
 require './apps/authority_lookup/file_parser'
 require './apps/authority_lookup/result_parser'
+require './apps/compile_mods/compile_mods'
 # require './apps/replayable_spreadsheet_generator/replayable_spreadsheet_generator'
 
 
@@ -29,6 +30,7 @@ get '/clear_cache' do
   clear_files('./public/replayable_spreadsheet_validator')
   clear_files('./public/transform_spreadsheet')
   clear_files('./public/virtual_object_manifest')
+  clear_files('./public/compile_mods')
 end
 
 ##### Replayable spreadsheet validator
@@ -101,6 +103,38 @@ def transform_spreadsheet
   in_filename = params[:datafile][:tempfile].path
   map_filename = params[:mapfile][:tempfile].path
   Transformer.new(in_filename, map_filename, './public/transform_spreadsheet/replayable_spreadsheet.csv').transform
+end
+
+##### Compile MODS for Argo upload #####
+
+get '/compile_mods_index' do
+  clear_files('./public/compile_mods')
+  erb :compile_mods_index
+end
+
+post '/compile_mods_index' do
+  clear_files('./public/compile_mods')
+  erb :compile_mods_index
+end
+
+post '/compile_mods_process' do
+  compile_mods
+  redirect to('/compile_mods_download')
+end
+
+get '/compile_mods_download' do
+  erb :compile_mods_download
+end
+
+post '/compile_mods_deliver' do
+  send_file('./public/compile_mods/compiled_mods_file.xml', :type => 'xml', :disposition => 'attachment')
+end
+
+def compile_mods
+  infile = params[:file][:tempfile]
+  filename = params[:file][:tempfile].path
+  outfile = File.open('./public/compile_mods/compiled_mods_file.xml', 'w')
+  MODSCompiler.new(infile, filename, outfile).process_input
 end
 
 ##### Virtual object manifest
