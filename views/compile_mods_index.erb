@@ -1,0 +1,13 @@
+<h2>MODS compiler</h2>
+<hr>
+<h3>Compile MODS records into a single file for editing or upload to Argo</h3>
+
+<p>Submit a ZIP file containing one or more MODS XML records. Individual MODS records in the ZIP file should have the druid as the filename (prefixing the druid with "druid:" or "druid_" is acceptable).</p>
+<form action="/compile_mods_process" method="post" enctype="multipart/form-data">
+  <input type="file" name="file" id="file">
+  <p>
+  <button class="button" type="submit">Submit the file</button>
+</form>
+
+<hr>
+<a href="/"><button class="button-return">Return to main menu</button></a>
