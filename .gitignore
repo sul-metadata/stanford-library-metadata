@@ -7,9 +7,9 @@
 /spec/public/replayable_spreadsheet_validator/*
 /spec/public/reverse_modsulator/*
 /spec/public/virtual_object_manifest/*
-/public/authority_lookup/*
-/public/reverse_modsulator/*
-/public/replayable_spreadsheet_validator/*
-/public/transform_spreadsheet/*
-/public/virtual_object_manifest/*
+/public/authority_lookup/report.csv
+/public/reverse_modsulator/log.csv
+/public/replayable_spreadsheet_validator/report.csv
+/public/transform_spreadsheet/replayable_spreadsheet.csv
+/public/virtual_object_manifest/errors.csv
 /apps/authority_lookup/*OLD.rb
