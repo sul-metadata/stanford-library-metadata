@@ -1,3 +1,4 @@
+require 'sucker_punch'
 require 'sinatra'
 require 'csv'
 require 'roo'
@@ -19,6 +20,8 @@ require './apps/authority_lookup/file_parser'
 require './apps/authority_lookup/result_parser'
 require './apps/compile_mods/compile_mods'
 # require './apps/replayable_spreadsheet_generator/replayable_spreadsheet_generator'
+require './jobs/compile_mods_job'
+require './jobs/replayable_spreadsheet_validator_job'
 
 
 get '/' do
@@ -60,16 +63,21 @@ post '/replayable_spreadsheet_validator_deliver' do
 end
 
 def validate_rps
-  filename = params[:file][:tempfile].path
-  result = Validator.new(filename).validate_spreadsheet
+  # filename = params[:file][:tempfile].path
+  # result = Validator.new(filename).validate_spreadsheet
+  ValidatorJob.perform_async(params[:file][:tempfile], './public/replayable_spreadsheet_validator/report.csv')
 end
 
 def generate_report_table
-  if File.zero?('./public/replayable_spreadsheet_validator/report.csv')
+  outfile = './public/replayable_spreadsheet_validator/report.csv'
+  if !File.exist?(outfile) || SuckerPunch::Queue.stats['ValidatorJob']['workers']['busy'] > 0
+    @validator_table = "Processing, please refresh page..."
+    @validator_download_display = ""
+  elsif File.zero?(outfile)
     @validator_table = "No errors logged."
     @validator_download_display = ""
   else
-    @validator_table = generate_html_table('./public/replayable_spreadsheet_validator/report.csv')
+    @validator_table = generate_html_table(outfile)
     @validator_download_display = generate_download_button("/replayable_spreadsheet_validator_deliver", "post", "Download report")
   end
 end
@@ -131,10 +139,11 @@ post '/compile_mods_deliver' do
 end
 
 def compile_mods
-  infile = params[:file][:tempfile]
-  filename = params[:file][:tempfile].path
-  outfile = File.open('./public/compile_mods/compiled_mods_file.xml', 'w')
-  MODSCompiler.new(infile, filename, outfile).process_input
+  # infile = params[:file][:tempfile]
+  # filename = params[:file][:tempfile].path
+  # outfile = File.open('./public/compile_mods/compiled_mods_file.xml', 'w')
+  # MODSCompiler.new(infile, filename, outfile).process_input
+  CompileMODSJob.perform_async(params[:file][:tempfile])
 end
 
 ##### Virtual object manifest
