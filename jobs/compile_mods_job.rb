@@ -3,9 +3,9 @@ require 'sucker_punch'
 
 class CompileMODSJob
   include SuckerPunch::Job
-  def perform(infile)
+  def perform(infile, outfile)
     filename = infile.path
-    outfile = File.open('./public/compile_mods/compiled_mods_file.xml', 'w')
+    outfile_obj = File.open(outfile, 'w')
     MODSCompiler.new(infile, filename, outfile).process_input
   end
 end

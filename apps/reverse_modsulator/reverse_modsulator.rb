@@ -15,9 +15,10 @@ class ReverseModsulator
   # @option options [String]  :namespace       The namespace prefix used in the input files.
   # @option options [String]  :logfile         The path to the file for logging any data loss.
   # @option options [Boolean] :analysis_only   True: run data analysis only, do not convert data.
-  def initialize(source, filename, options = {})
+  def initialize(source, filename, logfile, options = {})
     @source = source
     @filename = filename
+    @logfile = logfile
     @data = {}
     @data_loss = []
 
@@ -43,11 +44,6 @@ class ReverseModsulator
       @template_filename = './apps/reverse_modsulator/mods_namespace_template.xml'
     else
       @template_filename = './apps/reverse_modsulator/modsulator_template.xml'
-    end
-    if options[:logfile]
-      @logfile = options[:logfile]
-    else
-      @logfile = './public/reverse_modsulator/log.csv'
     end
     if options[:analysis_only] == true
       @analysis_only = true
