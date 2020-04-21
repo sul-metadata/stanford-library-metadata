@@ -5,7 +5,7 @@ require_relative 'manifest_sheet'
 # Generates virtual object manifest based on validated spreadsheet input
 class ManifestGenerator
 
-  attr_reader :infile, :sheet, :current_parent
+  attr_reader :infile, :sheet, :current_parent, :data
 
   # Creates a new ManifestGenerator
   # @param [String]  filename    The filename of the input spreadsheet.
