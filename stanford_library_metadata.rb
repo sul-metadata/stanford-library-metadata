@@ -27,6 +27,7 @@ require './jobs/reverse_modsulator_job'
 require './jobs/transform_spreadsheet_job'
 require './jobs/transform_to_datacite_xml_job'
 require './jobs/virtual_object_manifest_job'
+require './jobs/virtual_object_manifest_validate_job'
 
 before do
   @authority_lookup_outfile = './public/authority_lookup/report.csv'
@@ -181,13 +182,18 @@ post '/virtual_object_manifest_index' do
   erb :virtual_object_manifest_index
 end
 
+post '/virtual_object_manifest_validate' do
+  validate_virtual_object_manifest
+  redirect to('/virtual_object_manifest_validate_download')
+end
+
 post '/virtual_object_manifest_process' do
   generate_virtual_object_manifest
   redirect to('/virtual_object_manifest_download')
 end
 
 get '/virtual_object_manifest_download' do
-  if processing_file?(@virtual_object_manifest_outfile, 'ManifestGeneratorJob') == true
+  if processing_file?(@virtual_object_manifest_log_outfile, 'ManifestGeneratorJob') == true
     erb :processing
   else
     generate_error_table
@@ -197,12 +203,14 @@ get '/virtual_object_manifest_download' do
   end
 end
 
-# post '/virtual_object_manifest_download' do
-#   generate_error_table
-#   generate_stats_table
-#   show_download
-#   erb :virtual_object_manifest_download
-# end
+get '/virtual_object_manifest_validate_download' do
+  if processing_file?(@virtual_object_manifest_log_outfile, 'ManifestValidatorJob') == true
+    erb :processing
+  else
+    generate_error_table
+    erb :virtual_object_manifest_validate_download
+  end
+end
 
 post '/virtual_object_manifest_deliver' do
   send_file(@virtual_object_manifest_outfile, :type => 'csv', :disposition => 'attachment')
@@ -211,6 +219,11 @@ end
 def generate_virtual_object_manifest
   file = params[:file][:tempfile]
   ManifestGeneratorJob.perform_async(file, @virtual_object_manifest_outfile, @virtual_object_manifest_log_outfile, @virtual_object_manifest_stats_outfile)
+end
+
+def validate_virtual_object_manifest
+  file = params[:file_validate][:tempfile]
+  ManifestValidatorJob.perform_async(file, @virtual_object_manifest_log_outfile)
 end
 
 def generate_error_table
