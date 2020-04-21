@@ -396,7 +396,6 @@ def generate_download_button(action, method, label)
 end
 
 def processing_file?(outfile)
-  return true if outfile == nil
   if !File.exist?(outfile) || SuckerPunch::Queue.stats['ValidatorJob']['workers']['busy'] > 0
     return true
   else
