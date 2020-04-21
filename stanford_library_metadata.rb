@@ -73,7 +73,7 @@ post '/replayable_spreadsheet_validator_process' do
 end
 
 get '/replayable_spreadsheet_validator_download' do
-  if processing_file?(@replayable_spreadsheet_validator_outfile) == true
+  if processing_file?(@replayable_spreadsheet_validator_outfile, 'ValidatorJob') == true
     erb :processing
   else
     generate_report_table
@@ -118,7 +118,7 @@ end
 
 get '/transform_spreadsheet_download' do
   puts @transform_spreadsheet_outfile.inspect
-  if processing_file?(@transform_spreadsheet_outfile) == true
+  if processing_file?(@transform_spreadsheet_outfile, 'TransformerJob') == true
     erb :processing
   else
     erb :transform_spreadsheet_download
@@ -154,7 +154,11 @@ post '/compile_mods_process' do
 end
 
 get '/compile_mods_download' do
-  erb :compile_mods_download
+  if processing_file?(@compile_mods_outfile, 'CompileMODSJob') == true
+    erb :processing
+  else
+    erb :compile_mods_download
+  end
 end
 
 post '/compile_mods_deliver' do
@@ -183,18 +187,22 @@ post '/virtual_object_manifest_process' do
 end
 
 get '/virtual_object_manifest_download' do
-  generate_error_table
-  generate_stats_table
-  show_download
-  erb :virtual_object_manifest_download
+  if processing_file?(@compile_mods_outfile, 'CompileMODSJob') == true
+    erb :processing
+  else
+    generate_error_table
+    generate_stats_table
+    show_download
+    erb :compile_mods_download
+  end
 end
 
-post '/virtual_object_manifest_download' do
-  generate_error_table
-  generate_stats_table
-  show_download
-  erb :virtual_object_manifest_download
-end
+# post '/virtual_object_manifest_download' do
+#   generate_error_table
+#   generate_stats_table
+#   show_download
+#   erb :virtual_object_manifest_download
+# end
 
 post '/virtual_object_manifest_deliver' do
   send_file(@virtual_object_manifest_outfile, :type => 'csv', :disposition => 'attachment')
@@ -248,12 +256,16 @@ post '/reverse_modsulator_process' do
 end
 
 get '/reverse_modsulator_download' do
-  if File.exist?(@reverse_modsulator_log_outfile) && !File.zero?(@reverse_modsulator_log_outfile)
-    @rm_table = generate_html_table(@reverse_modsulator_log_outfile)
+  if processing_file?(@reverse_modsulator_outfile, 'ReverseModsulatorJob') == true
+    erb :processing
   else
-    @rm_table = "No data loss reported."
+    if File.exist?(@reverse_modsulator_log_outfile) && !File.zero?(@reverse_modsulator_log_outfile)
+      @rm_table = generate_html_table(@reverse_modsulator_log_outfile)
+    else
+      @rm_table = "No data loss reported."
+    end
+    erb :reverse_modsulator_download
   end
-  erb :reverse_modsulator_download
 end
 
 post '/reverse_modsulator_deliver' do
@@ -285,7 +297,11 @@ post '/transform_to_datacite_xml_process' do
 end
 
 get '/transform_to_datacite_xml_download' do
-  erb :transform_to_datacite_xml_download
+  if processing_file?(@transform_to_datacite_outfile, 'DataCiteTransformerJob') == true
+    erb :processing
+  else
+    erb :transform_to_datacite_xml_download
+  end
 end
 
 post '/transform_to_datacite_xml_deliver' do
@@ -325,7 +341,11 @@ post '/authority_lookup_process' do
 end
 
 get '/authority_lookup_download' do
-  erb :authority_lookup_download
+  if processing_file?(@authority_lookup_outfile, 'AuthorityLookupJob') == true
+    erb :processing
+  else
+    erb :authority_lookup_download
+  end
 end
 
 post '/authority_lookup_deliver' do
@@ -404,8 +424,8 @@ def generate_download_button(action, method, label)
   "<form action=\"#{action}\" method=\"#{method}\"> <button class=\"button\" type=\"submit\">#{label}</button> </form>"
 end
 
-def processing_file?(outfile)
-  if !File.exist?(outfile) || SuckerPunch::Queue.stats['ValidatorJob']['workers']['busy'] > 0
+def processing_file?(outfile, job)
+  if !File.exist?(outfile) || SuckerPunch::Queue.stats[job]['workers']['busy'] > 0
     return true
   else
     return false
