@@ -253,7 +253,7 @@ end
 
 def process_mods_file
   file = params[:file][:tempfile]
-  ReverseModsulator.new(file, @reverse_modsulator_outfile, @reverse_modsulator_log_outfile, input: 'zip-stream')
+  ReverseModsulatorJob.perform_async(file, @reverse_modsulator_outfile, @reverse_modsulator_log_outfile)
 end
 
 
