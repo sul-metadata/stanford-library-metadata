@@ -11,14 +11,12 @@ class ManifestSheet
   def initialize(file, logfile)
     @sheet = Roo::Spreadsheet.open(file)
     @error_report = File.open(logfile, 'w')
-    @exit = false
   end
 
   def validate
     # Check that all required headers are present
     headers = @sheet.row(1)
     validate_headers(headers)
-    exit if @exit == true
     # Parse data columns based on headers
     @rows = @sheet.parse(sequence: 'sequence', root: 'root', druid: 'druid')
     # Hash
@@ -34,8 +32,7 @@ class ManifestSheet
   def validate_headers(headers)
     # Checks that header contains sequence, root, and druid
     unless headers.include?('sequence') && headers.include?('root') && headers.include?('druid')
-      puts 'no'
-      @exit = true
+      @errors << 'File has incorrect headers: must include sequence, root, and druid'
     end
   end
 
