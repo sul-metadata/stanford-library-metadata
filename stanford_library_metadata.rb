@@ -193,7 +193,7 @@ end
 
 def generate_virtual_object_manifest
   file = params[:file][:tempfile]
-  ManifestGenerator.new(file, @virtual_object_manifest_outfile, @virtual_object_manifest_errors_outfile, @virtual_object_manifest_stats_outfile).generate_manifest
+  ManifestGeneratorJob.perform_async(file, @virtual_object_manifest_outfile, @virtual_object_manifest_errors_outfile, @virtual_object_manifest_stats_outfile).generate_manifest
 end
 
 def generate_error_table
