@@ -73,7 +73,6 @@ post '/replayable_spreadsheet_validator_process' do
 end
 
 get '/replayable_spreadsheet_validator_download' do
-  @replayable_spreadsheet_validator_outfile = './public/replayable_spreadsheet_validator/report.csv'
   if processing_file?(@replayable_spreadsheet_validator_outfile) == true
     erb :processing
   else
