@@ -23,18 +23,20 @@ require './apps/compile_mods/compile_mods'
 require './jobs/compile_mods_job'
 require './jobs/replayable_spreadsheet_validator_job'
 
-@authority_lookup_outfile = './public/authority_lookup/report.csv'
-@compile_mods_outfile = './public/compile_mods/compiled_mods_file.xml'
-@replayable_spreadsheet_validator_outfile = './public/replayable_spreadsheet_validator/report.csv'
-@reverse_modsulator_outfile = './public/reverse_modsulator/replayable_spreadsheet.csv'
-@reverse_modsulator_log_outfile = './public/reverse_modsulator/log.csv'
-@transform_spreadsheet_outfile = './public/transform_spreadsheet/replayable_spreadsheet.csv'
-@transform_to_datacite_outfile = './public/transform_to_datacite/datacite_xml.zip'
-@transform_to_datacite_mods_template = './public/transform_to_datacite_xml/datacite_template_20200413.xlsx'
-@transform_to_datacite_only_template = './public/transform_to_datacite_xml/datacite_only_template_20200415.xlsx'
-@virtual_object_manifest_outfile = './public/virtual_object_manifest/manifest.csv'
-@virtual_object_manifest_log_outfile = './public/virtual_object_manifest/log.csv'
-@virtual_object_manifest_stats_outfile = './public/virtual_object_manifest/stats.csv'
+before do
+  @authority_lookup_outfile = './public/authority_lookup/report.csv'
+  @compile_mods_outfile = './public/compile_mods/compiled_mods_file.xml'
+  @replayable_spreadsheet_validator_outfile = './public/replayable_spreadsheet_validator/report.csv'
+  @reverse_modsulator_outfile = './public/reverse_modsulator/replayable_spreadsheet.csv'
+  @reverse_modsulator_log_outfile = './public/reverse_modsulator/log.csv'
+  @transform_spreadsheet_outfile = './public/transform_spreadsheet/replayable_spreadsheet.csv'
+  @transform_to_datacite_outfile = './public/transform_to_datacite/datacite_xml.zip'
+  @transform_to_datacite_mods_template = './public/transform_to_datacite_xml/datacite_template_20200413.xlsx'
+  @transform_to_datacite_only_template = './public/transform_to_datacite_xml/datacite_only_template_20200415.xlsx'
+  @virtual_object_manifest_outfile = './public/virtual_object_manifest/manifest.csv'
+  @virtual_object_manifest_log_outfile = './public/virtual_object_manifest/log.csv'
+  @virtual_object_manifest_stats_outfile = './public/virtual_object_manifest/stats.csv'
+end
 
 get '/' do
   erb :index
@@ -66,6 +68,7 @@ post '/replayable_spreadsheet_validator_process' do
 end
 
 get '/replayable_spreadsheet_validator_download' do
+  @replayable_spreadsheet_validator_outfile = './public/replayable_spreadsheet_validator/report.csv'
   if processing_file?(@replayable_spreadsheet_validator_outfile) == true
     erb :processing
   else
