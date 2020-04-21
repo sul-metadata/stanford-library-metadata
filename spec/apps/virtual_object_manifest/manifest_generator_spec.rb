@@ -9,6 +9,7 @@ RSpec.describe ManifestGenerator do
     @statfile = File.join(PUBLIC_DIR, 'virtual_object_manifest/stats.csv')
     @manifest_test_object = ManifestGenerator.new(File.join(FIXTURES_DIR, 'virtual_object_manifest/manifest_test.xlsx'), @outfile, @logfile, @statfile)
     @manifest_test_process = @manifest_test_object.generate_manifest
+    @data = @manifest_test_object.process_sheet(@manifest_test_object.sheet)
   end
 
   describe 'parses input data:' do
@@ -30,20 +31,10 @@ RSpec.describe ManifestGenerator do
 
   describe 'generates manifest data:' do
     it 'processes a new parent row' do
-      @manifest_test_object.sheet.each(sequence: 'sequence', druid: 'druid') do |row|
-        next unless row[:druid] == 'wc326ks0006'
-        @manifest_test_object.process_row(row)
-        expect(@manifest_test_object.current_parent).to eq('wc326ks0006')
-        break
-      end
+      expect(@data).to have_key('hn306pf4453')
     end
     it 'processes a new child row for an existing parent' do
-      @manifest_test_object.sheet.each(sequence: 'sequence', druid: 'druid') do |row|
-        next unless row[:druid] == 'dw373br9638'
-        @manifest_test_object.process_row(row)
-        expect(@manifest_test_object.current_parent).to eq('wc326ks0006')
-        break
-      end
+      expect(@data['hn306pf4453']).to include('qv868zb8723')
     end
 
   end
