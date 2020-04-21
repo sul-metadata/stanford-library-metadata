@@ -12,6 +12,6 @@
 /public/reverse_modsulator/log.csv
 /public/replayable_spreadsheet_validator/report.csv
 /public/transform_spreadsheet/replayable_spreadsheet.csv
-/public/virtual_object_manifest/errors.csv
+/public/virtual_object_manifest/log.csv
 /public/compile_mods/compiled_mods_file.xml
 /apps/authority_lookup/*OLD.rb
