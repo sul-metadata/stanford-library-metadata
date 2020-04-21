@@ -20,8 +20,13 @@ require './apps/authority_lookup/file_parser'
 require './apps/authority_lookup/result_parser'
 require './apps/compile_mods/compile_mods'
 # require './apps/replayable_spreadsheet_generator/replayable_spreadsheet_generator'
+require './jobs/authority_lookup_job'
 require './jobs/compile_mods_job'
 require './jobs/replayable_spreadsheet_validator_job'
+require './jobs/reverse_modsulator_job'
+require './jobs/transform_spreadsheet_job'
+require './jobs/transform_to_datacite_xml_job'
+require './jobs/virtual_object_manifest_job'
 
 before do
   @authority_lookup_outfile = './public/authority_lookup/report.csv'
