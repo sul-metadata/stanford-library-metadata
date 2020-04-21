@@ -294,16 +294,7 @@ end
 def transform_to_datacite_xml
   in_file = params[:file][:tempfile]
   in_filename = params[:file][:tempfile].path
-  xml = Modsulator.new(in_file, in_filename).convert_rows
-  doc = Nokogiri::XML(xml)
-  records = doc.xpath('//*[local-name()="resource"]')
-  xml_declaration = '<?xml version="1.0" encoding="UTF-8"?>'
-  Zip::File.open(@transform_to_datacite_outfile, Zip::File::CREATE) do |z|
-    records.each do |resource|
-      druid = resource.parent['objectId']
-      z.get_output_stream("#{druid}.xml") {|f| f.puts "#{xml_declaration}\n#{resource.to_s}"}
-    end
-  end
+  DataCiteTransformerJob.perform_async(in_file, in_filename, @transform_spreadsheet_outfile)
 end
 
 
