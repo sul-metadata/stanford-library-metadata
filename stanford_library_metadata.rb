@@ -117,6 +117,7 @@ post '/transform_spreadsheet_process' do
 end
 
 get '/transform_spreadsheet_download' do
+  puts @transform_spreadsheet_outfile.inspect
   if processing_file?(@transform_spreadsheet_outfile) == true
     erb :processing
   else
@@ -125,6 +126,7 @@ get '/transform_spreadsheet_download' do
 end
 
 post '/transform_spreadsheet_deliver' do
+  puts @transform_spreadsheet_outfile.inspect
   send_file(@transform_spreadsheet_outfile, :type => 'csv', :disposition => 'attachment')
 end
 
