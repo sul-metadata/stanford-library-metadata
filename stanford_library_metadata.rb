@@ -187,13 +187,13 @@ post '/virtual_object_manifest_process' do
 end
 
 get '/virtual_object_manifest_download' do
-  if processing_file?(@compile_mods_outfile, 'CompileMODSJob') == true
+  if processing_file?(@virtual_object_manifest_outfile, 'ManifestGeneratorJob') == true
     erb :processing
   else
     generate_error_table
     generate_stats_table
     show_download
-    erb :compile_mods_download
+    erb :virtual_object_manifest_download
   end
 end
 
@@ -210,14 +210,14 @@ end
 
 def generate_virtual_object_manifest
   file = params[:file][:tempfile]
-  ManifestGeneratorJob.perform_async(file, @virtual_object_manifest_outfile, @virtual_object_manifest_errors_outfile, @virtual_object_manifest_stats_outfile).generate_manifest
+  ManifestGeneratorJob.perform_async(file, @virtual_object_manifest_outfile, @virtual_object_manifest_log_outfile, @virtual_object_manifest_stats_outfile)
 end
 
 def generate_error_table
-  if File.zero?(@virtual_object_manifest_errors_outfile)
+  if File.zero?(@virtual_object_manifest_log_outfile)
     @error_table = "No errors logged."
   else
-    @error_table = generate_html_table(@virtual_object_manifest_errors_outfile, has_headers=false)
+    @error_table = generate_html_table(@virtual_object_manifest_log_outfile, has_headers=false)
   end
 end
 
