@@ -336,9 +336,7 @@ def authority_lookup
   file = params[:file][:tempfile]
   subauthority = params[:subauthority]
   limit = params[:limit]
-  terms = FileParser.new(file).terms
-  result_set = AuthorityLookup.new(terms, "LOCNAMES_LD4L_CACHE", "https://lookup.ld4l.org/authorities/search/linked_data/", limit: limit.to_i, subauthority: subauthority).process_term_list
-  ResultParser.new(result_set, @authority_lookup_outfile)
+  AuthorityLookupJob.perform_async(file, subauthority, limit, @authority_lookup_outfile)
 end
 
 
