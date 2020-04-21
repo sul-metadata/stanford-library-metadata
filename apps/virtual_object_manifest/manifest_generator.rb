@@ -18,7 +18,7 @@ class ManifestGenerator
 
   def generate_manifest
     # Create new ManifestSheet object (using Roo) from input file
-    @infile = ManifestSheet.new(@in_filename)
+    @infile = ManifestSheet.new(@in_filename, @log_filename)
     # Validate incoming data and return validated spreadsheet object
     @sheet = @infile.validate
     return 0 unless File.zero?(@log_filename)
