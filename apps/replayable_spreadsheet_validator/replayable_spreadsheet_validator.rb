@@ -4,11 +4,11 @@ class Validator
 
   attr_reader :header_row_index, :header_row_terms, :errors, :exit, :value_type_indexes, :selected_headers, :druids, :formula_errors, :report
 
-  def initialize(filename)
+  def initialize(filename, outfile)
     @filename = filename
     @template = File.expand_path('./modsulator_template.xml', File.dirname(__FILE__))
     @extension = File.extname(@filename)
-    @report = CSV.new(File.open('./public/replayable_spreadsheet_validator/report.csv', 'w'))
+    @report = CSV.new(File.open(outfile, 'w'))
 
     @exit = false
     @value_type_indexes = {}

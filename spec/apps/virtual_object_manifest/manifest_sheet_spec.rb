@@ -1,9 +1,10 @@
 require '../apps/virtual_object_manifest/manifest_sheet'
+require './spec_helper'
 
 RSpec.describe ManifestSheet do
 
   before(:all) do
-    @manifest_errors_object = ManifestSheet.new('./fixtures/manifest_test_errors.xlsx')
+    @manifest_errors_object = ManifestSheet.new(File.join(FIXTURES_DIR, 'virtual_object_manifest/manifest_test_errors.xlsx'))
     @manifest_errors_process = @manifest_errors_object.validate
   end
 
@@ -42,7 +43,7 @@ RSpec.describe ManifestSheet do
 
   describe 'generates output:' do
     it 'generates expected error report' do
-      expect(File.read('./public/virtual_object_manifest/errors.csv')).to eq(File.read('./fixtures/manifest_error_report.csv'))
+      expect(File.read(File.join(PUBLIC_DIR, 'virtual_object_manifest/errors.csv'))).to eq(File.read(File.join(FIXTURES_DIR, 'virtual_object_manifest/errors.csv')))
     end
   end
 

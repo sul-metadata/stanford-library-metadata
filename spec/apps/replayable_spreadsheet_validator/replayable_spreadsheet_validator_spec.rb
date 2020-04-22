@@ -6,10 +6,11 @@ require 'roo'
 RSpec.describe Validator do
 
   before(:all) do
-    @csv = Validator.new(File.join(FIXTURES_DIR, 'replayable_spreadsheet_validator/test.csv'))
+    @logfile = File.join(PUBLIC_DIR, 'replayable_spreadsheet_validator/log.csv')
+    @csv = Validator.new(File.join(FIXTURES_DIR, 'replayable_spreadsheet_validator/test.csv'), @logfile)
     @csv.validate_spreadsheet
     @csv_errors = @csv.errors.to_a.flatten
-    @xlsx = Validator.new(File.join(FIXTURES_DIR, 'replayable_spreadsheet_validator/test.xlsx'))
+    @xlsx = Validator.new(File.join(FIXTURES_DIR, 'replayable_spreadsheet_validator/test.xlsx'), @logfile)
     @xlsx.validate_spreadsheet
     @xlsx_errors = @xlsx.errors.to_a.flatten
     @non_utf8_csv = File.join(FIXTURES_DIR, 'replayable_spreadsheet_validator/test_word.csv')
@@ -30,16 +31,16 @@ RSpec.describe Validator do
       expect(@csv.validate_file_extension).not_to be(true)
     end
     it 'identifies xls file extension' do
-      expect(Validator.new('file.xls').validate_file_extension).not_to be(true)
+      expect(Validator.new('file.xls', @logfile).validate_file_extension).not_to be(true)
     end
     it 'identifies xlsx file extension' do
       expect(@xlsx.validate_file_extension).not_to be(true)
     end
     it 'reports invalid file extension' do
-      expect(Validator.new('file.xxx').validate_file_extension).to be(true)
+      expect(Validator.new('file.xxx', @logfile).validate_file_extension).to be(true)
     end
     it 'reports missing file extension' do
-      expect(Validator.new('file').validate_file_extension).to be(true)
+      expect(Validator.new('file', @logfile).validate_file_extension).to be(true)
     end
   end
 
@@ -49,7 +50,7 @@ RSpec.describe Validator do
       expect(@csv.validate_file_encoding).not_to be(true)
     end
     it 'recognizes non-utf-8 file encoding for csv' do
-      expect(Validator.new(@non_utf8_csv).validate_file_encoding).to be(true)
+      expect(Validator.new(@non_utf8_csv, @logfile).validate_file_encoding).to be(true)
     end
   end
 
@@ -69,12 +70,12 @@ RSpec.describe Validator do
       expect(@xlsx.header_row_index).to eq(0)
     end
     it 'reports missing header row for csv' do
-      no_header_csv = Validator.new(@no_header_csv)
+      no_header_csv = Validator.new(@no_header_csv, @logfile)
       no_header_csv.validate_headers
       expect(no_header_csv.exit).to eq(true)
     end
     it 'reports missing header row for xlsx' do
-      no_header_csv = Validator.new(@no_header_xlsx)
+      no_header_csv = Validator.new(@no_header_xlsx, @logfile)
       no_header_csv.validate_headers
       expect(no_header_csv.exit).to eq(true)
     end
@@ -92,42 +93,42 @@ RSpec.describe Validator do
       expect(@xlsx_errors).to include('Header not in XML template')
     end
     it 'reports missing title header for csv' do
-      no_title_csv = Validator.new(@druid_sourceid_csv)
+      no_title_csv = Validator.new(@druid_sourceid_csv, @logfile)
       no_title_csv.validate_headers
       expect(no_title_csv.errors.to_a.flatten).to include('Missing required column')
     end
     it 'reports missing title header for xlsx' do
-      no_title_xlsx = Validator.new(@druid_sourceid_xlsx)
+      no_title_xlsx = Validator.new(@druid_sourceid_xlsx, @logfile)
       no_title_xlsx.validate_headers
       expect(no_title_xlsx.errors.to_a.flatten).to include('Missing required column')
     end
     it 'reports missing type of resource header for csv' do
-      no_type_csv = Validator.new(@druid_sourceid_csv)
+      no_type_csv = Validator.new(@druid_sourceid_csv, @logfile)
       no_type_csv.validate_headers
       expect(no_type_csv.errors.to_a.flatten).to include('Recommended column missing')
     end
     it 'reports missing type of resource header for xlsx' do
-      no_type_xlsx = Validator.new(@druid_sourceid_xlsx)
+      no_type_xlsx = Validator.new(@druid_sourceid_xlsx, @logfile)
       no_type_xlsx.validate_headers
       expect(no_type_xlsx.errors.to_a.flatten).to include('Recommended column missing')
     end
     it 'reports missing subject value header for csv' do
-      subject_type_no_value_csv = Validator.new(@subject_type_no_value_csv)
+      subject_type_no_value_csv = Validator.new(@subject_type_no_value_csv, @logfile)
       subject_type_no_value_csv.validate_headers
       expect(subject_type_no_value_csv.errors.to_a.flatten).to include('Missing subject value column header for su1:p1:type')
     end
     it 'reports missing subject value header for xlsx' do
-      subject_type_no_value_xlsx = Validator.new(@subject_type_no_value_xlsx)
+      subject_type_no_value_xlsx = Validator.new(@subject_type_no_value_xlsx, @logfile)
       subject_type_no_value_xlsx.validate_headers
       expect(subject_type_no_value_xlsx.errors.to_a.flatten).to include('Missing subject value column header for su1:p1:type')
     end
     it 'reports missing subject type header for csv' do
-      subject_value_no_type_csv = Validator.new(@subject_value_no_type_csv)
+      subject_value_no_type_csv = Validator.new(@subject_value_no_type_csv, @logfile)
       subject_value_no_type_csv.validate_headers
       expect(subject_value_no_type_csv.errors.to_a.flatten).to include('Missing subject type column header for su1:p1:value')
     end
     it 'reports missing subject type header for xlsx' do
-      subject_value_no_type_xlsx = Validator.new(@subject_value_no_type_xlsx)
+      subject_value_no_type_xlsx = Validator.new(@subject_value_no_type_xlsx, @logfile)
       subject_value_no_type_xlsx.validate_headers
       expect(subject_value_no_type_xlsx.errors.to_a.flatten).to include('Missing subject type column header for su1:p1:value')
     end
@@ -451,7 +452,7 @@ RSpec.describe Validator do
 
   describe 'gets current date headers and values:' do
     before(:all) do
-      date_validator_csv = Validator.new(@date_content_csv)
+      date_validator_csv = Validator.new(@date_content_csv, @logfile)
       date_validator_csv.validate_spreadsheet
       date_headers_csv = date_validator_csv.selected_headers['dates']
       data_row_csv = CSV.new(File.open(@date_content_csv)).read[1]
@@ -460,7 +461,7 @@ RSpec.describe Validator do
       @or2_date_captured_headers_csv, @or2_date_captured_values_csv = date_validator_csv.get_current_date_headers_and_values('or2:dt:', 'dateCaptured', date_headers_csv['or2:dt:']['dateCaptured'], data_row_csv)
       @or2_copyright_date_headers_csv, @or2_copyright_date_values_csv = date_validator_csv.get_current_date_headers_and_values('or2:dt:', 'copyrightDate', date_headers_csv['or2:dt:']['copyrightDate'], data_row_csv)
       @or3_date_other_headers_csv, @or3_date_other_values_csv = date_validator_csv.get_current_date_headers_and_values('or3:dt:', 'dateOther', date_headers_csv['or3:dt:']['dateOther'], data_row_csv)
-      date_validator_xlsx = Validator.new(@date_content_xlsx)
+      date_validator_xlsx = Validator.new(@date_content_xlsx, @logfile)
       date_validator_xlsx.validate_spreadsheet
       date_headers_xlsx = date_validator_xlsx.selected_headers['dates']
       data_row_xlsx = Roo::Excelx.new(File.open(@date_content_xlsx)).row(2)
@@ -935,13 +936,13 @@ RSpec.describe Validator do
 
   describe 'logs errors:' do
     it 'logs fail error and exits for csv' do
-      no_header_csv = Validator.new(@no_header_csv)
+      no_header_csv = Validator.new(@no_header_csv, @logfile)
       no_header_csv.validate_headers
       expect(no_header_csv.errors).to include("FAIL" => [["FAIL", "Invalid header row, must begin with druid & sourceId (case-sensitive) and appear in first ten lines of file", "headers"]])
       expect(no_header_csv.report.closed?).to be(true)
     end
     it 'logs fail error and exits for xlsx' do
-      no_header_xlsx = Validator.new(@no_header_xlsx)
+      no_header_xlsx = Validator.new(@no_header_xlsx, @logfile)
       no_header_xlsx.validate_headers
       expect(no_header_xlsx.errors).to include("FAIL" => [["FAIL", "Invalid header row, must begin with druid & sourceId (case-sensitive) and appear in first ten lines of file", "headers"]])
       expect(no_header_xlsx.report.closed?).to be(true)

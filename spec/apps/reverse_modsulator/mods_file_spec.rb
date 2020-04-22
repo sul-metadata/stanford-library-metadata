@@ -5,7 +5,8 @@ require './spec_helper'
 RSpec.describe MODSFile do
 
   before(:all) do
-    reverse_modsulator_test = ReverseModsulator.new(File.join(FIXTURES_DIR, 'reverse_modsulator/aa111aa1111.zip'), File.join(PUBLIC_DIR, 'reverse_modsulator/aa111aa1111.csv'))
+    @logfile = File.join(PUBLIC_DIR, 'reverse_modsulator/log.csv')
+    reverse_modsulator_test = ReverseModsulator.new(File.join(FIXTURES_DIR, 'reverse_modsulator/aa111aa1111.zip'), File.join(PUBLIC_DIR, 'reverse_modsulator/aa111aa1111.csv'), @logfile)
     template = reverse_modsulator_test.template_xml
     mods = Nokogiri::XML(File.open(File.join(FIXTURES_DIR, 'reverse_modsulator/aa111aa1111.xml')))
     @mods_file_test = MODSFile.new(mods, template, 'xmlns')
@@ -156,7 +157,7 @@ RSpec.describe MODSFile do
 
   describe 'extracts MODS data from non-default namespace:' do
     before(:all) do
-      reverse_modsulator_test_namespace = ReverseModsulator.new(File.join(FIXTURES_DIR, 'reverse_modsulator/namespace'), File.join(PUBLIC_DIR, 'reverse_modsulator/mm111mm1111.csv'), namespace: 'mods', template_file: File.join(FIXTURES_DIR, 'reverse_modsulator/modified_template-3-4.xml'))
+      reverse_modsulator_test_namespace = ReverseModsulator.new(File.join(FIXTURES_DIR, 'reverse_modsulator/namespace'), File.join(PUBLIC_DIR, 'reverse_modsulator/mm111mm1111.csv'), @logfile, namespace: 'mods', template_file: File.join(FIXTURES_DIR, 'reverse_modsulator/modified_template-3-4.xml'))
       template_namespace = reverse_modsulator_test_namespace.template_xml
       mods_namespace = Nokogiri::XML(File.open(File.join(FIXTURES_DIR, 'reverse_modsulator/namespace/mm111mm1111.xml')))
       @mods_file_test_namespace = MODSFile.new(mods_namespace, template_namespace, 'mods')

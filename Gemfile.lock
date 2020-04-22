@@ -139,6 +139,8 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    sucker_punch (2.1.2)
+      concurrent-ruby (~> 1.0)
     thor (1.0.1)
     thread_safe (0.3.6)
     tilt (2.0.9)
@@ -163,6 +165,7 @@ DEPENDENCIES
   roo-xls
   rubyzip
   sinatra
+  sucker_punch (~> 2.0)
 
 RUBY VERSION
    ruby 2.6.3p62

@@ -1,11 +1,17 @@
 <h2>Virtual object manifest generator</h2>
 <hr>
-<h3>Process a file</h3>
+<h3>Validate a file</h3>
+<form action="/virtual_object_manifest_validate" method = "post" enctype="multipart/form-data">
+  <input type="file" name="file_validate" id= "file_validate"
+  <p>
+  <button class="button" type="submit">Validate the file</button>
+</form>
 
+<h3>Process a file</h3>
 <form action="/virtual_object_manifest_process" method="post" enctype="multipart/form-data">
   <input type="file" name="file" id="file">
   <p>
-  <button class="button" type="submit">Submit the file</button>
+  <button class="button" type="submit">Process the file</button>
 </form>
 
 <hr>
@@ -19,7 +25,7 @@ Takes input file with column headers:
 <li>'druid' (object druids)</li>
 </ul>
 <p>
-The order of columns or the presence of additional columns does not matter.
+The order of columns or the presence of additional columns does not matter. Validate the file before converting to check for errors.
 <p>
 Input file should be .xlsx, .xls, or .csv.
 

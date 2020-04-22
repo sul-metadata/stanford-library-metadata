@@ -11,3 +11,4 @@ gem 'equivalent-xml'
 gem 'rails'
 gem 'json'
 gem 'actionview', ">= 6.0.2.2"
+gem 'sucker_punch', '~> 2.0'

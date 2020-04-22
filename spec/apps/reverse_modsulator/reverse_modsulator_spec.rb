@@ -6,13 +6,13 @@ require 'zip'
 
 RSpec.describe ReverseModsulator do
 
-  # before(:all) do
-  #
-  # end
+  before(:all) do
+    @logfile = File.join(PUBLIC_DIR, 'reverse_modsulator/log.csv')
+  end
 
   describe 'modifies template:' do
     it 'substitutes subject elements in template:' do
-      test = ReverseModsulator.new(File.join(FIXTURES_DIR, 'aa111aa1111.zip'), File.join(PUBLIC_DIR, 'reverse_modsulator/aa111aa1111.csv'))
+      test = ReverseModsulator.new(File.join(FIXTURES_DIR, 'aa111aa1111.zip'), File.join(PUBLIC_DIR, 'reverse_modsulator/aa111aa1111.csv'), @logfile)
       template = test.modify_template
       template_string = Nokogiri::XML(template).to_s
       expect(template_string).to include('topic')
@@ -23,28 +23,28 @@ RSpec.describe ReverseModsulator do
 
   describe 'processes input:' do
     it 'processes files in a directory' do
-      test = ReverseModsulator.new("#{FIXTURES_DIR}/reverse_modsulator/dir", File.join(PUBLIC_DIR, 'reverse_modsulator/dir.csv'))
+      test = ReverseModsulator.new("#{FIXTURES_DIR}/reverse_modsulator/dir", File.join(PUBLIC_DIR, 'reverse_modsulator/dir.csv'), @logfile)
       test.process_input
       new_output = File.read(File.join(PUBLIC_DIR, 'reverse_modsulator/dir.csv'))
       expected_output = File.read(File.join(FIXTURES_DIR, 'reverse_modsulator/dir.csv'))
       expect(new_output).to eq(expected_output)
     end
     it 'processes a compiled MODS file' do
-      test = ReverseModsulator.new("#{FIXTURES_DIR}/reverse_modsulator/compiled_mods.xml", File.join(PUBLIC_DIR, 'reverse_modsulator/compiled_mods.csv'))
+      test = ReverseModsulator.new("#{FIXTURES_DIR}/reverse_modsulator/compiled_mods.xml", File.join(PUBLIC_DIR, 'reverse_modsulator/compiled_mods.csv'), @logfile)
       test.process_input
       new_output = File.read(File.join(PUBLIC_DIR, 'reverse_modsulator/compiled_mods.csv'))
       expected_output = File.read(File.join(FIXTURES_DIR, 'reverse_modsulator/compiled_mods.csv'))
       expect(new_output).to eq(expected_output)
     end
     it 'processes a ZIP file' do
-      test = ReverseModsulator.new("#{FIXTURES_DIR}/reverse_modsulator/zip_file.zip", File.join(PUBLIC_DIR, 'reverse_modsulator/zip_file.csv'))
+      test = ReverseModsulator.new("#{FIXTURES_DIR}/reverse_modsulator/zip_file.zip", File.join(PUBLIC_DIR, 'reverse_modsulator/zip_file.csv'), @logfile)
       test.process_input
       new_output = File.read(File.join(PUBLIC_DIR, 'reverse_modsulator/zip_file.csv'))
       expected_output = File.read(File.join(FIXTURES_DIR, 'reverse_modsulator/zip_file.csv'))
       expect(new_output).to eq(expected_output)
     end
     it 'processes a ZIP stream' do
-      test = ReverseModsulator.new(File.new("#{FIXTURES_DIR}/reverse_modsulator/zip_file.zip"), File.join(PUBLIC_DIR, 'reverse_modsulator/zip_stream.csv'), input: 'zip-stream')
+      test = ReverseModsulator.new(File.new("#{FIXTURES_DIR}/reverse_modsulator/zip_file.zip"), File.join(PUBLIC_DIR, 'reverse_modsulator/zip_stream.csv'), @logfile, input: 'zip-stream')
       test.process_zip_stream
       new_output = File.read(File.join(PUBLIC_DIR, 'reverse_modsulator/zip_file.csv'))
       expected_output = File.read(File.join(FIXTURES_DIR, 'reverse_modsulator/zip_file.csv'))
@@ -57,7 +57,7 @@ RSpec.describe ReverseModsulator do
     #   test = ReverseModsulator.new(File.new("#{FIXTURES_DIR}/reverse_modsulator/modified_template-3-4.xml"))
     # end
     it 'processes MODS 3.4 and 3.5 with mods: namespace' do
-      reverse_modsulator_test_namespace = ReverseModsulator.new(File.join(FIXTURES_DIR, 'reverse_modsulator/namespace'), File.join(PUBLIC_DIR, 'reverse_modsulator/namespace.csv'), namespace: 'mods' )
+      reverse_modsulator_test_namespace = ReverseModsulator.new(File.join(FIXTURES_DIR, 'reverse_modsulator/namespace'), File.join(PUBLIC_DIR, 'reverse_modsulator/namespace.csv'), @logfile, namespace: 'mods' )
       reverse_modsulator_test_namespace.process_input
       new_output = File.read(File.join(PUBLIC_DIR, 'reverse_modsulator/namespace.csv'))
       expected_output = File.read(File.join(FIXTURES_DIR, 'reverse_modsulator/namespace.csv'))

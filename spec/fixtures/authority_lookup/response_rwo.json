@@ -1,0 +1,77 @@
+[
+    {
+        "uri": "http://id.loc.gov/rwo/agents/n79046044",
+        "id": "n 79046044",
+        "label": "Sayers, Dorothy L. (Dorothy Leigh), 1893-1957",
+        "context": [
+            {
+                "property": "Preferred label",
+                "values": ["Sayers, Dorothy L. (Dorothy Leigh), 1893-1957"],
+                "selectable": true,
+                "drillable": false
+            },
+            {
+                "property": "Type",
+                "values": [
+                    "http://www.loc.gov/mads/rdf/v1#RWO",
+                    "http://id.loc.gov/ontologies/bibframe/Person",
+                    "http://xmlns.com/foaf/0.1/Person"
+                ],
+                "selectable": false,
+                "drillable": false
+            },
+            {
+                "property": "VIAF match",
+                "values": ["http://viaf.org/viaf/sourceID/LC%7Cn+79046044#skos:Concept"],
+                "selectable": false,
+                "drillable": false
+            },
+            {
+                "property": "Variant label",
+                "values": [
+                    "Sayersová, Dorothy L., 1893-1957",
+                    "سيرز، داراتى",
+                    "Сэйерс, Дороти Л., 1893-1957",
+                    "Fleming, Dorothy Leigh Sayers, 1893-1957",
+                    "Сэйерс, Дорoти Л., 1893-1957"
+                ],
+                "selectable": false,
+                "drillable": false
+            },
+            {
+                "property": "Citation note",
+                "values": [
+                    "t.p. (Dorothy L. Sayersová) copyr. (Dorothy L. Sayers)",
+                    "t.p. (Dorothy L. Sayers)"
+                ],
+                "selectable": false,
+                "drillable": false
+            },
+            {
+                "property": "Citation source",
+                "values": [
+                    "Vražda potřebuje reklamu, 1998:",
+                    "Her Op.I ... 1916.",
+                    "Brabazon, J. Dorothy L. Sayers, 1981 (subj.)"
+                ],
+                "selectable": false,
+                "drillable": false
+            },
+            {
+                "property": "Editorial note",
+                "values": [
+                    "[Non-Latin script references not evaluated.]",
+                    "[Machine-derived non-Latin script reference project.]"
+                ],
+                "selectable": false,
+                "drillable": false
+            },
+            {
+                "property": "Authority URI",
+                "values": ["http://id.loc.gov/authorities/names/n79046044"],
+                "selectable": false,
+                "drillable": false
+            }
+        ]
+    }
+]

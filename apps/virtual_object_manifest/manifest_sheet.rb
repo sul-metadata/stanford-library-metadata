@@ -8,17 +8,15 @@ class ManifestSheet
 
   # Creates a new ManifestSheet
   # @param [File]  file    The input file object
-  def initialize(file)
+  def initialize(file, logfile)
     @sheet = Roo::Spreadsheet.open(file)
-    @error_report = File.open('./public/virtual_object_manifest/errors.csv', 'w')
-    @exit = false
+    @error_report = File.open(logfile, 'w')
   end
 
   def validate
     # Check that all required headers are present
     headers = @sheet.row(1)
     validate_headers(headers)
-    exit if @exit == true
     # Parse data columns based on headers
     @rows = @sheet.parse(sequence: 'sequence', root: 'root', druid: 'druid')
     # Hash
@@ -33,8 +31,8 @@ class ManifestSheet
 
   def validate_headers(headers)
     # Checks that header contains sequence, root, and druid
-    unless ['sequence', 'root', 'druid'] & headers == ['sequence', 'root', 'druid']
-      @exit = true
+    unless headers.include?('sequence') && headers.include?('root') && headers.include?('druid')
+      @errors << 'File has incorrect headers: must include sequence, root, and druid'
     end
   end
 

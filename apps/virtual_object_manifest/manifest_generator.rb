@@ -5,22 +5,22 @@ require_relative 'manifest_sheet'
 # Generates virtual object manifest based on validated spreadsheet input
 class ManifestGenerator
 
-  attr_reader :infile, :sheet, :current_parent
+  attr_reader :infile, :sheet, :current_parent, :data
 
   # Creates a new ManifestGenerator
   # @param [String]  filename    The filename of the input spreadsheet.
-  def initialize(filename)
-    @in_filename = filename
-    @out_filename = './public/virtual_object_manifest/manifest.csv'
-    @stat_filename = './public/virtual_object_manifest/stats.csv'
+  def initialize(in_filename, out_filename, log_filename, stats_filename)
+    @in_filename = in_filename
+    @out_filename = out_filename
+    @log_filename = log_filename
+    @stats_filename = stats_filename
   end
 
   def generate_manifest
     # Create new ManifestSheet object (using Roo) from input file
-    @infile = ManifestSheet.new(@in_filename)
+    @infile = ManifestSheet.new(@in_filename, @log_filename)
     # Validate incoming data and return validated spreadsheet object
     @sheet = @infile.validate
-    return 0 unless File.zero?("./public/virtual_object_manifest/errors.csv")
     data = process_sheet(@sheet)
     report_output_stats(data)
     write_output_file(data)
@@ -55,7 +55,7 @@ class ManifestGenerator
 
   def report_output_stats(data)
     # Reports number of child objects assigned to each parent in the manifest
-    CSV.open(@stat_filename, 'wb') do |csv|
+    CSV.open(@stats_filename, 'wb') do |csv|
       csv << ["Parent druid", "Child object count"]
       data.each { |parent, children| csv << ["#{parent}", "#{children.count}"] }
     end
