@@ -14,4 +14,6 @@
 /public/transform_spreadsheet/replayable_spreadsheet.csv
 /public/virtual_object_manifest/log.csv
 /public/compile_mods/compiled_mods_file.xml
+/public/reverse_modsulator/replayable_spreadsheet.csv
+public/transform_to_datacite_xml/datacite_xml.zip
 /apps/authority_lookup/*OLD.rb
