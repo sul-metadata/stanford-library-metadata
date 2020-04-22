@@ -2,6 +2,7 @@
 <hr>
 <h3>Search the LD4P cache of the Library of Congress Name Authority file for authorized terms and URIs</h3>
 <p>Note: The LD4P cache server is not a production system, and may not always be available.</p>
+<p><a href="https://lookup.ld4l.org/authority_list">Lookups to other authorities are also possible</a> -- contact the Metadata Coordinator if there's one you'd like to have added to this tool.</p>
 
 <p>Submit a text file (.txt) containing a list of terms to search, one term per line.</p>
 <form action="/authority_lookup_process" method="post" enctype="multipart/form-data">
@@ -14,8 +15,6 @@
     <input type="radio" value="" name="subauthority" checked>&nbsp;No limits<br>
     <input type="radio" value="person" name="subauthority">&nbsp;Personal names only<br>
     <input type="radio" value="organization" name="subauthority">&nbsp;Corporate bodies and organizations only<br>
-    <input type="radio" value="place" name="subauthority">&nbsp;Places only<br>
-    <input type="radio" value="work" name="subauthority">&nbsp;Works only<br>
   </fieldset>
   <p>
   <fieldset id="limit">

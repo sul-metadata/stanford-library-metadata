@@ -36,7 +36,6 @@ class ResponseParser
   def parse_response_LOCNAMES_RWO_LD4L_CACHE
     result = []
     parsed_json = JSON.parse(@response)
-    puts parsed_json.inspect
     parsed_json.each do |match|
       label = match['label']
       uri = match["context"].select { |item| item["property"] == "Authority URI" }.first["values"].first

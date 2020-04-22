@@ -4,7 +4,7 @@ require_relative 'response_parser'
 
 class AuthorityLookup
 
-  attr_reader :subauthority, :limit, :language, :parameter, :exit
+  attr_reader :subauthority, :limit, :language, :parameter
 
   def initialize(term_list, authority, base_url, subauthority: '', limit: 10, language: '', parameter: '')
     @term_list = term_list
@@ -44,7 +44,7 @@ class AuthorityLookup
     query_url += "/#{@subauthority}" unless @subauthority == nil || @subauthority.empty?
     query_url += "?q=#{encoded_search_term}&maxRecords=#{@limit}"
     query_url += "&lang=#{@language}" unless @language == nil || @language.empty?
-    query_url += @parameter
+    query_url += "&#{parameter}" unless @parameter == nil || @parameter.empty?
     query_url
   end
 
