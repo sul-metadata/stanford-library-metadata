@@ -16,6 +16,8 @@ class ResponseParser
 
     if @authority == 'LOCNAMES_LD4L_CACHE'
       @parsed_response = parse_response_LOCNAMES_LD4L_CACHE
+    elsif @authority == 'LOCNAMES_RWO_LD4L_CACHE'
+      @parsed_response = parse_response_LOCNAMES_RWO_LD4L_CACHE
     end
 
   end
@@ -26,6 +28,18 @@ class ResponseParser
     parsed_json.each do |match|
       label = match['label']
       uri = match['uri']
+      result << {'label' => label, 'uri' => uri}
+    end
+    result
+  end
+
+  def parse_response_LOCNAMES_RWO_LD4L_CACHE
+    result = []
+    parsed_json = JSON.parse(@response)
+    puts parsed_json.inspect
+    parsed_json.each do |match|
+      label = match['label']
+      uri = match["context"].select { |item| item["property"] == "Authority URI" }.first["values"].first
       result << {'label' => label, 'uri' => uri}
     end
     result

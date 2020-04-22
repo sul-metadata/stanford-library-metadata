@@ -14,13 +14,6 @@ class AuthorityLookup
     @limit = limit
     @language = language
     @parameter = parameter
-    @exit = false
-
-    @exit = true if @term_list == nil || @term_list == []
-    @exit = true if @authority == nil || @authority == ""
-    @exit = true if @base_url == nil || @base_url == ""
-
-    return if @exit
 
   end
 
