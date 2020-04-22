@@ -35,4 +35,13 @@ RSpec.describe ResponseParser do
     end
   end
 
+  describe 'parses a response with subauthority from LOCNAMES_RWO_LD4L_CACHE:' do
+    it 'extracts data from the JSON response' do
+      response_json = File.read(File.join(FIXTURES_DIR, 'authority_lookup/response_rwo.json'))
+      parser_test = ResponseParser.new(response_json, 'LOCNAMES_RWO_LD4L_CACHE')
+      parsed_loc_rwo = parser_test.parse_response_LOCNAMES_RWO_LD4L_CACHE
+      expect(parsed_loc_rwo).to eq([{"uri" => "http://id.loc.gov/authorities/names/n79046044","label" => "Sayers, Dorothy L. (Dorothy Leigh), 1893-1957"}])
+    end
+  end
+
 end

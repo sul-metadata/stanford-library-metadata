@@ -1,9 +1,17 @@
-[{  "uri":"http://id.loc.gov/authorities/names/no2013046209",
-    "id":"no2013046209",
-    "label":"Dorothy Dunnett Society"},
- {  "uri":"http://id.loc.gov/authorities/names/n82064450",
-    "id":"n 82064450",
-    "label":"Dunnett, Dorothy. Photogenic soprano"},
- {  "uri":"http://id.loc.gov/authorities/names/n82059824",
-    "id":"n 82059824",
-    "label":"Dunnett, Dorothy. Murder in focus"}]
+[
+    {
+        "uri": "http://id.loc.gov/authorities/names/no2013046209",
+        "id": "no2013046209",
+        "label": "Dorothy Dunnett Society"
+    },
+    {
+        "uri": "http://id.loc.gov/authorities/names/n82064450",
+        "id": "n 82064450",
+        "label": "Dunnett, Dorothy. Photogenic soprano"
+    },
+    {
+        "uri": "http://id.loc.gov/authorities/names/n82059824",
+        "id": "n 82059824",
+        "label": "Dunnett, Dorothy. Murder in focus"
+    }
+]
