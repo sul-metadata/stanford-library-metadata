@@ -6,7 +6,7 @@ require 'sucker_punch'
 
 class AuthorityLookupJob
   include SuckerPunch::Job
-  def perform(infile, subauthority, limit, outfile)
+  def perform(file, subauthority, limit, outfile)
     terms = FileParser.new(file).terms
     result_set = AuthorityLookup.new(terms, "LOCNAMES_LD4L_CACHE", "https://lookup.ld4l.org/authorities/search/linked_data/", limit: limit.to_i, subauthority: subauthority).process_term_list
     ResultParser.new(result_set, outfile)
