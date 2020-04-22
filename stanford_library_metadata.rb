@@ -36,7 +36,7 @@ before do
   @reverse_modsulator_outfile = './public/reverse_modsulator/replayable_spreadsheet.csv'
   @reverse_modsulator_log_outfile = './public/reverse_modsulator/log.csv'
   @transform_spreadsheet_outfile = './public/transform_spreadsheet/replayable_spreadsheet.csv'
-  @transform_to_datacite_outfile = './public/transform_to_datacite/datacite_xml.zip'
+  @transform_to_datacite_outfile = './public/transform_to_datacite_xml/datacite_xml.zip'
   @transform_to_datacite_mods_template = './public/transform_to_datacite_xml/datacite_template_20200413.xlsx'
   @transform_to_datacite_only_template = './public/transform_to_datacite_xml/datacite_only_template_20200415.xlsx'
   @virtual_object_manifest_outfile = './public/virtual_object_manifest/manifest.csv'
@@ -332,7 +332,7 @@ end
 def transform_to_datacite_xml
   in_file = params[:file][:tempfile]
   in_filename = params[:file][:tempfile].path
-  DataCiteTransformerJob.perform_async(in_file, in_filename, @transform_spreadsheet_outfile)
+  DataCiteTransformerJob.perform_async(in_file, in_filename, @transform_to_datacite_outfile)
 end
 
 
