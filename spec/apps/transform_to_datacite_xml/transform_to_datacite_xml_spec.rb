@@ -8,7 +8,9 @@ require './spec_helper'
 RSpec.describe Modsulator do
 
   before(:all) do
-    @dc = Modsulator.new(File.open(File.join(FIXTURES_DIR, 'transform_to_datacite_xml/datacite_template_20200413_test.xlsx')), File.join(FIXTURES_DIR, './transform_to_datacite_xml/datacite_template_20200413_test.xlsx'))
+    @dc_test = 'transform_to_datacite_xml/datacite_template_20200424_test.xlsx'
+    @dc_only_test = 'transform_to_datacite_xml/datacite_only_template_20200424_test.xlsx'
+    @dc = Modsulator.new(File.open(File.join(FIXTURES_DIR, @dc_test)), File.join(FIXTURES_DIR, @dc_test))
   end
 
 
@@ -24,7 +26,7 @@ RSpec.describe Modsulator do
       expect(generated_xml).to be_equivalent_to(expected_xml)
     end
     it 'converts rows to expected XML (DataCite-only template)' do
-      dc = Modsulator.new(File.open(File.join(FIXTURES_DIR, 'transform_to_datacite_xml/datacite_only_template_20200415_test.xlsx')), File.join(FIXTURES_DIR, './transform_to_datacite_xml/datacite_only_template_20200415_test.xlsx'))
+      dc = Modsulator.new(File.open(File.join(FIXTURES_DIR, @dc_only_test)), File.join(FIXTURES_DIR, @dc_only_test))
       xml = dc.convert_rows
       doc = Nokogiri::XML(xml)
       generated_xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n#{doc.at_xpath('//*[local-name()="resource"]').to_s}"
