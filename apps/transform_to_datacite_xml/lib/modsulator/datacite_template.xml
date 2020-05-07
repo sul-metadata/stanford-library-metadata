@@ -381,6 +381,11 @@
     <relatedIdentifier relatedIdentifierType="[[dc:relatedIdentifierType3]]" relationType="[[dc:relationType3]]">[[ri4:id1:identifier]]</relatedIdentifier>
     <relatedIdentifier relatedIdentifierType="[[dc:relatedIdentifierType4]]" relationType="[[dc:relationType4]]">[[ri5:id1:identifier]]</relatedIdentifier>
     <relatedIdentifier relatedIdentifierType="[[dc:relatedIdentifierType5]]" relationType="[[dc:relationType5]]">[[ri6:id1:identifier]]</relatedIdentifier>
+    <relatedIdentifier relatedIdentifierType="[[dc:relatedIdentifierType6]]" relationType="[[dc:relationType6]]">[[ri7:id1:identifier]]</relatedIdentifier>
+    <relatedIdentifier relatedIdentifierType="[[dc:relatedIdentifierType7]]" relationType="[[dc:relationType7]]">[[ri8:id1:identifier]]</relatedIdentifier>
+    <relatedIdentifier relatedIdentifierType="[[dc:relatedIdentifierType8]]" relationType="[[dc:relationType8]]">[[ri9:id1:identifier]]</relatedIdentifier>
+    <relatedIdentifier relatedIdentifierType="[[dc:relatedIdentifierType9]]" relationType="[[dc:relationType9]]">[[ri10:id1:identifier]]</relatedIdentifier>
+    <relatedIdentifier relatedIdentifierType="[[dc:relatedIdentifierType10]]" relationType="[[dc:relationType10]]">[[ri11:id1:identifier]]</relatedIdentifier>
   </relatedIdentifier>
   <rightsList>
     <rights>[[dc:rights]]</rights>
