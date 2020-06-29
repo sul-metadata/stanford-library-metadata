@@ -118,7 +118,6 @@ post '/transform_spreadsheet_process' do
 end
 
 get '/transform_spreadsheet_download' do
-  puts @transform_spreadsheet_outfile.inspect
   if processing_file?(@transform_spreadsheet_outfile, 'TransformerJob') == true
     erb :processing
   else
@@ -127,7 +126,6 @@ get '/transform_spreadsheet_download' do
 end
 
 post '/transform_spreadsheet_deliver' do
-  puts @transform_spreadsheet_outfile.inspect
   send_file(@transform_spreadsheet_outfile, :type => 'csv', :disposition => 'attachment')
 end
 
@@ -216,6 +214,11 @@ post '/virtual_object_manifest_deliver' do
   send_file(@virtual_object_manifest_outfile, :type => 'csv', :disposition => 'attachment')
 end
 
+post '/virtual_object_manifest_log_deliver' do
+  send_file(@virtual_object_manifest_log_outfile, :type => 'csv', :disposition => 'attachment')
+end
+
+
 def generate_virtual_object_manifest
   file = params[:file][:tempfile]
   ManifestGeneratorJob.perform_async(file, @virtual_object_manifest_outfile, @virtual_object_manifest_log_outfile, @virtual_object_manifest_stats_outfile)
@@ -229,8 +232,10 @@ end
 def generate_error_table
   if File.zero?(@virtual_object_manifest_log_outfile)
     @error_table = "No errors logged."
+    @manifest_log_download_display = ""
   else
     @error_table = generate_html_table(@virtual_object_manifest_log_outfile, has_headers=false)
+    @manifest_log_download_display = generate_download_button("/virtual_object_manifest_log_deliver", "post", "Download error log")
   end
 end
 
@@ -245,8 +250,10 @@ end
 def show_download
   if !File.exist?(@virtual_object_manifest_outfile) || File.zero?(@virtual_object_manifest_outfile)
     @manifest_download_display = "Manifest not created due to errors."
+    @manifest_log_download_display = generate_download_button("/virtual_object_manifest_log_deliver", "post", "Download error log")
   else
     @manifest_download_display = generate_download_button("/virtual_object_manifest_deliver", "post", "Download manifest")
+    @manifest_log_download_display = ""
   end
 end
 
@@ -274,8 +281,10 @@ get '/reverse_modsulator_download' do
   else
     if File.exist?(@reverse_modsulator_log_outfile) && !File.zero?(@reverse_modsulator_log_outfile)
       @rm_table = generate_html_table(@reverse_modsulator_log_outfile)
+      @reverse_modsulator_log_download_display = generate_download_button("/reverse_modsulator_log_deliver", "post", "Download data loss log")
     else
       @rm_table = "No data loss reported."
+      @reverse_modsulator_log_download_display = ""
     end
     erb :reverse_modsulator_download
   end
@@ -283,6 +292,10 @@ end
 
 post '/reverse_modsulator_deliver' do
   send_file(@reverse_modsulator_outfile, :type => 'csv', :disposition => 'attachment')
+end
+
+post '/reverse_modsulator_log_deliver' do
+  send_file(@reverse_modsulator_log_outfile, :type => 'csv', :disposition => 'attachment')
 end
 
 def process_mods_file
@@ -411,7 +424,16 @@ def clear_files(path)
   end
 end
 
+def file_too_large_to_display?(file)
+  if File.exist?(file) && !File.zero?(file) && File.size(file) > 7000
+    return true
+  else
+    return false
+  end
+end
+
 def generate_html_table(file, has_headers=true)
+  return "" if file_too_large_to_display?(file)
   csv = CSV.new(File.open(file))
   rows = csv.read
   table = "<table><tr>"
