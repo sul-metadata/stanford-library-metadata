@@ -77,6 +77,7 @@ class ManifestSheet
   def check_for_errors
     return if @errors.empty?
     write_error_output
+    @sheet = nil
   end
 
   def write_error_output
