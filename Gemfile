@@ -12,3 +12,6 @@ gem 'rails'
 gem 'json'
 gem 'actionview', ">= 6.0.2.2"
 gem 'sucker_punch', '~> 2.0'
+gem 'actionstorage', '>=6.0.3.1'
+gem 'actionpack', '>=6.0.3.2'
+gem 'actionsupport', '>=6.0.3.1'
