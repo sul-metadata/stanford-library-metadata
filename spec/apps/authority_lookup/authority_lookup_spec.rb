@@ -5,19 +5,7 @@ require './spec_helper'
 RSpec.describe AuthorityLookup do
 
   before(:all) do
-    @authority_lookup_test = AuthorityLookup.new(['Dorothy Dunnett'], 'LOCNAMES_RWO_LD4L_CACHE', 'https://lookup.ld4l.org/authorities/search/linked_data/', language: 'en', parameter: '&context=true')
-  end
-
-  describe 'exits if arguments missing:' do
-    it 'exits if term list not provided' do
-      expect(AuthorityLookup.new([], 'authority', 'http://example.com/').exit).to eq(true)
-    end
-    it 'exits if authority not provided' do
-      expect(AuthorityLookup.new(['term'], '', 'http://example.com/').exit).to eq(true)
-    end
-    it 'exits if base URL not provided' do
-      expect(AuthorityLookup.new(['term'], 'authority', nil).exit).to eq(true)
-    end
+    @authority_lookup_test = AuthorityLookup.new(['Dorothy Dunnett'], 'LOCNAMES_RWO_LD4L_CACHE', 'https://lookup.ld4l.org/authorities/search/linked_data/', language: 'en', parameter: 'context=true')
   end
 
   describe 'parses optional arguments:' do
@@ -47,7 +35,7 @@ RSpec.describe AuthorityLookup do
       expect(@authority_lookup_test.construct_query('Dorothy Dunnett')).to eq('https://lookup.ld4l.org/authorities/search/linked_data/LOCNAMES_RWO_LD4L_CACHE?q=Dorothy+Dunnett&maxRecords=10&lang=en&context=true')
     end
     it 'constructs a query with options' do
-      options_test = AuthorityLookup.new('Dorothy Dunnett', 'LOCNAMES_RWO_LD4L_CACHE', 'https://lookup.ld4l.org/authorities/search/linked_data/', subauthority: 'naf', limit: 1, language: 'ru', parameter: '&context=true')
+      options_test = AuthorityLookup.new('Dorothy Dunnett', 'LOCNAMES_RWO_LD4L_CACHE', 'https://lookup.ld4l.org/authorities/search/linked_data/', subauthority: 'naf', limit: 1, language: 'ru', parameter: 'context=true')
       expect(options_test.construct_query('Dorothy Dunnett')).to eq('https://lookup.ld4l.org/authorities/search/linked_data/LOCNAMES_RWO_LD4L_CACHE/naf?q=Dorothy+Dunnett&maxRecords=1&lang=ru&context=true')
     end
   end

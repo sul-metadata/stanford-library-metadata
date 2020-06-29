@@ -21,6 +21,7 @@ class ManifestGenerator
     @infile = ManifestSheet.new(@in_filename, @log_filename)
     # Validate incoming data and return validated spreadsheet object
     @sheet = @infile.validate
+    return 0 if @sheet == nil
     data = process_sheet(@sheet)
     report_output_stats(data)
     write_output_file(data)

@@ -4,13 +4,14 @@ require './spec_helper'
 RSpec.describe ManifestSheet do
 
   before(:all) do
-    @manifest_errors_object = ManifestSheet.new(File.join(FIXTURES_DIR, 'virtual_object_manifest/manifest_test_errors.xlsx'))
+    @manifest_errors_object = ManifestSheet.new(File.join(FIXTURES_DIR, 'virtual_object_manifest/manifest_test_errors.xlsx'), File.join(PUBLIC_DIR, 'virtual_object_manifest/log.csv'))
     @manifest_errors_process = @manifest_errors_object.validate
   end
 
   describe 'parses input spreadsheet:' do
     it 'generates roo object' do
-      expect(@manifest_errors_object.sheet).to be_a(Roo::Excelx)
+      manifest_object = ManifestSheet.new(File.join(FIXTURES_DIR, 'virtual_object_manifest/manifest_test.xlsx'), File.join(PUBLIC_DIR, 'virtual_object_manifest/log2.csv'))
+      expect(manifest_object.sheet).to be_a(Roo::Excelx)
     end
     it 'parses column headers' do
       expect(@manifest_errors_object.rows[0].keys.sort).to eq([:druid, :root, :sequence])
@@ -22,7 +23,8 @@ RSpec.describe ManifestSheet do
 
   describe 'validates data:' do
     it 'validates headers' do
-      expect(@manifest_errors_object.validate_headers(['sequence', 'x'])).to eq(true)
+      @manifest_errors_object.validate_headers(['sequence', 'x'])
+      expect(@manifest_errors_object.errors).to include('File has incorrect headers: must include sequence, root, and druid')
     end
     it 'validates druid' do
       expect(@manifest_errors_object.errors).to include('Druid not recognized: zs357zh746')
