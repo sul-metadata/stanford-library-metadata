@@ -22,8 +22,8 @@ RSpec.describe AuthorityLookup do
       expect(language_option.language).to eq('ru')
     end
     it 'sets terminal parameter' do
-      parameter_option = AuthorityLookup.new(['term'], 'authority', 'http://example.com/', parameter: '&context=true')
-      expect(parameter_option.parameter).to eq('&context=true')
+      parameter_option = AuthorityLookup.new(['term'], 'authority', 'http://example.com/', parameter: 'context=true')
+      expect(parameter_option.parameter).to eq('context=true')
     end
   end
 
@@ -43,7 +43,7 @@ RSpec.describe AuthorityLookup do
   describe 'returns results:' do
     it 'returns a result for a search term' do
       lookup_result = @authority_lookup_test.lookup_term('Dorothy Dunnett')
-      expect(lookup_result['Dorothy Dunnett']).not_to eq([])
+      expect(lookup_result['Dorothy Dunnett'].size).not_to eq(0)
     end
     it 'returns a result for a search term with a non-ASCII character' do
       lookup_result = @authority_lookup_test.lookup_term('Renée Vivien')
@@ -52,7 +52,7 @@ RSpec.describe AuthorityLookup do
     it 'returns results for each term in a list' do
       term_list = FileParser.new(File.join(FIXTURES_DIR, 'authority_lookup/lookup_list.txt')).terms
       expect(term_list.size).to eq(2)
-      results = AuthorityLookup.new(term_list, 'LOCNAMES_RWO_LD4L_CACHE', 'https://lookup.ld4l.org/authorities/search/linked_data/', parameter: '&context=true').process_term_list
+      results = AuthorityLookup.new(term_list, 'LOCNAMES_RWO_LD4L_CACHE', 'https://lookup.ld4l.org/authorities/search/linked_data/', parameter: 'context=true').process_term_list
       expect(results.size).to eq(2)
     end
   end
