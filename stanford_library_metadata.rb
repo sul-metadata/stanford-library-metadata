@@ -54,6 +54,7 @@ get '/clear_cache' do
   clear_files('./public/reverse_modsulator')
   clear_files('./public/transform_spreadsheet')
   clear_files('./public/virtual_object_manifest')
+  erb :index
 end
 
 ##### Replayable spreadsheet validator
