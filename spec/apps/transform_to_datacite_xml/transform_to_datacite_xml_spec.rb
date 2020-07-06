@@ -8,8 +8,8 @@ require './spec_helper'
 RSpec.describe Modsulator do
 
   before(:all) do
-    @dc_test = 'transform_to_datacite_xml/datacite_template_20200424_test.xlsx'
-    @dc_only_test = 'transform_to_datacite_xml/datacite_only_template_20200424_test.xlsx'
+    @dc_test = 'transform_to_datacite_xml/datacite_template_20200706_test.xlsx'
+    @dc_only_test = 'transform_to_datacite_xml/datacite_only_template_20200706_test.xlsx'
     @dc = Modsulator.new(File.open(File.join(FIXTURES_DIR, @dc_test)), File.join(FIXTURES_DIR, @dc_test))
   end
 
