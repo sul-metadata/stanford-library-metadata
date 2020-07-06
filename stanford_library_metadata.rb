@@ -54,6 +54,7 @@ get '/clear_cache' do
   clear_files('./public/reverse_modsulator')
   clear_files('./public/transform_spreadsheet')
   clear_files('./public/virtual_object_manifest')
+  erb :index
 end
 
 ##### Replayable spreadsheet validator
@@ -75,6 +76,7 @@ end
 
 get '/replayable_spreadsheet_validator_download' do
   if processing_file?(@replayable_spreadsheet_validator_outfile, 'ValidatorJob') == true
+    @refresh = generate_refresh_button("/replayable_spreadsheet_validator_download")
     erb :processing
   else
     generate_report_table
@@ -119,6 +121,7 @@ end
 
 get '/transform_spreadsheet_download' do
   if processing_file?(@transform_spreadsheet_outfile, 'TransformerJob') == true
+    @refresh = generate_refresh_button("/transform_spreadsheet_download")
     erb :processing
   else
     erb :transform_spreadsheet_download
@@ -154,6 +157,7 @@ end
 
 get '/compile_mods_download' do
   if processing_file?(@compile_mods_outfile, 'CompileMODSJob') == true
+    @refresh = generate_refresh_button("/compile_mods_download")
     erb :processing
   else
     erb :compile_mods_download
@@ -192,6 +196,7 @@ end
 
 get '/virtual_object_manifest_download' do
   if processing_file?(@virtual_object_manifest_log_outfile, 'ManifestGeneratorJob') == true
+    @refresh = generate_refresh_button("/virtual_object_manifest_download")
     erb :processing
   else
     generate_error_table
@@ -203,6 +208,7 @@ end
 
 get '/virtual_object_manifest_validate_download' do
   if processing_file?(@virtual_object_manifest_log_outfile, 'ManifestValidatorJob') == true
+    @refresh = generate_refresh_button("/virtual_object_manifest_validate_download")
     erb :processing
   else
     generate_error_table
@@ -277,6 +283,7 @@ end
 
 get '/reverse_modsulator_download' do
   if processing_file?(@reverse_modsulator_outfile, 'ReverseModsulatorJob') == true
+    @refresh = generate_refresh_button("/reverse_modsulator_download")
     erb :processing
   else
     if File.exist?(@reverse_modsulator_log_outfile) && !File.zero?(@reverse_modsulator_log_outfile)
@@ -324,6 +331,7 @@ end
 
 get '/transform_to_datacite_xml_download' do
   if processing_file?(@transform_to_datacite_outfile, 'DataCiteTransformerJob') == true
+    @refresh = generate_refresh_button("/transform_to_datacite_xml_download")
     erb :processing
   else
     erb :transform_to_datacite_xml_download
@@ -368,6 +376,7 @@ end
 
 get '/authority_lookup_download' do
   if processing_file?(@authority_lookup_outfile, 'AuthorityLookupJob') == true
+    @refresh = generate_refresh_button("/authority_lookup_download")
     erb :processing
   else
     erb :authority_lookup_download
@@ -465,4 +474,8 @@ def processing_file?(outfile, job)
   else
     return false
   end
+end
+
+def generate_refresh_button(target)
+  "<a href=\"#{target}\"><button class=\"button\">Refresh</button>"
 end
