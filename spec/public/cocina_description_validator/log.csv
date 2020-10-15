@@ -1,0 +1,3 @@
+Description,Locator
+Property is invalid,property '/not'
+Value must be of type string,property '/purl'

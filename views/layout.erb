@@ -15,6 +15,21 @@
       padding: 15px;
       vertical-align: top;
     }
+    .json {
+      width: 80%;
+      min-height: 200px;
+      display: inline-block;
+      text-align: left;
+      padding: 5px;
+      border: 1px solid #cccccc;
+      -webkit-border-radius: 4px;
+      -moz-border-radius: 4px;
+      border-radius: 4px;
+    }
+    textarea {
+      vertical-align: top;
+      width: 90%;
+    }
     .button {
       background-color: #4CAF50; /* Green */
       border: none;
@@ -42,7 +57,26 @@
   </style>
   <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
   <script src="//cdnjs.cloudflare.com/ajax/libs/ace/1.1.3/ace.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
+    <script type="text/javascript">
+      $(document).ready(function(){
+
+        if ($('#cocina).length > 0) {
+          var editor = ace.edit("cocina");
+          editor.setTheme("ace/theme/monokai");
+          editor.getSession().setMode("ace/mode/json");
+          $('#cocina').css('fontSize', '16px');
+
+          var textarea = $('textarea[name="cocina"]');
+          textarea.hide();
+          editor.getSession().setValue(textarea.val());
+
+          editor.getSession().on('change', function(){
+            textarea.val(editor.getSession().getValue());
+          });
+        }
+      });
+    </script>
   <body>
     <div class="container">
       <%= yield %>
