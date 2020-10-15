@@ -119,8 +119,13 @@ post '/cocina_description_validator_index' do
   erb :cocina_description_validator_index
 end
 
-post '/cocina_description_validator_process' do
-  validate_cocina
+post '/cocina_description_validator_process_file' do
+  validate_cocina_file
+  redirect to('/cocina_description_validator_download')
+end
+
+post '/cocina_description_validator_process_json' do
+  validate_cocina_json
   redirect to('/cocina_description_validator_download')
 end
 
@@ -138,8 +143,13 @@ post '/cocina_description_validator_deliver' do
   send_file(@cocina_description_validator_outfile, :type => 'csv', :disposition => 'attachment')
 end
 
-def validate_cocina
+def validate_cocina_file
   data = JSON.parse(File.read(params[:file][:tempfile]))
+  CocinaValidatorJob.perform_async(data, @cocina_description_validator_outfile)
+end
+
+def validate_cocina_json
+  data = JSON.parse(params[:cocina])
   CocinaValidatorJob.perform_async(data, @cocina_description_validator_outfile)
 end
 
