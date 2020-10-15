@@ -10,6 +10,8 @@ RSpec.describe CocinaValidator do
     @log = File.join(PUBLIC_DIR, 'cocina_description_validator/log.csv')
     @valid = CocinaValidator.new(JSON.parse(File.read(File.join(FIXTURES_DIR, 'cocina_description_validator/hj456dt5655.json'))), @log)
     @no_errors = @valid.validate_data
+    @missing_required = CocinaValidator.new(JSON.parse(File.read(File.join(FIXTURES_DIR, 'cocina_description_validator/no_title.json'))), @log)
+    @missing_title = @missing_required.validate_data
     @invalid = CocinaValidator.new(JSON.parse(File.read(File.join(FIXTURES_DIR, 'cocina_description_validator/invalid.json'))), @log)
     @has_errors = @invalid.validate_data
     @errors = @invalid.identify_errors
@@ -33,6 +35,10 @@ RSpec.describe CocinaValidator do
     end
     it 'identifies the location of an error' do
       expect(@errors[0]['data_pointer']).to match('/not')
+    end
+    it 'identifies a missing title' do
+      missing_field = @missing_required.identify_errors[0].fetch('details').fetch('missing_keys').to_s
+      expect(missing_field).to match('title')
     end
   end
 
