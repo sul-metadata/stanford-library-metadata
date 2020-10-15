@@ -1,13 +1,13 @@
 /.gitignore
 /test/
 /test.rb
-/helpers.rb
 /spec/public/authority_lookup/*
 /spec/public/transform_spreadsheet/*
 /spec/public/replayable_spreadsheet_validator/*
 /spec/public/reverse_modsulator/*
 /spec/public/virtual_object_manifest/*
 /spec/public/compile_mods/*
+/spec/public/cocina_description_validator/*
 /public/authority_lookup/report.csv
 /public/reverse_modsulator/log.csv
 /public/replayable_spreadsheet_validator/report.csv
@@ -15,5 +15,6 @@
 /public/virtual_object_manifest/log.csv
 /public/compile_mods/compiled_mods_file.xml
 /public/reverse_modsulator/replayable_spreadsheet.csv
-public/transform_to_datacite_xml/datacite_xml.zip
-/apps/authority_lookup/*OLD.rb
+/public/transform_to_datacite_xml/datacite_xml.zip
+/public/cocina_description_validator/log.csv
+/public/log.csv

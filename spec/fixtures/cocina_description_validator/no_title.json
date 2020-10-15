@@ -1,0 +1,55 @@
+{
+  "adminMetadata": {
+    "language": [
+      {
+        "value": "English",
+        "code": "eng",
+        "uri": "http://id.loc.gov/vocabulary/iso639-2/eng",
+        "source": {
+          "code": "iso639-2b",
+          "uri": "http://id.loc.gov/vocabulary/iso639-2/"
+        },
+        "script": {
+          "value": "Latin",
+          "code": "Latn",
+          "source": {
+            "code": "iso15924"
+          }
+        }
+      }
+    ],
+    "contributor": [
+      {
+        "name": [
+          {
+            "code": "CSt",
+            "uri": "http://id.loc.gov/vocabulary/organizations/cst",
+            "source": {
+              "code": "marcorg",
+              "uri": "http://id.loc.gov/vocabulary/organizations/"
+            }
+          }
+        ],
+        "type": "organization",
+        "role": [
+          {
+            "value": "original cataloging agency"
+          }
+        ]
+      }
+    ],
+    "standard": {
+      "code": "dacs",
+      "uri": "http://id.loc.gov/vocabulary/descriptionConventions/dacs",
+      "source": {
+        "uri": "http://id.loc.gov/vocabulary/descriptionConventions/"
+      }
+    },
+    "note": [
+      {
+        "type": "record origin",
+        "value": "human prepared"
+      }
+    ]
+  }
+}

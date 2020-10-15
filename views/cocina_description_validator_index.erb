@@ -1,0 +1,26 @@
+<h2>COCINA description validator</h2>
+<hr>
+
+<h3>Validate a file</h3>
+
+<form action="/cocina_description_validator_process_file" method="post" enctype="multipart/form-data">
+  <input type="file" name="file" id="file">
+  <p>
+  <button class="button" type="submit">Submit the file</button>
+</form>
+
+<p>
+<hr>
+
+<h3>Validate JSON</h3>
+
+<form class="form" action="/cocina_description_validator_process_json" method="post">
+  <textarea name='cocina'></textarea>
+  <div id="mods" class="cocina" contenteditable="true"></div>
+  <p>
+  <button class='button'>Submit JSON</button>
+
+</form>
+<p>
+<hr>
+<a href="/"><button class="button-return">Return to main menu</button></a>

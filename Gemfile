@@ -10,6 +10,7 @@ gem 'rubyzip'
 gem 'equivalent-xml'
 gem 'rails'
 gem 'json'
+gem 'json_schemer'
 gem 'actionview', ">= 6.0.2.2"
 gem 'sucker_punch', '~> 2.0'
 gem 'activestorage', '>=6.0.3.1'

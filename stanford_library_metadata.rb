@@ -8,7 +8,9 @@ require 'zip'
 require 'cgi'
 require 'net/http'
 require 'json'
+require 'json_schemer'
 require './apps/replayable_spreadsheet_validator/replayable_spreadsheet_validator'
+require './apps/cocina_description_validator/cocina_description_validator'
 require './apps/transform_spreadsheet/transform_spreadsheet'
 require './apps/virtual_object_manifest/manifest_generator'
 require './apps/reverse_modsulator/reverse_modsulator'
@@ -21,6 +23,7 @@ require './apps/authority_lookup/result_parser'
 require './apps/compile_mods/compile_mods'
 # require './apps/replayable_spreadsheet_generator/replayable_spreadsheet_generator'
 require './jobs/authority_lookup_job'
+require './jobs/cocina_description_validator_job'
 require './jobs/compile_mods_job'
 require './jobs/replayable_spreadsheet_validator_job'
 require './jobs/reverse_modsulator_job'
@@ -31,6 +34,7 @@ require './jobs/virtual_object_manifest_validate_job'
 
 before do
   @authority_lookup_outfile = './public/authority_lookup/report.csv'
+  @cocina_description_validator_outfile = './public/cocina_description_validator/log.csv'
   @compile_mods_outfile = './public/compile_mods/compiled_mods_file.xml'
   @replayable_spreadsheet_validator_outfile = './public/replayable_spreadsheet_validator/report.csv'
   @reverse_modsulator_outfile = './public/reverse_modsulator/replayable_spreadsheet.csv'
@@ -49,6 +53,7 @@ get '/' do
 end
 
 get '/clear_cache' do
+  clear_files('./public/cocina_description_validator')
   clear_files('./public/compile_mods')
   clear_files('./public/replayable_spreadsheet_validator')
   clear_files('./public/reverse_modsulator')
@@ -99,6 +104,62 @@ def generate_report_table
   else
     @validator_table = generate_html_table(@replayable_spreadsheet_validator_outfile)
     @validator_download_display = generate_download_button("/replayable_spreadsheet_validator_deliver", "post", "Download report")
+  end
+end
+
+##### COCINA description validator
+
+get '/cocina_description_validator_index' do
+  clear_files('./public/cocina_description_validator')
+  erb :cocina_description_validator_index
+end
+
+post '/cocina_description_validator_index' do
+  clear_files('./public/cocina_description_validator')
+  erb :cocina_description_validator_index
+end
+
+post '/cocina_description_validator_process_file' do
+  validate_cocina_file
+  redirect to('/cocina_description_validator_download')
+end
+
+post '/cocina_description_validator_process_json' do
+  validate_cocina_json
+  redirect to('/cocina_description_validator_download')
+end
+
+get '/cocina_description_validator_download' do
+  if processing_file?(@cocina_description_validator_outfile, 'CocinaValidatorJob') == true
+    @refresh = generate_refresh_button("/cocina_description_validator_download")
+    erb :processing
+  else
+    generate_cocina_report_table
+    erb :cocina_description_validator_download
+  end
+end
+
+post '/cocina_description_validator_deliver' do
+  send_file(@cocina_description_validator_outfile, :type => 'csv', :disposition => 'attachment')
+end
+
+def validate_cocina_file
+  data = JSON.parse(File.read(params[:file][:tempfile]))
+  CocinaValidatorJob.perform_async(data, @cocina_description_validator_outfile)
+end
+
+def validate_cocina_json
+  data = JSON.parse(params[:cocina])
+  CocinaValidatorJob.perform_async(data, @cocina_description_validator_outfile)
+end
+
+def generate_cocina_report_table
+  if File.zero?(@cocina_description_validator_outfile)
+    @cocina_validator_table = "No errors logged."
+    @cocina_validator_download_display = ""
+  else
+    @cocina_validator_table = generate_html_table(@cocina_description_validator_outfile)
+    @cocina_validator_download_display = generate_download_button("/cocina_description_validator_deliver", "post", "Download report")
   end
 end
 
