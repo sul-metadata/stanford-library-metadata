@@ -648,6 +648,7 @@
         }
     },
     "additionalProperties": false,
+    "required": ["title"],
     "properties": {
         "title": {
             "description": "Titles of the resource.",
