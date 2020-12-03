@@ -20,10 +20,7 @@
                 },
                 "status": {
                     "description": "Status of the contributor relative to other parallel contributors (e.g. the primary author among a group of contributors).",
-                    "type": [
-                        "string",
-                        "integer"
-                    ]
+                    "type": "string"
                 },
                 "role": {
                     "description": "Relationships of the contributor to the resource or to an event in its history.",
@@ -128,10 +125,7 @@
                 },
                 "status": {
                     "description": "Status of the descriptive element value relative to other instances of the element.",
-                    "type": [
-                        "string",
-                        "integer"
-                    ]
+                    "type": "string"
                 },
                 "code": {
                     "description": "Code value of the descriptive element.",
@@ -203,10 +197,7 @@
                 },
                 "status": {
                     "description": "Status of the descriptive element value relative to other instances of the element.",
-                    "type": [
-                        "string",
-                        "integer"
-                    ]
+                    "type": "string"
                 },
                 "code": {
                     "description": "Code value of the descriptive element.",
@@ -344,10 +335,7 @@
             "properties": {
                 "value": {
                     "description": "String or integer value of the descriptive element.",
-                    "type": [
-                        "string",
-                        "integer"
-                    ]
+                    "type": "string"
                 },
                 "type": {
                     "description": "Type of value provided by the descriptive element.",
@@ -355,10 +343,7 @@
                 },
                 "status": {
                     "description": "Status of the descriptive element value relative to other instances of the element.",
-                    "type": [
-                        "string",
-                        "integer"
-                    ]
+                    "type": "string"
                 },
                 "code": {
                     "description": "Code value of the descriptive element.",
@@ -432,10 +417,7 @@
                 },
                 "status": {
                     "description": "Status of the related resource relative to other related resources.",
-                    "type": [
-                        "string",
-                        "integer"
-                    ]
+                    "type": "string"
                 },
                 "displayLabel": {
                     "description": "The preferred display label to use for the related resource in access systems.",
@@ -490,6 +472,12 @@
                     "type": "string"
                 },
                 "access": {"$ref": "#/definitions/DescriptiveAccessMetadata"},
+                "relatedResource": {
+                    "description": "Other resources associated with the related resource.",
+                    "type": "array",
+                    "items": {"$ref": "#/definitions/RelatedResource"}
+                },
+                "adminMetadata": {"$ref": "#/definitions/DescriptiveAdminMetadata"},
                 "version": {
                     "description": "The version of the related resource.",
                     "type": "string"
@@ -584,10 +572,7 @@
                 },
                 "status": {
                     "description": "Status of the descriptive element value relative to other instances of the element.",
-                    "type": [
-                        "string",
-                        "integer"
-                    ]
+                    "type": "string"
                 },
                 "code": {
                     "description": "Code value of the descriptive element.",
