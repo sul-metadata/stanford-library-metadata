@@ -9,7 +9,7 @@ attr_reader :data, :validator, :outfile, :result
     @data = data
     @outfile = outfile
     @csv = CSV.new(File.open(@outfile, 'w'))
-    @schema_file = File.expand_path('./description_cocina_schema_v4-6_validator.json', File.dirname(__FILE__))
+    @schema_file = File.expand_path('./description_cocina_schema_v4-8_validator.json', File.dirname(__FILE__))
     @validator = parse_schema
   end
 

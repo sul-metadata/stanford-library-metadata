@@ -54,6 +54,11 @@
                     "type": "array",
                     "items": {"$ref": "#/definitions/DescriptiveValue"}
                 },
+                "digitalLocation": {
+                    "description": "Location of a digital version of the resource, such as a file path for a born digital resource.",
+                    "type": "array",
+                    "items": {"$ref": "#/definitions/DescriptiveValue"}
+                },
                 "accessContact": {
                     "description": "The library, organization, or person responsible for access to the resource.",
                     "type": "array",
@@ -96,9 +101,10 @@
                     "type": "array",
                     "items": {"$ref": "#/definitions/DescriptiveValue"}
                 },
-                "standard": {
+                "metadataStandard": {
                     "description": "Descriptive or content standards to which this resource description conforms.",
-                    "$ref": "#/definitions/Standard"
+                    "type": "array",
+                    "items": {"$ref": "#/definitions/Standard"}
                 },
                 "identifier": {
                     "description": "Identifiers associated with this resource description.",
