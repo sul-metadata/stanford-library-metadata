@@ -45,7 +45,7 @@ RSpec.describe ManifestSheet do
 
   describe 'generates output:' do
     it 'generates expected error report' do
-      expect(File.read(File.join(PUBLIC_DIR, 'virtual_object_manifest/errors.csv'))).to eq(File.read(File.join(FIXTURES_DIR, 'virtual_object_manifest/errors.csv')))
+      expect(File.read(File.join(PUBLIC_DIR, 'virtual_object_manifest/log.csv'))).to eq(File.read(File.join(FIXTURES_DIR, 'virtual_object_manifest/errors.csv')))
     end
   end
 
