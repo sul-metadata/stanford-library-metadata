@@ -960,10 +960,10 @@ RSpec.describe Validator do
       expect(@xlsx.errors['WARNING']).to include(["WARNING", "Blank ty1:typeOfResource", "aa111aa1111"])
     end
     it 'logs info for csv' do
-      expect(@csv.errors['INFO']).to include(["INFO", "Header not in XML template", "not:header"])
+      expect(@csv.errors['INFO']).to include(["INFO", "Header not in XML template", "not:header, dt:dateCreated3KeyDate, dt:dateIssued3KeyDate"])
     end
     it 'logs info for xlsx' do
-      expect(@xlsx.errors['INFO']).to include(["INFO", "Header not in XML template", "not:header"])
+      expect(@xlsx.errors['INFO']).to include(["INFO", "Header not in XML template", "not:header, dt:dateCreated3KeyDate, dt:dateIssued3KeyDate"])
     end
     it 'logs the expected number of non-fail errors for csv' do
       expect(@csv.errors['ERROR'].size).to eq(26)
