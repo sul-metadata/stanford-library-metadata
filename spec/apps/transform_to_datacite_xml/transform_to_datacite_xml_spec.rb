@@ -1,7 +1,7 @@
 require '../apps/transform_to_datacite_xml/lib/modsulator'
 require '../apps/transform_to_datacite_xml/app/models/modsulator_sheet'
 require '../apps/transform_to_datacite_xml/app/models/normalizer'
-require 'active_support/core_ext/hash'
+#require 'active_support/core_ext/hash'
 require 'equivalent-xml'
 require './spec_helper'
 

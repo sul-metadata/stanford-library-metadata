@@ -14,6 +14,8 @@ class ManifestSheet
   end
 
   def validate
+    # Array to hold errors
+    @errors = []
     # Check that all required headers are present
     headers = @sheet.row(1)
     validate_headers(headers)
@@ -21,8 +23,6 @@ class ManifestSheet
     @rows = @sheet.parse(sequence: 'sequence', root: 'root', druid: 'druid')
     # Hash
     @root_sequence = {}
-    # Array to hold errors
-    @errors = []
     validate_data
     check_sequence
     check_for_errors
