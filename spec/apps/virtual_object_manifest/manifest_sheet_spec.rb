@@ -23,8 +23,9 @@ RSpec.describe ManifestSheet do
 
   describe 'validates data:' do
     it 'validates headers' do
-      @manifest_errors_object.validate_headers(['sequence', 'x'])
-      expect(@manifest_errors_object.errors).to include('File has incorrect headers: must include sequence, root, and druid')
+      manifest_object = ManifestSheet.new(File.join(FIXTURES_DIR, 'virtual_object_manifest/header_errors.csv'), File.join(PUBLIC_DIR, 'virtual_object_manifest/log2.csv'))
+      manifest_object_process = manifest_object.validate
+      expect(manifest_object.errors).to include('File has incorrect headers: must include sequence, root, and druid')
     end
     it 'validates druid' do
       expect(@manifest_errors_object.errors).to include('Druid not recognized: zs357zh746')
