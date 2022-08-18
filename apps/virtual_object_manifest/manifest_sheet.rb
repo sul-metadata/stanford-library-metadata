@@ -9,7 +9,7 @@ class ManifestSheet
   # Creates a new ManifestSheet
   # @param [File]  file    The input file object
   def initialize(file, logfile)
-    @sheet = Roo::Spreadsheet.open(file)
+    @sheet = Roo::Spreadsheet.open(file, { csv_options: { encoding: 'bom|utf-8' } })
     @error_report = File.open(logfile, 'w')
   end
 
@@ -20,7 +20,7 @@ class ManifestSheet
     headers = @sheet.row(1)
     validate_headers(headers)
     # Parse data columns based on headers
-    @rows = @sheet.parse(sequence: 'sequence', root: 'root', druid: 'druid')
+    @rows = @sheet.parse(sequence: 'sequence', root: 'root', druid: 'druid', clean: true)
     # Hash
     @root_sequence = {}
     validate_data
@@ -33,11 +33,14 @@ class ManifestSheet
     # Checks that header contains sequence, root, and druid
     unless headers.include?('sequence') && headers.include?('root') && headers.include?('druid')
       @errors << 'File has incorrect headers: must include sequence, root, and druid'
+      write_error_output
+      exit
     end
   end
 
   def validate_data
     @rows.each_with_index do |row, i|
+      next if row.compact.empty?
       # Checks druid pattern
       unless row[:druid] =~ /^druid:[a-z]{2}[0-9]{3}[a-z]{2}[0-9]{4}$/ || row[:druid] =~ /^[a-z]{2}[0-9]{3}[a-z]{2}[0-9]{4}$/
         @errors << "Druid not recognized: #{row[:druid]}"
