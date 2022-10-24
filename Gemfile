@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
-ruby '2.7.1'
+ruby '3.1.2'
 
 gem 'sinatra'
-gem 'roo'
+gem 'roo', ">= 2.9.0"
 gem 'roo-xls'
 gem 'csv'
 gem 'nokogiri', ">= 1.10.8"
@@ -16,3 +16,8 @@ gem 'sucker_punch', '~> 2.0'
 gem 'activestorage', '>=6.0.3.1'
 gem 'actionpack', '>=6.0.3.2'
 gem 'activesupport', '>=6.0.3.1'
+gem 'thin'
+gem 'puma'
+gem 'reel'
+gem 'http'
+gem 'webrick'
