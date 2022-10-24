@@ -107,7 +107,7 @@ class Modsulator
 
 
     # Enable access with symbol or string keys
-    manifest_row = manifest_row.with_indifferent_access
+    #manifest_row = manifest_row.with_indifferent_access
 
     # Run the XML template through ERB. This creates a new ERB object from the template XML,
     # NOT creating a separate thread, and omitting newlines for lines ending with '%>'
