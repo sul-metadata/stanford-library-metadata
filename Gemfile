@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 ruby '3.1.2'
 
 gem 'sinatra'
-gem 'roo'
+gem 'roo', ">= 2.9.0"
 gem 'roo-xls'
 gem 'csv'
 gem 'nokogiri', ">= 1.10.8"
